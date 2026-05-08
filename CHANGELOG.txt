@@ -1,3 +1,19 @@
+v0.3.0 beta - Estrutura híbrida real: Força + Corrida + Recuperação
+Data: 08/05/2026
+
+Principais mudanças:
+- Corrigida a separação de sessão: recuperação, caminhada, mobilidade e descanso ativo não aparecem mais como treino de força com carga, séries e repetições.
+- Plano semanal remodelado para trabalhar com tipos de sessão independentes: Força, Corrida, Recuperação e Descanso.
+- Treinos de força renomeados para linguagem simples com sublegenda e impacto na corrida: Superiores, Pernas — Força, Pernas — Moderado, Corpo Todo, Core e Estabilidade e Força Funcional.
+- Aba Corrida repaginada como central de corrida híbrida, com status semanal, compatibilidade com musculação, zonas, RPE, sensação das pernas, dor articular e tipos de corrida explicados.
+- Nova área de Recuperação ativa com registro específico de caminhada leve, mobilidade, alongamento, recuperação de pernas, soltura muscular, relaxamento e descanso total.
+- Check-in diário deixou de alterar a semana automaticamente: agora ele recomenda e o aluno escolhe aplicar ajuste de hoje ou manter plano original.
+- Fluxo após salvar perfil passa por Plano sugerido antes de Hoje.
+- Ações foram separadas: Ajustar treino de hoje, Reorganizar semana e Gerar novo plano.
+- Conquistas refeitas para força, corrida, semanas híbridas e recuperação.
+- Manifest e service worker atualizados para cache v0.3.0.
+- Regra fixa mantida: dentro do app aparece somente a versão atual; histórico completo apenas neste CHANGELOG.
+
 MetaTreino - CHANGELOG
 Regra fixa de atualizações a partir da v0.0.9:
 - Dentro do app aparece somente a versão atual, em Perfil > Versão atual.

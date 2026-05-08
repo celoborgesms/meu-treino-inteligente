@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MetaTreino Hybrid</title>
-  <meta name="app-version" content="0.2.0">
+  <meta name="app-version" content="0.3.0">
   <meta name="theme-color" content="#111827">
-  <link rel="manifest" href="manifest.json?v=0.2.0">
-<link rel="icon" type="image/png" href="icon-512.png.png?v=0.2.0">
-<link rel="apple-touch-icon" href="icon-512.png.png?v=0.2.0">
+  <link rel="manifest" href="manifest.json?v=0.3.0">
+<link rel="icon" type="image/png" href="icon-512.png.png?v=0.3.0">
+<link rel="apple-touch-icon" href="icon-512.png.png?v=0.3.0">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -1175,7 +1175,7 @@
     }
 
 
-    /* MetaTreino Hybrid 0.2.0 - visual premium atlético */
+    /* MetaTreino Hybrid 0.3.0 - visual premium híbrido real */
     :root {
       --bg: #050816;
       --bg-2: #0b1020;
@@ -1402,6 +1402,30 @@
     }
 
 
+  
+
+    /* MetaTreino Hybrid v0.3.0 - estrutura híbrida real */
+    .session-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-size:11px; font-weight:900; letter-spacing:.04em; text-transform:uppercase; border:1px solid rgba(255,255,255,.14); color:#f8fafc; margin: 4px 6px 8px 0; }
+    .session-badge.forca { background: linear-gradient(135deg, rgba(59,130,246,.92), rgba(37,99,235,.65)); }
+    .session-badge.corrida { background: linear-gradient(135deg, rgba(34,197,94,.92), rgba(16,185,129,.60)); }
+    .session-badge.recuperacao { background: linear-gradient(135deg, rgba(168,85,247,.92), rgba(99,102,241,.62)); }
+    .session-badge.descanso { background: linear-gradient(135deg, rgba(100,116,139,.92), rgba(51,65,85,.70)); }
+    .session-card-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-top:14px; }
+    .session-card { border:1px solid rgba(148,163,184,.22); border-radius:18px; padding:14px; background: linear-gradient(180deg, rgba(15,23,42,.92), rgba(15,23,42,.62)); box-shadow: 0 12px 30px rgba(0,0,0,.22); }
+    .session-card strong { color:#fff; }
+    .session-card .small { display:block; margin-top:6px; }
+    .impacto-pill { display:inline-flex; align-items:center; padding:5px 9px; margin:7px 6px 0 0; border-radius:999px; background:rgba(219,234,254,.12); border:1px solid rgba(191,219,254,.22); color:#dbeafe; font-size:12px; font-weight:800; }
+    .impacto-pill.baixo { background:rgba(34,197,94,.16); color:#dcfce7; border-color:rgba(34,197,94,.30); }
+    .impacto-pill.moderado { background:rgba(245,158,11,.16); color:#fef3c7; border-color:rgba(245,158,11,.34); }
+    .impacto-pill.alto { background:rgba(239,68,68,.16); color:#fee2e2; border-color:rgba(239,68,68,.35); }
+    .corrida-dashboard { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin: 12px 0; }
+    .metric-card { padding:13px; border-radius:17px; background:rgba(15,23,42,.80); border:1px solid rgba(148,163,184,.22); }
+    .metric-card strong { display:block; color:#fff; font-size:21px; line-height:1.1; }
+    .metric-card span { color:#cbd5e1; font-size:12px; }
+    .tipo-registro-info { padding:12px; border-radius:16px; margin: 12px 0; background:rgba(59,130,246,.12); border:1px solid rgba(59,130,246,.25); color:#dbeafe; }
+    .plano-acoes-principais { display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap:10px; margin-top:12px; }
+    .recomendacao-checkin { border-left: 4px solid #22c55e; background: rgba(34,197,94,.12); }
+
   </style>
 </head>
 <body>
@@ -1409,7 +1433,7 @@
   <div class="container">
     <div class="app-hero">
       <div>
-        <span class="app-badge">MetaTreino Hybrid • Beta 0.2.0</span>
+        <span class="app-badge">MetaTreino Hybrid • Beta 0.3.0</span>
         <h1><span style="color:#bef264;">Meta</span>Treino <span class="hero-hybrid-word">Hybrid</span></h1>
         <p>Musculação e corrida no mesmo plano: força, shape, fôlego e recuperação sem bagunçar sua semana.</p>
       </div>
@@ -1575,7 +1599,7 @@
         <div id="resultadoPerfil" class="alerta hidden"></div>
         <div id="mensagemPeso" class="alerta hidden"></div>
 
-        <button id="botaoIrTreino" type="button" class="hidden botao-principal" onclick="irParaHoje()">➡️ Ir para Hoje</button>
+        <button id="botaoIrTreino" type="button" class="hidden botao-principal" onclick="irParaPlano()">➡️ Ver plano sugerido</button>
         <button type="button" class="botao-secundario" onclick="apagarPerfilSalvo()">Apagar perfil salvo</button>
       </div>
 
@@ -1612,15 +1636,16 @@
         <h2>✨ Versão atual</h2>
         <p class="small"><strong>Regra fixa de atualizações:</strong> dentro do app será mostrada somente a versão atual. O histórico completo fica no arquivo CHANGELOG que acompanha o pacote da versão.</p>
         <div class="plano-topo">
-          <strong>MetaTreino Hybrid 0.2.0 Beta</strong><br>
+          <strong>MetaTreino Hybrid 0.3.0 Beta</strong><br>
           <span class="tag beta">Hybrid</span>
           <p><strong>Atualizada em:</strong> 08/05/2026</p>
           <ul class="versao-atual-lista">
-            <li>App reposicionado para treino híbrido: musculação + corrida/cardio no mesmo plano semanal.</li>
-            <li>Perfil ganhou nível de corrida, objetivo de corrida, dias de corrida, distância confortável, pace e prioridade híbrida.</li>
-            <li>Plano semanal agora separa força, corrida leve, intervalado, longão e recuperação, evitando conflitos com treino pesado de pernas.</li>
-            <li>Tela Hoje, Plano, Treino, Corrida e Progresso ganharam textos e métricas com foco híbrido.</li>
-            <li>Aparência redesenhada com visual mais premium, escuro, atlético e moderno.</li>
+            <li>Estrutura híbrida real: sessões separadas em Força, Corrida, Recuperação e Descanso.</li>
+            <li>Recuperação deixou de aparecer como treino de força com carga/repetições; caminhada e mobilidade agora têm registro próprio.</li>
+            <li>Treinos ganharam nomes simples, sublegendas e impacto na corrida: Superiores, Pernas — Força, Pernas — Moderado, Corpo Todo, Core e Estabilidade e Força Funcional.</li>
+            <li>Aba Corrida virou central de performance híbrida, com status semanal, compatibilidade com força, zonas, sensação das pernas e sugestão por objetivo.</li>
+            <li>Check-in agora recomenda ajustes e só muda o treino do dia quando o aluno confirma. Reorganizar semana e Gerar novo plano ficaram separados.</li>
+            <li>Conquistas foram refeitas para força, corrida, híbridas e recuperação.</li>
           </ul>
         </div>
         <button type="button" class="botao-principal" onclick="verificarAtualizacaoManual()">Verificar se há nova atualização</button>
@@ -1724,12 +1749,13 @@
 
     <section id="paginaCheckin" class="hidden">
       <div class="card">
+        <span class="session-badge recuperacao">Check-in</span>
         <h2>✅ Check-in diário</h2>
-        <p class="small">Responda como você está hoje. O app cruza energia, dores e última corrida/cardio para adaptar a sessão do dia.</p>
+        <p class="small">O check-in agora gera uma recomendação. Ele não reorganiza sua semana sozinho; você escolhe se mantém o plano, ajusta só o treino de hoje ou muda para recuperação.</p>
       </div>
 
       <div class="card">
-        <h2>✅ Como você está hoje?</h2>
+        <h2>Como você está hoje?</h2>
 
         <label for="energia">Energia do dia</label>
         <select id="energia">
@@ -1738,9 +1764,9 @@
           <option value="mal">Estou mal</option>
         </select>
 
-        <label>Tem alguma dor?</label>
+        <label>Tem alguma dor ou fadiga?</label>
         <input id="dor" type="hidden" value="nenhuma">
-        <label class="check-exercicio"><input type="radio" name="dorCheckin" value="nenhuma" checked onchange="atualizarDorCheckin(this.value)">Nenhuma dor</label>
+        <label class="check-exercicio"><input type="radio" name="dorCheckin" value="nenhuma" checked onchange="atualizarDorCheckin(this.value)">Nenhuma dor relevante</label>
         <label class="check-exercicio"><input type="radio" name="dorCheckin" value="pernas" onchange="atualizarDorCheckin(this.value)">Pernas cansadas/doloridas</label>
         <label class="check-exercicio"><input type="radio" name="dorCheckin" value="bracos" onchange="atualizarDorCheckin(this.value)">Braços cansados/doloridos</label>
         <label class="check-exercicio"><input type="radio" name="dorCheckin" value="coluna" onchange="atualizarDorCheckin(this.value)">Coluna/costas</label>
@@ -1750,44 +1776,51 @@
 
         <label for="tempo">Tempo disponível</label>
         <select id="tempo">
-          <option value="normal" selected>Treino normal — cerca de 1 hora</option>
-          <option value="rapido">Treino rápido — até 30 minutos</option>
-          <option value="longo">Treino longo — acima de 1 hora</option>
+          <option value="normal" selected>Normal — cerca de 1 hora</option>
+          <option value="rapido">Rápido — até 30 minutos</option>
+          <option value="longo">Longo — acima de 1 hora</option>
         </select>
 
-        <label for="cardioNoTreino">Deseja incluir corrida/cardio junto da força hoje?</label>
-        <select id="cardioNoTreino">
-          <option value="nao">Não incluir corrida/cardio</option>
-          <option value="corrida">Corrida leve na esteira/rua</option>
-          <option value="esteira">Esteira leve</option>
-          <option value="bicicleta">Bicicleta</option>
-        </select>
-        <p class="small">Se incluir corrida/cardio junto da força, o app reduz o volume de exercícios para preservar recuperação.</p>
-
-        <label for="divisaoTreino">Divisão do treino</label>
+        <label for="divisaoTreino">Sessão de força, se for treinar musculação</label>
         <select id="divisaoTreino">
-          <option value="automatico" selected>Treino inteligente</option>
-          <option value="superior">Treino A - Superiores</option>
-          <option value="inferior">Treino B - Inferiores</option>
-          <option value="core_abdomen">Treino C - Abdômen / core</option>
-          <option value="full_body">Treino Full Body</option>
-          <option value="descanso">Treino leve / recuperação</option>
+          <option value="automatico" selected>Automático pelo plano</option>
+          <option value="superior">Superiores — preserva as pernas para correr</option>
+          <option value="inferior_forca">Pernas — Força: pesado, longe de tiros/longão</option>
+          <option value="inferior_moderado">Pernas — Moderado: menos impacto na corrida</option>
+          <option value="full_body">Corpo Todo — equilíbrio geral</option>
+          <option value="core_estabilidade">Core e Estabilidade — postura, quadril e controle</option>
+          <option value="funcional">Força Funcional — atlético e dinâmico</option>
+          <option value="recuperacao">Recuperação ativa — sem peso/repetições</option>
         </select>
 
-        <button type="button" class="botao-principal" onclick="gerarTreino()">💪 Gerar / atualizar treino do dia</button>
-        <button type="button" class="botao-secundario" onclick="irParaTreino()">Voltar para o treino</button>
+        <div class="tipo-registro-info">
+          <strong>Importante:</strong> recuperação, caminhada e mobilidade não entram como treino de força. Se a recomendação for recuperação, o app abre registro de duração, distância opcional, esforço e sensação das pernas.
+        </div>
+
+        <button type="button" class="botao-principal" onclick="gerarRecomendacaoCheckin()">✅ Gerar recomendação do dia</button>
+        <button type="button" class="botao-secundario" onclick="manterPlanoOriginalCheckin()">Manter plano original</button>
+        <button type="button" class="botao-secundario" onclick="irParaTreino()">Voltar para Força</button>
       </div>
 
+      <div id="recomendacaoCheckinBox" class="card recomendacao-checkin hidden"></div>
     </section>
 
     <section id="paginaCardio" class="hidden">
       <div id="avisoCardioSemCheckin" class="alerta alerta-aviso hidden">
-        ⚠️ Para uma sugestão mais inteligente, responda o check-in antes. Mesmo assim, você pode usar o Cardio normalmente.
+        ⚠️ Para uma sugestão mais inteligente, responda o check-in antes. Mesmo assim, você pode registrar sua corrida normalmente.
       </div>
 
       <div class="card">
-        <h2>🏃 Corrida inteligente</h2>
-        <p class="small">Monte corrida leve, ritmo, intervalado ou longão conforme seu nível. O app usa esses dados para proteger pernas e recuperação na musculação.</p>
+        <span class="session-badge corrida">Corrida</span>
+        <h2>🏃 Central de corrida híbrida</h2>
+        <p class="small">Aqui a corrida é tratada como sessão própria: distância, tempo, zona, esforço, sensação das pernas e compatibilidade com treino de força.</p>
+        <div id="painelCorridaSemana" class="corrida-dashboard"></div>
+        <div id="alertaCompatibilidadeCorrida" class="mensagem-inteligente">Carregando compatibilidade com a musculação...</div>
+      </div>
+
+      <div class="card">
+        <h2>🎯 Sugestão de corrida/cardio</h2>
+        <p class="small">Escolha o tipo de sessão. O app explica o objetivo e evita tratar corrida/caminhada como treino de peso.</p>
 
         <label for="tipoAtividadeCardio">Tipo de atividade</label>
         <select id="tipoAtividadeCardio" onchange="atualizarTextoTipoCardio()">
@@ -1796,16 +1829,15 @@
           <option value="bicicleta">Bicicleta</option>
         </select>
 
-
-        <label for="nivelCardio">Seu nível no cardio</label>
+        <label for="nivelCardio">Seu nível na corrida/cardio</label>
         <select id="nivelCardio">
           <option value="iniciante">Estou começando agora</option>
           <option value="voltando">Estou voltando a correr</option>
           <option value="regular">Já corro regularmente</option>
-          <option value="avancado">Tenho experiência / já participei de provas</option>
+          <option value="avancado">Tenho experiência / provas</option>
         </select>
 
-        <label for="objetivoCardio">Objetivo no cardio</label>
+        <label for="objetivoCardio">Objetivo</label>
         <select id="objetivoCardio">
           <option value="comecar">Começar com segurança</option>
           <option value="3k">Completar 3 km</option>
@@ -1817,22 +1849,24 @@
 
         <label for="condicaoCardio">Condição atual</label>
         <select id="condicaoCardio">
-          <option value="caminho">Consigo caminhar bem, mas ainda corro pouco</option>
-          <option value="intercalo">Consigo intercalar caminhada e trote/corrida</option>
-          <option value="corro_pouco">Consigo correr poucos km</option>
-          <option value="corro_bem">Já corro alguns km com segurança</option>
+          <option value="caminho">Consigo caminhar bem, mas corro pouco</option>
+          <option value="intercalo">Intercalo caminhada e trote/corrida</option>
+          <option value="corro_pouco">Corro poucos km</option>
+          <option value="corro_bem">Corro alguns km com segurança</option>
         </select>
 
-        <label for="tipoSessaoCardio">Tipo de treino de cardio hoje</label>
+        <label for="tipoSessaoCardio">Tipo de sessão</label>
         <select id="tipoSessaoCardio">
           <option value="automatico" selected>Automático pelo objetivo</option>
-          <option value="leve">Base leve / recuperação</option>
-          <option value="ritmo">Ritmo constante</option>
-          <option value="intervalado">Intervalado controlado</option>
-          <option value="longo">Longo confortável</option>
-          <option value="prova">Simulação de prova / desafio</option>
+          <option value="corrida_leve">Corrida Leve — zona 1–2</option>
+          <option value="corrida_regenerativa">Corrida Regenerativa — soltar as pernas</option>
+          <option value="intervalado">Tiros / Intervalado — velocidade e fôlego</option>
+          <option value="ritmo">Corrida de Ritmo — sustentar pace</option>
+          <option value="longo">Longão — resistência</option>
+          <option value="progressiva">Corrida Progressiva — controle de ritmo</option>
+          <option value="teste">Teste de Corrida — calibrar nível</option>
+          <option value="caminhada_leve">Caminhada Leve — recuperação ativa</option>
         </select>
-        <p class="small">Use “prova” apenas como simulação controlada. O app evita sugerir teste pesado se a data estiver muito próxima ou se você estiver começando.</p>
 
         <label class="check-exercicio">
           <input id="temDesafioCardio" type="checkbox" onchange="alternarDesafioCardio()">
@@ -1851,13 +1885,13 @@
         <label for="dataDesafioCardio">Data do desafio</label>
         <input id="dataDesafioCardio" type="date" disabled>
 
-        <button type="button" onclick="gerarTreinoCardio()">Gerar sugestão de cardio</button>
+        <button type="button" onclick="gerarTreinoCardio()">Gerar sugestão da sessão</button>
         <div id="sugestaoCardio" class="alerta hidden"></div>
       </div>
 
       <div class="card">
-        <h2>📈 Registrar evolução da corrida/cardio</h2>
-        <p class="small">Depois da corrida/cardio, registre como foi. Isso ajuda o app a ajustar os próximos treinos de força e corrida.</p>
+        <h2>📈 Registrar corrida/cardio</h2>
+        <p class="small">Registro específico de corrida/cardio. Nada de carga, séries ou repetições aqui.</p>
 
         <label for="distanciaCardio">Distância feita (km)</label>
         <input id="distanciaCardio" type="number" min="0" step="0.1" placeholder="Ex: 5">
@@ -1865,14 +1899,42 @@
         <label for="tempoCardio">Tempo total (minutos)</label>
         <input id="tempoCardio" type="number" min="0" step="1" placeholder="Ex: 35">
 
-        <label for="intensidadeCardio">Intensidade</label>
+        <label for="zonaCardio">Zona / intensidade percebida</label>
+        <select id="zonaCardio">
+          <option value="zona1">Zona 1 — muito leve</option>
+          <option value="zona2" selected>Zona 2 — leve/confortável</option>
+          <option value="zona3">Zona 3 — moderada</option>
+          <option value="zona4">Zona 4 — forte</option>
+          <option value="zona5">Zona 5 — máximo/tiros</option>
+        </select>
+
+        <label for="rpeCardio">Esforço percebido, de 1 a 10</label>
+        <input id="rpeCardio" type="number" min="1" max="10" step="1" placeholder="Ex: 4">
+
+        <label for="intensidadeCardio">Intensidade geral</label>
         <select id="intensidadeCardio">
           <option value="leve">Leve</option>
           <option value="moderada">Moderada</option>
           <option value="forte">Forte</option>
         </select>
 
-        <label for="sensacaoCardio">Como você terminou?</label>
+        <label for="sensacaoPernasCardio">Como estavam as pernas?</label>
+        <select id="sensacaoPernasCardio">
+          <option value="soltas">Soltas / boas</option>
+          <option value="normais" selected>Normais</option>
+          <option value="pesadas">Pesadas</option>
+          <option value="doloridas">Doloridas</option>
+        </select>
+
+        <label for="dorArticularCardio">Sentiu dor articular?</label>
+        <select id="dorArticularCardio">
+          <option value="nao" selected>Não</option>
+          <option value="leve">Sim, leve</option>
+          <option value="moderada">Sim, moderada</option>
+          <option value="forte">Sim, forte</option>
+        </select>
+
+        <label for="sensacaoCardio">Como terminou?</label>
         <select id="sensacaoCardio">
           <option value="bem">Bem</option>
           <option value="cansado">Cansado</option>
@@ -1880,23 +1942,85 @@
         </select>
 
         <label for="observacaoCardio">Observação</label>
-        <textarea id="observacaoCardio" placeholder="Ex: caminhada forte, corrida leve, subi ladeira, senti panturrilha..."></textarea>
+        <textarea id="observacaoCardio" placeholder="Ex: corrida leve, panturrilha presa, subi ladeira, pace confortável..."></textarea>
 
-        <button type="button" onclick="salvarCardio()">Salvar evolução do cardio</button>
+        <button type="button" onclick="salvarCardio()">Salvar corrida/cardio</button>
         <div id="mensagemCardio" class="alerta hidden"></div>
         <div id="compartilharUltimoCardioBox" class="compartilhar-inline hidden">
-          <strong>✅ Cardio salvo</strong><br>
-          <span class="small">Gere um card do cardio para compartilhar seu registro do dia com a marca do MetaTreino.</span>
-          <button type="button" class="botao-secundario" onclick="compartilharUltimoCardioSalvo()">Compartilhar cardio salvo</button>
+          <strong>✅ Corrida/cardio salvo</strong><br>
+          <span class="small">Gere um card da atividade para compartilhar seu registro do dia com a marca do MetaTreino.</span>
+          <button type="button" class="botao-secundario" onclick="compartilharUltimoCardioSalvo()">Compartilhar registro salvo</button>
         </div>
       </div>
 
       <div class="card">
-        <h2>🧠 Últimas corridas/cardios</h2>
-        <p class="small">Esses registros ajudam o app a evitar perna pesada perto de tiro, longão ou treino inferior.</p>
+        <h2>📚 Tipos de corrida/cardio</h2>
+        <div id="bibliotecaCorridaCards" class="session-card-grid"></div>
+      </div>
+
+      <div class="card">
+        <h2>🧠 Últimos registros</h2>
+        <p class="small">Esses registros ajudam o app a evitar perna pesada perto de tiros, longão ou treino inferior.</p>
         <div id="listaCardios"></div>
       </div>
 
+    </section>
+
+    <section id="paginaRecuperacao" class="hidden">
+      <div class="card">
+        <span class="session-badge recuperacao">Recuperação</span>
+        <h2>🧘 Recuperação ativa</h2>
+        <p class="small">Caminhada, mobilidade e alongamento são registrados por duração, distância opcional, esforço e sensação. Não entram como treino de força.</p>
+        <div id="sugestaoRecuperacaoHoje" class="mensagem-inteligente">Carregando sugestão de recuperação...</div>
+      </div>
+
+      <div class="card">
+        <h2>Registrar recuperação</h2>
+        <label for="tipoRecuperacao">Tipo de recuperação</label>
+        <select id="tipoRecuperacao" onchange="atualizarTextoRecuperacao()">
+          <option value="caminhada_leve">Caminhada Leve</option>
+          <option value="mobilidade">Mobilidade</option>
+          <option value="alongamento">Alongamento</option>
+          <option value="recuperacao_pernas">Recuperação de Pernas</option>
+          <option value="soltura_muscular">Soltura Muscular</option>
+          <option value="relaxamento">Relaxamento</option>
+          <option value="descanso_total">Descanso Total</option>
+        </select>
+        <div id="descricaoRecuperacao" class="tipo-registro-info"></div>
+
+        <label for="tempoRecuperacao">Duração (minutos)</label>
+        <input id="tempoRecuperacao" type="number" min="0" step="1" placeholder="Ex: 20">
+
+        <label for="distanciaRecuperacao">Distância, se foi caminhada (km) — opcional</label>
+        <input id="distanciaRecuperacao" type="number" min="0" step="0.1" placeholder="Ex: 2">
+
+        <label for="esforcoRecuperacao">Esforço percebido</label>
+        <select id="esforcoRecuperacao">
+          <option value="muito_leve">Muito leve</option>
+          <option value="leve" selected>Leve</option>
+          <option value="moderado">Moderado</option>
+        </select>
+
+        <label for="sensacaoPernasRecuperacao">Sensação das pernas</label>
+        <select id="sensacaoPernasRecuperacao">
+          <option value="melhorou">Melhorou</option>
+          <option value="igual" selected>Ficou igual</option>
+          <option value="pesada">Continuou pesada</option>
+          <option value="dor">Teve dor</option>
+        </select>
+
+        <label for="observacaoRecuperacao">Observação</label>
+        <textarea id="observacaoRecuperacao" placeholder="Ex: caminhei leve, mobilidade de quadril, panturrilha presa..."></textarea>
+
+        <button type="button" onclick="salvarRecuperacao()">Salvar recuperação</button>
+        <button type="button" class="botao-secundario" onclick="irParaHoje()">Voltar para Hoje</button>
+        <div id="mensagemRecuperacao" class="alerta hidden"></div>
+      </div>
+
+      <div class="card">
+        <h2>📚 Opções de recuperação</h2>
+        <div id="bibliotecaRecuperacaoCards" class="session-card-grid"></div>
+      </div>
     </section>
 
     <section id="paginaProgresso" class="hidden">
@@ -1984,6 +2108,7 @@
       <button type="button" onclick="irParaPlano()">🗓️ Plano</button>
       <button type="button" onclick="irParaTreino()">💪 Força</button>
       <button type="button" onclick="irParaCardio()">🏃 Corrida</button>
+      <button type="button" onclick="irParaRecuperacao()">🧘 Recuperação</button>
       <button type="button" onclick="irParaProgresso()">📊 Evolução</button>
       <button type="button" onclick="voltarParaPerfil()">👤 Perfil</button>
     </nav>
@@ -2115,7 +2240,7 @@
           treino: treinoAtual,
           letra: treinoAtual.letra || "",
           categoria: treinoAtual.categoria || treinoAtual.letra || "",
-          versaoGeracao: "0.2.0-hybrid",
+          versaoGeracao: "0.3.0-hybrid-real",
           concluidos: exerciciosConcluidos || [],
           feedback: feedbackTreinoFinalAtual || "",
           salvoEm: Date.now()
@@ -2539,7 +2664,7 @@
     function exportarMeusDados() {
       const dadosBase = {
         app: "MetaTreino",
-        versao: "0.2.0-hybrid",
+        versao: "0.3.0-hybrid-real",
         exportadoEm: new Date().toISOString(),
         usuario: usuarioAtual ? { uid: usuarioAtual.uid, email: usuarioAtual.email || "", nome: usuarioAtual.displayName || "" } : null,
         dadosLocais: coletarDadosLocaisPrivacidade(),
@@ -3779,12 +3904,12 @@
       const chave = normalizarCategoriaTreino(letra);
       const nomes = {
         automatico: "Treino inteligente",
-        superior: "Treino A - Superiores",
+        superior: "Superiores",
         inferior: "Treino B - Inferiores",
         core_abdomen: "Treino C - Abdômen / core",
-        full_body: "Treino Full Body",
+        full_body: "Corpo Todo",
         cardio: "Cardio do dia",
-        descanso: "Treino leve / recuperação"
+        descanso: "Recuperação ativa"
       };
       return nomes[chave] || nomes[letra] || "Treino inteligente";
     }
@@ -4008,7 +4133,7 @@
 
     function chavePlanoSemanalAtual() {
       const email = usuarioAtual && usuarioAtual.email ? usuarioAtual.email.toLowerCase() : "anonimo";
-      return "metatreino-plano-semanal-0.2.0-hybrid-" + email + "-" + inicioSemanaAtualISO();
+      return "metatreino-plano-semanal-0.3.0-hybrid-real-" + email + "-" + inicioSemanaAtualISO();
     }
 
     function lerPlanoSemanalLocal() {
@@ -4147,7 +4272,7 @@
       });
 
       const plano = {
-        versao: "0.2.0-hybrid",
+        versao: "0.3.0-hybrid-real",
         inicioSemana: inicioSemanaAtualISO(),
         criadoEm: Date.now(),
         metaSemanal: dist.total,
@@ -6146,7 +6271,7 @@
         criarExercicioCategoria("Mobilidade articular", "Mobilidade", "Peso corporal", todosLocais, "nenhuma", "iniciante", ["Faça rotações leves de ombro.", "Inclua mobilidade de quadril.", "Movimente tornozelos com calma.", "Não force amplitude dolorida."], false),
         criarExercicioCategoria("Alongamento leve", "Alongamento", "Livre", todosLocais, "nenhuma", "iniciante", ["Segure posições confortáveis.", "Respire fundo e mantenha o corpo relaxado.", "Evite forçar dor.", "Use como complemento do treino leve."], false),
         criarExercicioCategoria("Liberação miofascial", "Liberação miofascial", "Rolo ou bola", basica, "nenhuma", "iniciante", ["Use rolo ou bola de massagem.", "Passe devagar nas regiões tensionadas.", "Evite pressão excessiva.", "Use como recuperação, não como exercício de carga."], false),
-        criarExercicioCategoria("Cardio leve zona 1-2", "Cardio leve", "Caminhada, bike ou elíptico", todosLocais, "nenhuma", "iniciante", ["Mantenha intensidade leve.", "Consiga conversar durante a atividade.", "Não transforme em treino forte.", "Finalize se sentir cansaço excessivo."], false),
+        criarExercicioCategoria("Caminhada leve / zona 1-2", "Cardio leve", "Caminhada, bike ou elíptico", todosLocais, "nenhuma", "iniciante", ["Mantenha intensidade leve.", "Consiga conversar durante a atividade.", "Não transforme em treino forte.", "Finalize se sentir cansaço excessivo."], false),
         criarExercicioCategoria("Yoga / relaxamento", "Yoga", "Livre", todosLocais, "nenhuma", "iniciante", ["Faça movimentos lentos.", "Priorize respiração e relaxamento.", "Evite posições desconfortáveis.", "Use como complemento regenerativo."], false),
         criarExercicioCategoria("Treino técnico leve", "Recuperação ativa", "Carga baixa", basica, "nenhuma", "iniciante", ["Escolha movimentos simples.", "Use carga bem baixa.", "Foque em postura perfeita.", "Não busque falha muscular."], true)
       ];
@@ -6995,10 +7120,10 @@
         "Treinos salvos: " + treinos.length + " | Cardios salvos: " + cardios.length + "</div>" +
         montarLinhaGrafico("Frequência nos últimos 90 dias", frequencia, 90, frequencia + " dia(s)") +
         "<br><strong>💪 Partes treinadas</strong>" +
-        montarLinhaGrafico("Treino A - Superiores", mapaTreinos.superior, maxTreino, mapaTreinos.superior + " registro(s)") +
+        montarLinhaGrafico("Superiores", mapaTreinos.superior, maxTreino, mapaTreinos.superior + " registro(s)") +
         montarLinhaGrafico("Treino B - Inferiores", mapaTreinos.inferior, maxTreino, mapaTreinos.inferior + " registro(s)") +
         montarLinhaGrafico("Treino C - Abdômen / core", mapaTreinos.core_abdomen, maxTreino, mapaTreinos.core_abdomen + " registro(s)") +
-        montarLinhaGrafico("Treino leve / recuperação", mapaTreinos.descanso, maxTreino, mapaTreinos.descanso + " registro(s)") +
+        montarLinhaGrafico("Recuperação ativa", mapaTreinos.descanso, maxTreino, mapaTreinos.descanso + " registro(s)") +
         "<br><strong>🏃 Cardio</strong>" +
         montarLinhaGrafico("Corrida", mapaCardio.Corrida, maxCardio, mapaCardio.Corrida + " registro(s)") +
         montarLinhaGrafico("Caminhada", mapaCardio.Caminhada, maxCardio, mapaCardio.Caminhada + " registro(s)") +
@@ -7329,8 +7454,823 @@
   </script>
 
 
+
 <script>
-  const METATREINO_APP_VERSION = "0.2.0";
+(function() {
+  const MT03 = {
+    versaoPlano: "0.3.0-hybrid-real",
+    forca: ["superior", "inferior_forca", "inferior_moderado", "full_body", "core_estabilidade", "funcional"],
+    corrida: ["corrida_leve", "corrida_regenerativa", "intervalado", "ritmo", "longo", "progressiva", "teste", "caminhada_leve"],
+    recuperacao: ["caminhada_leve", "mobilidade", "alongamento", "recuperacao_pernas", "soltura_muscular", "relaxamento", "descanso_total"]
+  };
+  window.MT03 = MT03;
+
+  const oldCalcularPerfil = window.calcularPerfil;
+  const oldGerarTreino = window.gerarTreino;
+  const oldIrParaCardio = window.irParaCardio;
+  const oldObterBaseTreinoPorCategoria = window.obterBaseTreinoPorCategoria;
+
+  function safe(texto) { return window.limparTextoSeguro ? limparTextoSeguro(texto) : String(texto || ""); }
+  function byId(id) { return document.getElementById(id); }
+  function categoriaNormalizada(categoria) { return window.normalizarCategoriaTreino ? normalizarCategoriaTreino(categoria) : String(categoria || ""); }
+  function isForca(categoria) { return MT03.forca.indexOf(categoriaNormalizada(categoria)) !== -1; }
+  function isCorrida(categoria) { const cat = categoriaNormalizada(categoria); return cat === "cardio" || cat === "corrida"; }
+  function isRecuperacao(categoria) { const cat = categoriaNormalizada(categoria); return cat === "recuperacao" || cat === "descanso" || cat === "descanso_total"; }
+  function hojeKey() { return typeof hojeISO === "function" ? hojeISO() : new Date().toISOString().slice(0,10); }
+
+  window.ocultarPaginasDoApp = function() {
+    ["paginaPerfil", "paginaHoje", "paginaPlano", "paginaTreino", "paginaCheckin", "paginaCardio", "paginaRecuperacao", "paginaProgresso", "paginaPainelTreinador"].forEach(function(id) {
+      const el = byId(id); if (el) el.classList.add("hidden");
+    });
+  };
+
+  window.normalizarCategoriaTreino = function(categoria) {
+    const chaveOriginal = String(categoria || "").trim();
+    const chave = chaveOriginal.toLowerCase();
+    const aliases = {
+      a: "superior", upper: "superior", upper_body: "superior", superior: "superior", superiores: "superior",
+      b: "inferior_forca", lower: "inferior_forca", lower_body: "inferior_forca", inferior: "inferior_forca", pernas: "inferior_forca", pernas_forca: "inferior_forca", inferior_forca: "inferior_forca",
+      inferior_moderado: "inferior_moderado", pernas_moderado: "inferior_moderado",
+      c: "core_estabilidade", core: "core_estabilidade", core_abdomen: "core_estabilidade", core_estabilidade: "core_estabilidade",
+      fullbody: "full_body", full_body: "full_body", corpo_todo: "full_body", completo: "full_body",
+      funcional: "funcional", forca_funcional: "funcional",
+      descanso: "descanso", descanso_total: "descanso", recuperacao: "recuperacao", recuperação: "recuperacao",
+      cardio: "cardio", corrida: "cardio", caminhada: "cardio", bicicleta: "cardio", automatico: "automatico"
+    };
+    return aliases[chave] || chaveOriginal;
+  };
+
+  window.nomeAmigavelTreino = function(letra) {
+    const chave = normalizarCategoriaTreino(letra);
+    const nomes = {
+      automatico: "Treino inteligente",
+      superior: "Superiores",
+      inferior_forca: "Pernas — Força",
+      inferior_moderado: "Pernas — Moderado",
+      core_estabilidade: "Core e Estabilidade",
+      full_body: "Corpo Todo",
+      funcional: "Força Funcional",
+      cardio: "Corrida/Cardio",
+      recuperacao: "Recuperação ativa",
+      descanso: "Descanso Total"
+    };
+    return nomes[chave] || nomes[letra] || "Treino inteligente";
+  };
+
+  window.descricaoForcaCategoria = function(categoria) {
+    const mapa = {
+      superior: "Peito, costas, ombros e braços. Ideal quando você precisa preservar as pernas para correr.",
+      inferior_forca: "Treino pesado de pernas. Melhor deixar longe de tiros, ritmo forte ou longão.",
+      inferior_moderado: "Fortalece pernas sem gerar tanta fadiga para a corrida.",
+      full_body: "Treino completo para quem tem poucos dias ou quer equilíbrio geral.",
+      core_estabilidade: "Abdômen, lombar, quadril e controle corporal para correr melhor.",
+      funcional: "Movimentos atléticos com foco em força, mobilidade e condicionamento."
+    };
+    return mapa[normalizarCategoriaTreino(categoria)] || "Sessão de força ajustada ao seu plano híbrido.";
+  };
+
+  window.impactoCorridaCategoria = function(categoria) {
+    const cat = normalizarCategoriaTreino(categoria);
+    if (cat === "superior" || cat === "core_estabilidade") return { nivel: "baixo", texto: "Impacto na corrida: baixo" };
+    if (cat === "inferior_moderado" || cat === "full_body" || cat === "funcional") return { nivel: "moderado", texto: "Impacto na corrida: moderado" };
+    if (cat === "inferior_forca") return { nivel: "alto", texto: "Impacto na corrida: alto" };
+    return { nivel: "baixo", texto: "Impacto na corrida: baixo" };
+  };
+
+  window.textoSubtipoCorrida = function(subtipo) {
+    const mapa = {
+      corrida_leve: "Corrida Leve",
+      corrida_regenerativa: "Corrida Regenerativa",
+      intervalado: "Tiros / Intervalado",
+      corrida_intervalado: "Tiros / Intervalado",
+      ritmo: "Corrida de Ritmo",
+      corrida_ritmo: "Corrida de Ritmo",
+      longo: "Longão",
+      corrida_longo: "Longão",
+      progressiva: "Corrida Progressiva",
+      corrida_progressiva: "Corrida Progressiva",
+      teste: "Teste de Corrida",
+      caminhada_leve: "Caminhada Leve"
+    };
+    return mapa[subtipo] || "Corrida Leve";
+  };
+
+  window.descricaoCorridaSubtipo = function(subtipo) {
+    const mapa = {
+      corrida_leve: "Zona 1–2, confortável, dá para conversar. Constrói base aeróbica sem atrapalhar a musculação.",
+      corrida_regenerativa: "Muito leve, para soltar as pernas depois de treino pesado ou semana cansativa.",
+      intervalado: "Alterna esforço forte com recuperação. Evite colar em Pernas — Força ou Longão.",
+      corrida_intervalado: "Alterna esforço forte com recuperação. Evite colar em Pernas — Força ou Longão.",
+      ritmo: "Ritmo sustentado moderado/forte para melhorar pace sem virar teste máximo.",
+      corrida_ritmo: "Ritmo sustentado moderado/forte para melhorar pace sem virar teste máximo.",
+      longo: "Corrida mais longa da semana, em ritmo confortável, para desenvolver resistência.",
+      corrida_longo: "Corrida mais longa da semana, em ritmo confortável, para desenvolver resistência.",
+      progressiva: "Começa leve e termina um pouco mais forte. Ensina controle de ritmo.",
+      corrida_progressiva: "Começa leve e termina um pouco mais forte. Ensina controle de ritmo.",
+      teste: "Sessão curta para calibrar nível. Use pouco, não toda semana.",
+      caminhada_leve: "Recuperação ativa ou início seguro para quem ainda não corre."
+    };
+    return mapa[subtipo] || mapa.corrida_leve;
+  };
+
+  window.descricaoRecuperacao = function(tipo) {
+    const mapa = {
+      caminhada_leve: "Caminhada leve em zona 1–2. Registre tempo, distância opcional, esforço e sensação das pernas.",
+      mobilidade: "Mobilidade de quadril, tornozelo, posterior e lombar. Registre duração e sensação final.",
+      alongamento: "Alongamento leve e sem dor. Registre duração, região trabalhada e sensação final.",
+      recuperacao_pernas: "Foco em pernas cansadas: mobilidade, soltura e caminhada curta, sem transformar em treino forte.",
+      soltura_muscular: "Liberação/soltura muscular com rolo, bola ou movimentos leves. Registre região e dor antes/depois na observação.",
+      relaxamento: "Respiração, relaxamento e baixa intensidade para reduzir fadiga.",
+      descanso_total: "Descanso total. Sem registro obrigatório; faça apenas check-in se quiser acompanhar recuperação."
+    };
+    return mapa[tipo] || mapa.caminhada_leve;
+  };
+
+  window.tipoSessaoPorSubtipoCorrida = function(subtipo) {
+    const mapa = { corrida_leve: "corrida_leve", corrida_regenerativa: "corrida_regenerativa", corrida_progressiva: "progressiva", progressiva: "progressiva", corrida_intervalado: "intervalado", intervalado: "intervalado", corrida_ritmo: "ritmo", ritmo: "ritmo", corrida_longo: "longo", longo: "longo", caminhada_leve: "caminhada_leve", teste: "teste" };
+    return mapa[subtipo] || "corrida_leve";
+  };
+
+  window.traduzirTipoSessaoCardio = function(valor) { return textoSubtipoCorrida(valor === "automatico" ? "corrida_leve" : valor); };
+
+  window.rotacaoSemanalPorMeta = function(meta, sexo) {
+    if (meta === "corrida_5k" || meta === "corrida_10k" || meta === "hibrido_performance") return ["descanso", "superior", "core_estabilidade", "inferior_moderado", "superior", "funcional", "descanso"];
+    if (meta === "forca" || meta === "massa") return ["descanso", "superior", "inferior_forca", "core_estabilidade", "superior", "inferior_moderado", "full_body"];
+    if (meta === "perder_peso" || meta === "definicao") return ["descanso", "full_body", "superior", "inferior_moderado", "core_estabilidade", "funcional", "descanso"];
+    return sexo === "feminino" ? ["descanso", "inferior_forca", "superior", "core_estabilidade", "inferior_moderado", "superior", "full_body"] : ["descanso", "superior", "inferior_forca", "core_estabilidade", "superior", "inferior_moderado", "full_body"];
+  };
+
+  window.deveUsarRecuperacaoInteligente = function(divisaoSelecionada) {
+    return normalizarCategoriaTreino(divisaoSelecionada) === "recuperacao" || normalizarCategoriaTreino(divisaoSelecionada) === "descanso";
+  };
+
+  window.escolherTreinoABC = function(divisaoSelecionada) {
+    const div = normalizarCategoriaTreino(divisaoSelecionada);
+    if (div === "recuperacao" || div === "descanso") return "recuperacao";
+    if (MT03.forca.indexOf(div) !== -1) return div;
+    const itemHoje = typeof obterItemPlanoHoje === "function" ? obterItemPlanoHoje() : null;
+    if (itemHoje && isForca(itemHoje.categoria)) return normalizarCategoriaTreino(itemHoje.categoria);
+    const hoje = new Date().getDay();
+    const meta = perfilUsuario ? perfilUsuario.metaPrincipal : "hibrido_shape";
+    const sexo = perfilUsuario ? perfilUsuario.sexo : "";
+    const rotacao = rotacaoSemanalPorMeta(meta, sexo);
+    let preferida = normalizarCategoriaTreino(rotacao[hoje] || "full_body");
+    if (!isForca(preferida)) preferida = "full_body";
+    return preferida;
+  };
+
+  window.gruposPermitidosPorCategoria = function(categoria) {
+    const cat = normalizarCategoriaTreino(categoria);
+    const gruposForca = ["Peito", "Costas", "Ombros", "Ombro posterior", "Tríceps", "Bíceps", "Pernas", "Quadríceps", "Posterior de coxa", "Glúteos", "Panturrilha", "Abdômen", "Core", "Lombar", "Cardio/Abdômen", "Funcional"];
+    const mapa = {
+      superior: ["Peito", "Costas", "Ombros", "Ombro posterior", "Tríceps", "Bíceps"],
+      inferior_forca: ["Pernas", "Quadríceps", "Posterior de coxa", "Glúteos", "Panturrilha"],
+      inferior_moderado: ["Pernas", "Quadríceps", "Posterior de coxa", "Glúteos", "Panturrilha"],
+      core_estabilidade: ["Abdômen", "Core", "Lombar", "Cardio/Abdômen"],
+      full_body: gruposForca,
+      funcional: ["Funcional", "Core", "Abdômen", "Glúteos", "Pernas", "Costas", "Peito", "Ombros"],
+      descanso: [], recuperacao: []
+    };
+    return mapa[cat] || null;
+  };
+
+  window.categoriaDoGrupoExercicio = function(grupo) {
+    const mapa = { Peito: "superior", Costas: "superior", Ombros: "superior", "Ombro posterior": "superior", "Tríceps": "superior", "Bíceps": "superior", Pernas: "inferior_forca", "Quadríceps": "inferior_forca", "Posterior de coxa": "inferior_forca", Glúteos: "inferior_forca", Panturrilha: "inferior_forca", Abdômen: "core_estabilidade", Core: "core_estabilidade", Lombar: "core_estabilidade", "Cardio/Abdômen": "core_estabilidade", Funcional: "funcional" };
+    return mapa[grupo] || "";
+  };
+
+  window.obterBaseTreinoPorCategoria = function(categoria) {
+    const cat = normalizarCategoriaTreino(categoria);
+    if (cat === "recuperacao" || cat === "descanso") return [];
+    const baseCat = cat === "inferior_forca" || cat === "inferior_moderado" ? "inferior" : (cat === "core_estabilidade" ? "core_abdomen" : (cat === "funcional" ? "full_body" : cat));
+    let lista = oldObterBaseTreinoPorCategoria ? oldObterBaseTreinoPorCategoria(baseCat) : [];
+    if (cat === "inferior_moderado") {
+      lista = lista.filter(function(ex) { return !/pistol|burpee|salto|jump/i.test(ex.nome || ""); }).slice(0, 14);
+    }
+    if (cat === "funcional") {
+      const funcional = lista.filter(function(ex) { return ["Funcional", "Core", "Glúteos", "Pernas", "Costas", "Peito"].indexOf(ex.grupo) !== -1; });
+      lista = funcional.length >= 6 ? funcional : lista;
+    }
+    return lista;
+  };
+
+  window.atividadeForcaPlano = function(categoria) { return isForca(categoria); };
+
+  window.calcularDistribuicaoHibrida = function() {
+    const total = Math.max(2, Math.min(6, Number(perfilUsuario && perfilUsuario.diasTreinoSemana ? perfilUsuario.diasTreinoSemana : 4)));
+    const meta = perfilUsuario ? perfilUsuario.metaPrincipal : "hibrido_shape";
+    const prioridade = perfilUsuario ? (perfilUsuario.prioridadeHibrida || "equilibrado") : "equilibrado";
+    let corrida = Math.max(1, Math.min(4, Number(perfilUsuario && perfilUsuario.diasCorridaSemana ? perfilUsuario.diasCorridaSemana : 2)));
+    if (prioridade === "forca_shape") corrida = Math.min(corrida, total <= 3 ? 1 : 2);
+    if (prioridade === "corrida_performance" || ["corrida_5k", "corrida_10k", "hibrido_performance"].indexOf(meta) !== -1) corrida = Math.max(corrida, total >= 5 ? 3 : 2);
+    if (meta === "massa" || meta === "forca") corrida = Math.min(corrida, total >= 5 ? 2 : 1);
+    corrida = Math.max(1, Math.min(corrida, Math.max(1, total - 1)));
+    const forca = Math.max(1, total - corrida);
+    return { total: total, corrida: corrida, forca: forca, recuperacao: Math.max(1, 7 - total), prioridade: prioridade, meta: meta };
+  };
+
+  window.escolherSubtipoCorrida = function(ordemCorrida, totalCorrida) {
+    const objetivo = perfilUsuario ? (perfilUsuario.objetivoCorridaPerfil || "5k") : "5k";
+    const nivel = perfilUsuario ? (perfilUsuario.nivelCorridaPerfil || "iniciante") : "iniciante";
+    if (nivel === "iniciante" || objetivo === "comecar") return ordemCorrida === 0 ? "caminhada_leve" : "corrida_leve";
+    if (totalCorrida <= 1) return "corrida_leve";
+    if (ordemCorrida === totalCorrida - 1 && ["10k", "meia"].indexOf(objetivo) !== -1) return "longo";
+    if (ordemCorrida === 1 || objetivo === "pace") return "intervalado";
+    if (ordemCorrida === totalCorrida - 1) return "ritmo";
+    return "corrida_leve";
+  };
+
+  window.nomeItemPlanoHibrido = function(dia) {
+    if (!dia) return "Atividade";
+    const cat = normalizarCategoriaTreino(dia.categoria);
+    if (cat === "cardio") return textoSubtipoCorrida(dia.subtipoCorrida || "corrida_leve");
+    if (cat === "recuperacao") return nomeRecuperacao(dia.tipoRecuperacao || "caminhada_leve");
+    if (cat === "descanso") return "Descanso Total";
+    return nomeAmigavelTreino(cat);
+  };
+
+  function nomeRecuperacao(tipo) {
+    const mapa = { caminhada_leve: "Caminhada Leve", mobilidade: "Mobilidade", alongamento: "Alongamento", recuperacao_pernas: "Recuperação de Pernas", soltura_muscular: "Soltura Muscular", relaxamento: "Relaxamento", descanso_total: "Descanso Total" };
+    return mapa[tipo] || "Recuperação ativa";
+  }
+  window.nomeRecuperacao = nomeRecuperacao;
+
+  window.descricaoPlanoCategoria = function(categoria) {
+    const cat = normalizarCategoriaTreino(categoria);
+    if (isForca(cat)) return descricaoForcaCategoria(cat);
+    if (cat === "cardio") return "Corrida/cardio com registro próprio: duração, distância, zona, esforço e sensação das pernas.";
+    if (cat === "recuperacao") return "Recuperação ativa sem carga/repetições. Caminhada, mobilidade, alongamento ou soltura.";
+    return "Descanso total ou check-in opcional.";
+  };
+
+  window.descricaoPlanoItemHibrido = function(dia) {
+    if (!dia) return "";
+    const cat = normalizarCategoriaTreino(dia.categoria);
+    if (cat === "cardio") return descricaoCorridaSubtipo(dia.subtipoCorrida || "corrida_leve");
+    if (cat === "recuperacao") return descricaoRecuperacao(dia.tipoRecuperacao || "caminhada_leve");
+    if (cat === "descanso") return "Sem treino obrigatório. Use check-in se quiser registrar como está.";
+    let texto = descricaoForcaCategoria(cat);
+    if (dia.protegidoPorCorrida) texto += " Ajustado porque há corrida intensa ou longão perto.";
+    return texto;
+  };
+
+  function escolherForcaPorOrdem(ordem, categoriaAnterior, corridaProximaForte, corridaAnteriorForte) {
+    const prioridade = perfilUsuario ? (perfilUsuario.prioridadeHibrida || "equilibrado") : "equilibrado";
+    let lista = prioridade === "corrida_performance" ? ["superior", "core_estabilidade", "inferior_moderado", "funcional", "full_body"] : ["superior", "inferior_forca", "superior", "inferior_moderado", "core_estabilidade", "full_body", "funcional"];
+    let cat = lista[ordem % lista.length];
+    if ((corridaProximaForte || corridaAnteriorForte) && cat === "inferior_forca") cat = ordem % 2 === 0 ? "superior" : "core_estabilidade";
+    if (cat === categoriaAnterior) cat = lista.find(function(x){ return x !== categoriaAnterior && !(x === "inferior_forca" && (corridaProximaForte || corridaAnteriorForte)); }) || cat;
+    return cat;
+  }
+
+  function tipoRecuperacaoParaDia(dia, anterior, proximo) {
+    const anteriorCat = anterior ? normalizarCategoriaTreino(anterior.categoria) : "";
+    const proximoCat = proximo ? normalizarCategoriaTreino(proximo.categoria) : "";
+    const anteriorRun = anteriorCat === "cardio" ? anterior.subtipoCorrida : "";
+    if (anteriorCat === "inferior_forca" || anteriorRun === "longo") return "recuperacao_pernas";
+    if (proximoCat === "inferior_forca" || proximoCat === "cardio") return "mobilidade";
+    return dia.indiceSemana === 0 ? "descanso_total" : "caminhada_leve";
+  }
+
+  window.criarPlanoSemanalInteligente = function(preservarStatus) {
+    const antigo = preservarStatus ? lerPlanoSemanalLocal() : null;
+    const statusAntigo = {};
+    if (antigo && Array.isArray(antigo.dias)) antigo.dias.forEach(function(dia) { statusAntigo[dia.dataISO] = dia.status || "pendente"; });
+    const dias = gerarDiasPlanoSemanalBase();
+    const diasDisponiveis = (perfilUsuario && perfilUsuario.diasDisponiveis ? perfilUsuario.diasDisponiveis : valoresPadraoDiasDisponiveis()).map(String);
+    const dist = calcularDistribuicaoHibrida();
+    const indicesAtivos = [];
+    dias.forEach(function(dia, indice) {
+      if (diasDisponiveis.indexOf(String(dia.indiceSemana)) !== -1 && indicesAtivos.length < dist.total) indicesAtivos.push(indice);
+    });
+    let corridaSlots = [];
+    if (indicesAtivos.length) {
+      if (dist.corrida >= 1) corridaSlots.push(indicesAtivos[Math.max(0, indicesAtivos.length - 1)]);
+      if (dist.corrida >= 2) corridaSlots.push(indicesAtivos[Math.min(1, indicesAtivos.length - 1)]);
+      if (dist.corrida >= 3) corridaSlots.push(indicesAtivos[Math.floor(indicesAtivos.length / 2)]);
+      if (dist.corrida >= 4) corridaSlots.push(indicesAtivos[Math.max(0, indicesAtivos.length - 2)]);
+    }
+    corridaSlots = Array.from(new Set(corridaSlots)).slice(0, dist.corrida).sort(function(a,b){ return a-b; });
+    let ordemForca = 0;
+    let ordemCorrida = 0;
+    let categoriaAnterior = "";
+    dias.forEach(function(dia, indiceDia) {
+      dia.status = statusAntigo[dia.dataISO] || "pendente";
+      if (indicesAtivos.indexOf(indiceDia) === -1) {
+        dia.categoria = "descanso";
+        dia.focoHibrido = "descanso";
+        dia.tipoRecuperacao = "descanso_total";
+      } else if (corridaSlots.indexOf(indiceDia) !== -1) {
+        dia.categoria = "cardio";
+        dia.focoHibrido = "corrida";
+        dia.subtipoCorrida = escolherSubtipoCorrida(ordemCorrida, corridaSlots.length);
+        ordemCorrida += 1;
+        categoriaAnterior = "cardio";
+      } else {
+        const subtipoProximo = corridaSlots.indexOf(indiceDia + 1) !== -1 ? escolherSubtipoCorrida(corridaSlots.indexOf(indiceDia + 1), corridaSlots.length) : "";
+        const subtipoAnterior = corridaSlots.indexOf(indiceDia - 1) !== -1 ? escolherSubtipoCorrida(corridaSlots.indexOf(indiceDia - 1), corridaSlots.length) : "";
+        const corridaProximaForte = ["intervalado", "longo", "corrida_intervalado", "corrida_longo"].indexOf(subtipoProximo) !== -1;
+        const corridaAnteriorForte = ["intervalado", "longo", "corrida_intervalado", "corrida_longo"].indexOf(subtipoAnterior) !== -1;
+        const cat = escolherForcaPorOrdem(ordemForca, categoriaAnterior, corridaProximaForte, corridaAnteriorForte);
+        dia.categoria = cat;
+        dia.focoHibrido = "forca";
+        dia.protegidoPorCorrida = corridaProximaForte || corridaAnteriorForte;
+        ordemForca += 1;
+        categoriaAnterior = cat;
+      }
+    });
+    dias.forEach(function(dia, i) {
+      if (normalizarCategoriaTreino(dia.categoria) === "descanso") {
+        const tipo = tipoRecuperacaoParaDia(dia, dias[i - 1], dias[i + 1]);
+        if (tipo !== "descanso_total") { dia.categoria = "recuperacao"; dia.focoHibrido = "recuperacao"; }
+        dia.tipoRecuperacao = tipo;
+      }
+    });
+    const plano = { versao: MT03.versaoPlano, inicioSemana: inicioSemanaAtualISO(), criadoEm: Date.now(), metaSemanal: dist.total, metaForca: dias.filter(function(d){ return isForca(d.categoria); }).length, metaCardio: dias.filter(function(d){ return normalizarCategoriaTreino(d.categoria) === "cardio"; }).length, metaRecuperacao: dias.filter(function(d){ return normalizarCategoriaTreino(d.categoria) === "recuperacao"; }).length, prioridadeHibrida: dist.prioridade, objetivoCorrida: perfilUsuario ? (perfilUsuario.objetivoCorridaPerfil || "5k") : "5k", dias: dias };
+    salvarPlanoSemanalLocal(plano);
+    return plano;
+  };
+
+  window.classeBadgeSessao = function(categoria) {
+    const cat = normalizarCategoriaTreino(categoria);
+    if (isForca(cat)) return "forca";
+    if (cat === "cardio") return "corrida";
+    if (cat === "recuperacao") return "recuperacao";
+    return "descanso";
+  };
+
+  window.montarHTMLPlanoSemanal = function() {
+    if (!perfilUsuario) return "<p class='small'>Preencha e salve o perfil para montar o plano da semana.</p>";
+    const plano = obterOuCriarPlanoSemanal(false);
+    const hoje = hojeKey();
+    const atividades = plano.dias.filter(function(d){ return normalizarCategoriaTreino(d.categoria) !== "descanso"; }).length;
+    const concluidos = plano.dias.filter(function(d){ return d.status === "concluido" && normalizarCategoriaTreino(d.categoria) !== "descanso"; }).length;
+    const pulados = plano.dias.filter(function(d){ return d.status === "pulado" && normalizarCategoriaTreino(d.categoria) !== "descanso"; }).length;
+    const pct = atividades ? Math.min(100, Math.round((concluidos / atividades) * 100)) : 0;
+    const dataFim = adicionarDiasISO(plano.inicioSemana, 6);
+    let html = "<div class='plano-topo'><strong>Semana de " + safe(formatarDataPlano(plano.inicioSemana)) + " a " + safe(formatarDataPlano(dataFim)) + "</strong><br>" +
+      "Meta híbrida: " + atividades + " sessão(ões) | Força: " + (plano.metaForca || 0) + " | Corrida: " + (plano.metaCardio || 0) + " | Recuperação: " + (plano.metaRecuperacao || 0) + " | Concluídas: " + concluidos +
+      "<div class='barra-progresso-fina'><div style='width:" + pct + "%'></div></div>" +
+      "<span class='small'>O plano separa força, corrida, recuperação e descanso. Check-in recomenda; Reorganizar semana só acontece quando você toca no botão.</span>" +
+      "<div class='plano-acoes-principais'>" +
+      "<button type='button' class='botao-principal' onclick='gerarPlanoSemanalInteligente(true)'>Gerar novo plano</button>" +
+      "<button type='button' class='botao-secundario' onclick='reorganizarPlanoSemana()'>Reorganizar semana</button>" +
+      "<button type='button' class='botao-secundario' onclick='irParaCheckin()'>Ajustar treino de hoje</button>" +
+      "</div></div>";
+    plano.dias.forEach(function(dia, i) {
+      const ehHoje = dia.dataISO === hoje;
+      const cat = normalizarCategoriaTreino(dia.categoria);
+      const badge = classeBadgeSessao(cat);
+      const nome = nomeItemPlanoHibrido(dia);
+      const desc = descricaoPlanoItemHibrido(dia);
+      const impact = isForca(cat) ? impactoCorridaCategoria(cat) : null;
+      const botaoComecar = cat === "cardio" ? "Registrar corrida" : (cat === "recuperacao" ? "Abrir recuperação" : (cat === "descanso" ? "Check-in opcional" : "Começar força"));
+      html += "<div class='plano-semanal-dia'><strong>" + safe(dia.nomeDia) + (ehHoje ? " Hoje" : "") + "</strong><br>" +
+        "<span class='session-badge " + badge + "'>" + (badge === "forca" ? "Força" : badge === "corrida" ? "Corrida" : badge === "recuperacao" ? "Recuperação" : "Descanso") + "</span><br>" +
+        "<span><strong>" + safe(nome) + "</strong></span><br>" +
+        "<span class='small'>" + safe(desc) + "</span><br>" +
+        (impact ? "<span class='impacto-pill " + impact.nivel + "'>" + safe(impact.texto) + "</span>" : "") +
+        "<span class='" + classeStatusPlano(dia.status, ehHoje) + "'>" + textoStatusPlano(dia.status) + "</span>" +
+        "<div class='plano-acoes-dia'>" +
+        "<button type='button' class='botao-secundario' onclick='comecarItemPlano(" + i + ")'>" + botaoComecar + "</button>" +
+        (cat !== "descanso" ? "<button type='button' class='botao-secundario' onclick='marcarStatusPlanoDia(" + i + ", " + JSON.stringify("concluido") + ")'>Marcar feito</button>" : "") +
+        (cat !== "descanso" ? "<button type='button' class='botao-pular' onclick='marcarStatusPlanoDia(" + i + ", " + JSON.stringify("pulado") + ")'>Pular</button>" : "") +
+        (cat !== "descanso" ? "<button type='button' class='botao-secundario' onclick='reagendarItemPlano(" + i + ")'>Reagendar</button>" : "") +
+        "<button type='button' class='botao-secundario' onclick='marcarStatusPlanoDia(" + i + ", " + JSON.stringify("pendente") + ")'>Reabrir</button>" +
+        "</div></div>";
+    });
+    if (pulados > 0) html += "<div class='mensagem-inteligente'>Você pulou " + pulados + " sessão(ões). Use Reorganizar semana se quiser redistribuir sem compensar tudo de uma vez.</div>";
+    return html;
+  };
+
+  window.estatisticasSemanaAtualPorPlano = function() {
+    const plano = obterOuCriarPlanoSemanal(false);
+    const planejadas = plano.dias.filter(function(d){ return normalizarCategoriaTreino(d.categoria) !== "descanso"; }).length;
+    const concluidas = plano.dias.filter(function(d){ return d.status === "concluido" && normalizarCategoriaTreino(d.categoria) !== "descanso"; }).length;
+    const pendentes = plano.dias.filter(function(d){ return normalizarCategoriaTreino(d.categoria) !== "descanso" && d.status !== "concluido" && d.status !== "pulado"; }).length;
+    const puladas = plano.dias.filter(function(d){ return d.status === "pulado" && normalizarCategoriaTreino(d.categoria) !== "descanso"; }).length;
+    return { planejadas: planejadas, concluidas: concluidas, pendentes: pendentes, puladas: puladas, forcaPlanejada: plano.dias.filter(function(d){return isForca(d.categoria);}).length, corridaPlanejada: plano.dias.filter(function(d){return normalizarCategoriaTreino(d.categoria)==="cardio";}).length, recuperacaoPlanejada: plano.dias.filter(function(d){return normalizarCategoriaTreino(d.categoria)==="recuperacao";}).length, forcaConcluida: plano.dias.filter(function(d){return d.status === "concluido" && isForca(d.categoria);}).length, corridaConcluida: plano.dias.filter(function(d){return d.status === "concluido" && normalizarCategoriaTreino(d.categoria)==="cardio";}).length, recuperacaoConcluida: plano.dias.filter(function(d){return d.status === "concluido" && normalizarCategoriaTreino(d.categoria)==="recuperacao";}).length, plano: plano };
+  };
+
+  window.montarResumoHojeBase = function() {
+    const itemHoje = obterItemPlanoHoje();
+    const treinoLocal = lerResumoTreinoAtualLocal ? lerResumoTreinoAtualLocal() : null;
+    if (treinoLocal) {
+      const categoria = normalizarCategoriaTreino(treinoLocal.categoria || treinoLocal.letra || "");
+      const concluidos = (treinoLocal.concluidos || []).filter(Boolean).length;
+      const total = treinoLocal.treino ? treinoLocal.treino.length : 0;
+      return "<span class='session-badge forca'>Força</span><br><strong>Treino em andamento</strong><br>" + safe(nomeAmigavelTreino(categoria)) + "<br>Progresso: " + concluidos + " de " + total + " exercício(s).";
+    }
+    if (itemHoje) {
+      const cat = normalizarCategoriaTreino(itemHoje.categoria);
+      const badge = classeBadgeSessao(cat);
+      let motivo = "Escolhido pelo plano semanal para equilibrar força, corrida e recuperação.";
+      if (cat === "recuperacao") motivo = "Hoje a melhor sessão é recuperar sem transformar caminhada ou mobilidade em treino de peso.";
+      if (cat === "descanso") motivo = "Hoje está como descanso total. Check-in é opcional.";
+      if (itemHoje.status === "concluido") motivo = "Sessão de hoje já foi marcada como concluída. Excelente consistência.";
+      return "<span class='session-badge " + badge + "'>" + safe(badge === "forca" ? "Força" : badge === "corrida" ? "Corrida" : badge === "recuperacao" ? "Recuperação" : "Descanso") + "</span><br><strong>Hoje o foco é:</strong><br>" + safe(nomeItemPlanoHibrido(itemHoje)) + "<br><span class='small'>" + safe(descricaoPlanoItemHibrido(itemHoje)) + "</span><br><br><strong>Por que esse foco?</strong><br>" + safe(motivo);
+    }
+    return "<strong>Comece pelo plano</strong><br>Salve o perfil e veja o plano híbrido sugerido antes de iniciar o Hoje.";
+  };
+
+  window.comecarItemPlano = function(indice) {
+    const plano = obterOuCriarPlanoSemanal(false);
+    const item = plano.dias[indice];
+    if (!item) return;
+    const cat = normalizarCategoriaTreino(item.categoria);
+    if (cat === "cardio") { aplicarItemCardioAoFormulario(item); irParaCardio(); return; }
+    if (cat === "recuperacao" || cat === "descanso") { window.__mt03RecuperacaoPlano = item; irParaRecuperacao(); return; }
+    const select = byId("divisaoTreino");
+    if (select) select.value = cat;
+    irParaCheckin();
+  };
+
+  window.acaoPrincipalHoje = function() {
+    const treinoLocal = lerResumoTreinoAtualLocal ? lerResumoTreinoAtualLocal() : null;
+    if (treinoLocal) { irParaTreino(); return; }
+    const itemHoje = obterItemPlanoHoje();
+    if (!itemHoje) { irParaPlano(); return; }
+    const cat = normalizarCategoriaTreino(itemHoje.categoria);
+    if (cat === "cardio") { aplicarItemCardioAoFormulario(itemHoje); irParaCardio(); return; }
+    if (cat === "recuperacao" || cat === "descanso") { window.__mt03RecuperacaoPlano = itemHoje; irParaRecuperacao(); return; }
+    const select = byId("divisaoTreino"); if (select) select.value = cat;
+    irParaCheckin();
+  };
+
+  window.marcarPlanoHojeConcluido = function(tipo) {
+    const plano = obterOuCriarPlanoSemanal(false);
+    const item = plano.dias.find(function(dia) { return dia.dataISO === hojeKey(); });
+    if (item) {
+      if (tipo === "cardio") item.categoria = "cardio";
+      if (tipo === "recuperacao") { item.categoria = "recuperacao"; item.tipoRecuperacao = item.tipoRecuperacao || "caminhada_leve"; }
+      if (tipo === "forca" && !isForca(item.categoria)) item.categoria = "full_body";
+      item.status = "concluido";
+      item.concluidoComo = tipo || item.categoria;
+      salvarPlanoSemanalLocal(plano);
+    }
+  };
+
+  window.reagendarItemPlano = function(indice) {
+    const plano = obterOuCriarPlanoSemanal(false);
+    const origem = plano.dias[indice];
+    if (!origem || normalizarCategoriaTreino(origem.categoria) === "descanso") { alert("Esse dia está como descanso total. Use Check-in opcional se quiser ajustar hoje."); return; }
+    let destinoIndex = -1;
+    for (let i = indice + 1; i < plano.dias.length; i++) {
+      if (["descanso", "recuperacao"].indexOf(normalizarCategoriaTreino(plano.dias[i].categoria)) !== -1 || plano.dias[i].status === "pulado") { destinoIndex = i; break; }
+    }
+    if (destinoIndex < 0) { alert("Não encontrei um dia livre nesta semana. Use Reorganizar semana."); return; }
+    const copia = Object.assign({}, origem, { dataISO: plano.dias[destinoIndex].dataISO, indiceSemana: plano.dias[destinoIndex].indiceSemana, nomeDia: plano.dias[destinoIndex].nomeDia, status: "pendente", reagendadoDe: origem.dataISO });
+    plano.dias[destinoIndex] = copia;
+    origem.categoria = "recuperacao";
+    origem.tipoRecuperacao = "caminhada_leve";
+    origem.focoHibrido = "recuperacao";
+    origem.status = "reagendado";
+    origem.reagendadoPara = copia.dataISO;
+    salvarPlanoSemanalLocal(plano);
+    renderizarPlanoSemanal(); renderizarHoje();
+  };
+
+  window.reorganizarPlanoSemana = function() {
+    if (!garantirPerfilParaNavegar("Faça login para reorganizar o plano.")) return;
+    if (!confirm("Reorganizar a semana vai redistribuir força, corrida e recuperação mantendo o status já salvo quando possível. Continuar?")) return;
+    carregarMemoriaInteligenteTreino(function() { criarPlanoSemanalInteligente(true); renderizarPlanoSemanal(); renderizarHoje(); });
+  };
+
+  window.calcularPerfil = function() {
+    if (oldCalcularPerfil) oldCalcularPerfil();
+    if (!perfilUsuario) return;
+    try { criarPlanoSemanalInteligente(false); } catch (erro) { console.log("Plano após perfil:", erro); }
+    const botao = byId("botaoIrTreino");
+    if (botao) { botao.classList.remove("hidden"); botao.textContent = "➡️ Ver plano sugerido"; botao.onclick = irParaPlano; }
+    setTimeout(function() { if (perfilUsuario) irParaPlano(); }, 250);
+  };
+
+  window.gerarTreino = function() {
+    const div = byId("divisaoTreino") ? byId("divisaoTreino").value : "automatico";
+    const cat = normalizarCategoriaTreino(div);
+    if (cat === "recuperacao" || cat === "descanso") { marcarCheckinRespondido(); irParaRecuperacao(); return; }
+    if (oldGerarTreino) oldGerarTreino();
+  };
+
+  window.gerarRecomendacaoCheckin = function() {
+    marcarCheckinRespondido();
+    const energia = byId("energia") ? byId("energia").value : "bem";
+    const dor = byId("dor") ? byId("dor").value : "nenhuma";
+    const tempo = byId("tempo") ? byId("tempo").value : "normal";
+    const div = byId("divisaoTreino") ? normalizarCategoriaTreino(byId("divisaoTreino").value) : "automatico";
+    const item = obterItemPlanoHoje();
+    const catHoje = item ? normalizarCategoriaTreino(item.categoria) : "";
+    let rec = { tipo: "forca", categoria: isForca(div) ? div : (isForca(catHoje) ? catHoje : "full_body"), titulo: "Manter treino de força", texto: "Você pode seguir com a sessão de força, mantendo técnica e sem buscar falha se estiver cansado." };
+    if (catHoje === "cardio") rec = { tipo: "cardio", subtipo: item.subtipoCorrida || "corrida_leve", titulo: "Manter corrida planejada", texto: descricaoCorridaSubtipo(item.subtipoCorrida || "corrida_leve") };
+    if (catHoje === "recuperacao" || catHoje === "descanso") rec = { tipo: "recuperacao", tipoRecuperacao: item.tipoRecuperacao || "caminhada_leve", titulo: "Fazer recuperação", texto: descricaoRecuperacao(item.tipoRecuperacao || "caminhada_leve") };
+    const riscoPernas = ["pernas", "joelho", "lombar"].indexOf(dor) !== -1;
+    const sessaoForte = catHoje === "cardio" && ["intervalado", "longo", "corrida_intervalado", "corrida_longo"].indexOf(item.subtipoCorrida) !== -1;
+    const pernaPesada = isForca(catHoje) && normalizarCategoriaTreino(catHoje) === "inferior_forca";
+    if (energia === "mal" || (riscoPernas && (sessaoForte || pernaPesada))) {
+      rec = { tipo: "recuperacao", tipoRecuperacao: riscoPernas ? "recuperacao_pernas" : "mobilidade", titulo: "Trocar hoje por recuperação", texto: riscoPernas ? "Pernas/joelho/lombar sinalizaram fadiga. Melhor registrar recuperação sem peso/repetições." : "Energia baixa. Melhor reduzir a carga do dia e recuperar." };
+    } else if (energia === "cansado" && catHoje === "cardio") {
+      rec = { tipo: "cardio", subtipo: "corrida_regenerativa", titulo: "Ajustar para corrida regenerativa", texto: descricaoCorridaSubtipo("corrida_regenerativa") };
+    } else if (tempo === "rapido" && isForca(rec.categoria)) {
+      rec.texto += " Como o tempo está curto, use volume reduzido e registre apenas o exercício principal.";
+    }
+    window.__mt03RecomendacaoCheckin = rec;
+    const box = byId("recomendacaoCheckinBox");
+    if (box) {
+      box.classList.remove("hidden");
+      box.innerHTML = "<h2>🧠 Recomendação do dia</h2><strong>" + safe(rec.titulo) + "</strong><p>" + safe(rec.texto) + "</p>" +
+        "<div class='plano-acoes-principais'><button type='button' class='botao-principal' onclick='aplicarRecomendacaoCheckin()'>Aplicar ajuste de hoje</button><button type='button' class='botao-secundario' onclick='manterPlanoOriginalCheckin()'>Manter plano original</button></div>" +
+        "<p class='small'>Isso ajusta apenas a sessão de hoje. Para redistribuir a semana inteira, use Reorganizar semana no Plano.</p>";
+      box.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  window.aplicarRecomendacaoCheckin = function() {
+    const rec = window.__mt03RecomendacaoCheckin;
+    if (!rec) { gerarRecomendacaoCheckin(); return; }
+    const plano = obterOuCriarPlanoSemanal(false);
+    const item = plano.dias.find(function(dia) { return dia.dataISO === hojeKey(); });
+    if (item) {
+      if (rec.tipo === "recuperacao") { item.categoria = "recuperacao"; item.tipoRecuperacao = rec.tipoRecuperacao || "caminhada_leve"; item.ajustadoPeloCheckin = true; }
+      if (rec.tipo === "cardio") { item.categoria = "cardio"; item.subtipoCorrida = rec.subtipo || "corrida_leve"; item.ajustadoPeloCheckin = true; }
+      if (rec.tipo === "forca") { item.categoria = rec.categoria || "full_body"; item.ajustadoPeloCheckin = true; }
+      salvarPlanoSemanalLocal(plano);
+    }
+    if (rec.tipo === "recuperacao") { window.__mt03RecuperacaoPlano = item || rec; irParaRecuperacao(); return; }
+    if (rec.tipo === "cardio") { if (item) aplicarItemCardioAoFormulario(item); irParaCardio(); return; }
+    const select = byId("divisaoTreino"); if (select) select.value = rec.categoria || "full_body";
+    if (oldGerarTreino) oldGerarTreino();
+  };
+
+  window.manterPlanoOriginalCheckin = function() {
+    const item = obterItemPlanoHoje();
+    if (!item) { irParaPlano(); return; }
+    const cat = normalizarCategoriaTreino(item.categoria);
+    if (cat === "cardio") { aplicarItemCardioAoFormulario(item); irParaCardio(); return; }
+    if (cat === "recuperacao" || cat === "descanso") { window.__mt03RecuperacaoPlano = item; irParaRecuperacao(); return; }
+    const select = byId("divisaoTreino"); if (select) select.value = cat;
+    if (oldGerarTreino) oldGerarTreino();
+  };
+
+  window.aplicarItemCardioAoFormulario = function(item) {
+    const tipo = byId("tipoAtividadeCardio"); if (tipo) tipo.value = item && item.subtipoCorrida === "caminhada_leve" ? "caminhada" : "corrida";
+    const nivel = byId("nivelCardio"); if (nivel && perfilUsuario) nivel.value = perfilUsuario.nivelCorridaPerfil || nivel.value || "iniciante";
+    const objetivo = byId("objetivoCardio"); if (objetivo && perfilUsuario) objetivo.value = perfilUsuario.objetivoCorridaPerfil || objetivo.value || "5k";
+    const sessao = byId("tipoSessaoCardio"); if (sessao && item && item.subtipoCorrida) sessao.value = tipoSessaoPorSubtipoCorrida(item.subtipoCorrida);
+    atualizarTextoTipoCardio();
+  };
+
+  window.gerarTextoSugestaoCardio = function() {
+    const tipoAtividade = byId("tipoAtividadeCardio") ? byId("tipoAtividadeCardio").value : "corrida";
+    const nivel = byId("nivelCardio") ? byId("nivelCardio").value : "iniciante";
+    const objetivo = byId("objetivoCardio") ? byId("objetivoCardio").value : "5k";
+    let tipoSessao = byId("tipoSessaoCardio") ? byId("tipoSessaoCardio").value : "automatico";
+    if (tipoSessao === "automatico") {
+      if (tipoAtividade === "caminhada" || nivel === "iniciante" || objetivo === "comecar") tipoSessao = "caminhada_leve";
+      else if (objetivo === "pace") tipoSessao = "intervalado";
+      else if (objetivo === "10k" || objetivo === "meia") tipoSessao = "longo";
+      else tipoSessao = "corrida_leve";
+    }
+    const nome = textoSubtipoCorrida(tipoSessao);
+    const desc = descricaoCorridaSubtipo(tipoSessao);
+    const tempoBase = tipoSessao === "intervalado" ? "20–30 min" : tipoSessao === "longo" ? "35–70 min" : tipoSessao === "teste" ? "10–25 min" : "20–40 min";
+    const formato = tipoSessao === "intervalado" ? "Aquecimento + tiros curtos controlados + desaquecimento." : tipoSessao === "progressiva" ? "Comece fácil e aumente aos poucos, sem sprint final." : tipoSessao === "longo" ? "Ritmo confortável. Termine com sensação de que ainda conseguiria continuar." : tipoSessao === "caminhada_leve" ? "Caminhe leve, mantendo respiração confortável." : "Mantenha conversa possível e esforço controlado.";
+    return "<strong>" + safe(nome) + "</strong><br>" + safe(desc) + "<br><br><strong>Duração sugerida:</strong> " + tempoBase + "<br><strong>Como executar:</strong> " + safe(formato) + "<br><br><span class='small'>Registre depois: duração, distância, zona, esforço, sensação das pernas e dor articular.</span>";
+  };
+
+  window.gerarTreinoCardio = function() {
+    const caixa = byId("sugestaoCardio");
+    if (!caixa) return;
+    caixa.className = "alerta alerta-sucesso";
+    caixa.innerHTML = gerarTextoSugestaoCardio();
+  };
+
+  window.atualizarPainelCorrida = function() {
+    obterCardiosDaNuvem(function(lista) {
+      const inicio = new Date(inicioSemanaAtualISO() + "T00:00:00").getTime();
+      const semana = (lista || []).filter(function(i){ return Number(i.criadoEm || 0) >= inicio && i.tipo !== "sem_cardio"; });
+      const corridas = semana.filter(function(i){ return i.tipoAtividade !== "recuperacao"; });
+      const distancia = corridas.reduce(function(s, i){ return s + Number(i.distancia || 0); }, 0);
+      const zona2 = corridas.filter(function(i){ return i.zonaCardio === "zona2" || i.intensidade === "leve"; }).reduce(function(s, i){ return s + Number(i.tempo || 0); }, 0);
+      const painel = byId("painelCorridaSemana");
+      if (painel) painel.innerHTML = "<div class='metric-card'><strong>" + distancia.toFixed(1) + " km</strong><span>Volume da semana</span></div><div class='metric-card'><strong>" + corridas.length + "</strong><span>Sessões de corrida/cardio</span></div><div class='metric-card'><strong>" + zona2 + " min</strong><span>Zona leve/base</span></div><div class='metric-card'><strong>" + (perfilUsuario ? safe(traduzirObjetivoCorrida(perfilUsuario.objetivoCorridaPerfil || "5k")) : "5 km") + "</strong><span>Objetivo atual</span></div>";
+      const alerta = byId("alertaCompatibilidadeCorrida");
+      const item = obterItemPlanoHoje();
+      if (alerta && item) {
+        const cat = normalizarCategoriaTreino(item.categoria);
+        if (cat === "inferior_forca") alerta.innerHTML = "⚠️ Hoje tem Pernas — Força. Evite transformar a corrida em tiro ou ritmo forte.";
+        else if (cat === "cardio") alerta.innerHTML = "🏃 Corrida planejada: " + safe(textoSubtipoCorrida(item.subtipoCorrida || "corrida_leve")) + ". Registre zona e sensação das pernas ao terminar.";
+        else alerta.innerHTML = "✅ Compatível com a semana: mantenha corrida leve se houver treino de pernas perto.";
+      }
+    });
+  };
+
+  window.renderizarBibliotecaCorrida = function() {
+    const box = byId("bibliotecaCorridaCards"); if (!box) return;
+    const itens = ["corrida_leve", "corrida_regenerativa", "intervalado", "ritmo", "longo", "progressiva", "teste", "caminhada_leve"];
+    box.innerHTML = itens.map(function(tipo) { return "<div class='session-card'><span class='session-badge corrida'>Corrida</span><strong>" + safe(textoSubtipoCorrida(tipo)) + "</strong><span class='small'>" + safe(descricaoCorridaSubtipo(tipo)) + "</span></div>"; }).join("");
+  };
+
+  window.renderizarBibliotecaRecuperacao = function() {
+    const box = byId("bibliotecaRecuperacaoCards"); if (!box) return;
+    box.innerHTML = MT03.recuperacao.map(function(tipo) { return "<div class='session-card'><span class='session-badge recuperacao'>Recuperação</span><strong>" + safe(nomeRecuperacao(tipo)) + "</strong><span class='small'>" + safe(descricaoRecuperacao(tipo)) + "</span></div>"; }).join("");
+  };
+
+  window.irParaCardio = function() {
+    if (!garantirPerfilParaNavegar("Faça login com um e-mail autorizado para registrar corrida/cardio.")) return;
+    ocultarPaginasDoApp();
+    const page = byId("paginaCardio"); if (page) page.classList.remove("hidden");
+    preencherCorridaPorPerfil(); atualizarAvisoCardioSemCheckin(); carregarCardios(); atualizarPainelCorrida(); renderizarBibliotecaCorrida();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  window.atualizarTextoRecuperacao = function() {
+    const tipo = byId("tipoRecuperacao") ? byId("tipoRecuperacao").value : "caminhada_leve";
+    const desc = byId("descricaoRecuperacao"); if (desc) desc.innerHTML = "<strong>Como registrar:</strong> " + safe(descricaoRecuperacao(tipo));
+  };
+
+  window.atualizarTelaRecuperacao = function() {
+    const item = window.__mt03RecuperacaoPlano || obterItemPlanoHoje();
+    const tipo = item && item.tipoRecuperacao ? item.tipoRecuperacao : "caminhada_leve";
+    const campo = byId("tipoRecuperacao"); if (campo) campo.value = tipo;
+    atualizarTextoRecuperacao(); renderizarBibliotecaRecuperacao();
+    const box = byId("sugestaoRecuperacaoHoje");
+    if (box) box.innerHTML = "<strong>Hoje:</strong> " + safe(nomeRecuperacao(tipo)) + "<br>" + safe(descricaoRecuperacao(tipo));
+  };
+
+  window.irParaRecuperacao = function() {
+    if (!garantirPerfilParaNavegar("Faça login com um e-mail autorizado para registrar recuperação.")) return;
+    ocultarPaginasDoApp();
+    const page = byId("paginaRecuperacao"); if (page) page.classList.remove("hidden");
+    atualizarTelaRecuperacao(); window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  window.salvarRecuperacao = function() {
+    if (!acessoLiberado || !usuarioAtual || !db) { alert("Faça login com um e-mail autorizado para salvar recuperação."); return; }
+    const tipo = byId("tipoRecuperacao") ? byId("tipoRecuperacao").value : "caminhada_leve";
+    const tempo = Number(byId("tempoRecuperacao") ? byId("tempoRecuperacao").value : 0);
+    const distancia = Number(byId("distanciaRecuperacao") ? byId("distanciaRecuperacao").value || 0 : 0);
+    const esforco = byId("esforcoRecuperacao") ? byId("esforcoRecuperacao").value : "leve";
+    const pernas = byId("sensacaoPernasRecuperacao") ? byId("sensacaoPernasRecuperacao").value : "igual";
+    const obs = byId("observacaoRecuperacao") ? byId("observacaoRecuperacao").value.trim() : "";
+    const caixa = byId("mensagemRecuperacao");
+    if (tipo !== "descanso_total" && tempo <= 0) { if (caixa) { caixa.className = "alerta alerta-aviso"; caixa.innerHTML = "Informe a duração da recuperação em minutos."; } return; }
+    const agora = new Date();
+    const registro = { data: agora.toLocaleString("pt-BR"), criadoEm: agora.getTime(), diaSemana: nomeDoDiaDaSemana(), tipoAtividade: "recuperacao", tipoSessaoCardio: tipo, tipoRecuperacao: tipo, distancia: distancia, tempo: tempo, intensidade: esforco === "moderado" ? "moderada" : "leve", zonaCardio: "zona1", rpeCardio: esforco === "moderado" ? 4 : 2, sensacao: pernas, sensacaoPernas: pernas, dorArticular: pernas === "dor" ? "leve" : "nao", observacao: obs, treinoSugerido: descricaoRecuperacao(tipo), nomeUsuario: perfilUsuario ? perfilUsuario.nome : "Usuário" };
+    db.collection("usuarios").doc(usuarioAtual.uid).collection("corridas").add(registro).then(function() {
+      ultimaCardioCache = registro; ultimoCardioSalvoCompartilhavel = registro; marcarPlanoHojeConcluido("recuperacao");
+      if (caixa) { caixa.className = "alerta alerta-sucesso"; caixa.innerHTML = "✅ Recuperação salva corretamente, sem carga/séries/repetições."; }
+      ["tempoRecuperacao", "distanciaRecuperacao", "observacaoRecuperacao"].forEach(function(id){ const el = byId(id); if (el) el.value = ""; });
+      renderizarHoje(); carregarCardios();
+    }).catch(function(erro) { console.log("Erro ao salvar recuperação:", erro); if (caixa) { caixa.className = "alerta alerta-aviso"; caixa.innerHTML = "Não foi possível salvar agora. Confira sua conexão."; } });
+  };
+
+  window.salvarCardio = function() {
+    if (!acessoLiberado || !usuarioAtual || !db) { alert("Faça login com um e-mail autorizado para salvar corrida/cardio."); return; }
+    const tipoAtividadeCardio = byId("tipoAtividadeCardio") ? byId("tipoAtividadeCardio").value : "corrida";
+    const distancia = Number(byId("distanciaCardio") ? byId("distanciaCardio").value : 0);
+    const tempo = Number(byId("tempoCardio") ? byId("tempoCardio").value : 0);
+    const intensidade = byId("intensidadeCardio") ? byId("intensidadeCardio").value : "leve";
+    const sensacao = byId("sensacaoCardio") ? byId("sensacaoCardio").value : "bem";
+    const observacao = byId("observacaoCardio") ? byId("observacaoCardio").value.trim() : "";
+    const zonaCardio = byId("zonaCardio") ? byId("zonaCardio").value : "zona2";
+    const rpeCardio = Number(byId("rpeCardio") ? byId("rpeCardio").value || 0 : 0);
+    const sensacaoPernas = byId("sensacaoPernasCardio") ? byId("sensacaoPernasCardio").value : "normais";
+    const dorArticular = byId("dorArticularCardio") ? byId("dorArticularCardio").value : "nao";
+    const nivelCardio = byId("nivelCardio") ? byId("nivelCardio").value : "iniciante";
+    const objetivoCardio = byId("objetivoCardio") ? byId("objetivoCardio").value : "comecar";
+    const condicaoCardio = byId("condicaoCardio") ? byId("condicaoCardio").value : "caminho";
+    const tipoSessaoCardio = byId("tipoSessaoCardio") ? byId("tipoSessaoCardio").value : "automatico";
+    const temDesafioCardio = byId("temDesafioCardio") ? byId("temDesafioCardio").checked : false;
+    const distanciaDesafioCardio = byId("distanciaDesafioCardio") ? byId("distanciaDesafioCardio").value : "";
+    const dataDesafioCardio = byId("dataDesafioCardio") ? byId("dataDesafioCardio").value : "";
+    const sugestaoCardioHTML = byId("sugestaoCardio") && !byId("sugestaoCardio").classList.contains("hidden") ? byId("sugestaoCardio").innerText : "";
+    const caixa = byId("mensagemCardio");
+    if (distancia < 0 || tempo <= 0) { if (caixa) { caixa.className = "alerta alerta-aviso"; caixa.innerHTML = "Informe distância com 0 km ou mais e tempo maior que zero."; } return; }
+    const agora = new Date();
+    const corrida = { data: agora.toLocaleString("pt-BR"), criadoEm: agora.getTime(), diaSemana: nomeDoDiaDaSemana(), tipoAtividade: tipoAtividadeCardio, distancia: distancia, tempo: tempo, intensidade: intensidade, sensacao: sensacao, observacao: observacao, zonaCardio: zonaCardio, rpeCardio: rpeCardio, sensacaoPernas: sensacaoPernas, dorArticular: dorArticular, nivelCardio: nivelCardio, objetivoCardio: objetivoCardio, condicaoCardio: condicaoCardio, tipoSessaoCardio: tipoSessaoCardio, temDesafio: temDesafioCardio, distanciaDesafio: temDesafioCardio ? distanciaDesafioCardio : "", dataDesafio: temDesafioCardio ? dataDesafioCardio : "", treinoSugerido: sugestaoCardioHTML, nomeUsuario: perfilUsuario ? perfilUsuario.nome : "Usuário" };
+    db.collection("usuarios").doc(usuarioAtual.uid).collection("corridas").add(corrida).then(function() {
+      ultimaCardioCache = corrida; ultimoCardioSalvoCompartilhavel = corrida; marcarPlanoHojeConcluido("cardio");
+      if (caixa) { caixa.className = "alerta alerta-sucesso"; caixa.innerHTML = "✅ Corrida/cardio salvo. O plano de hoje foi atualizado e o próximo treino poderá considerar esse registro."; }
+      const boxCompartilharCardio = byId("compartilharUltimoCardioBox"); if (boxCompartilharCardio) boxCompartilharCardio.classList.remove("hidden");
+      ["distanciaCardio", "tempoCardio", "rpeCardio", "observacaoCardio"].forEach(function(id){ const el = byId(id); if (el) el.value = ""; });
+      carregarCardios(); atualizarPainelCorrida(); renderizarHoje();
+    }).catch(function(erro) { console.log("Erro ao salvar cardio:", erro); if (caixa) { caixa.className = "alerta alerta-aviso"; caixa.innerHTML = "Não foi possível salvar agora. Confira sua conexão."; } });
+  };
+
+  window.carregarCardios = function() {
+    obterCardiosDaNuvem(function(lista) {
+      const caixa = byId("listaCardios"); if (!caixa) return;
+      caixa.innerHTML = "";
+      if (!lista || !lista.length) { caixa.innerHTML = "<p class='small'>Nenhum registro de corrida/cardio/recuperação salvo ainda.</p>"; ultimaCardioCache = null; return; }
+      ultimaCardioCache = lista[0];
+      lista.slice(0, 5).forEach(function(item) {
+        const div = document.createElement("div"); div.className = "historico-item";
+        if (item.tipoAtividade === "recuperacao") {
+          div.innerHTML = "<span class='session-badge recuperacao'>Recuperação</span><br><strong>" + safe(item.data || "Sem data") + "</strong><br>Tipo: " + safe(nomeRecuperacao(item.tipoRecuperacao || item.tipoSessaoCardio || "caminhada_leve")) + "<br>Duração: " + safe(item.tempo || 0) + " min<br>Distância: " + safe(item.distancia || 0) + " km<br>Sensação das pernas: " + safe(item.sensacaoPernas || item.sensacao || "-") + "<br>Observação: " + safe(item.observacao || "Nenhuma");
+        } else if (item.tipo === "sem_cardio" || item.tipo === "sem_corrida") {
+          div.innerHTML = "<strong>" + safe(item.data || "Sem data") + "</strong><br>Status: não fez cardio recentemente<br>Observação: " + safe(item.observacao || "Nenhuma");
+        } else {
+          div.innerHTML = "<span class='session-badge corrida'>Corrida</span><br><strong>" + safe(item.data || "Sem data") + "</strong><br>Atividade: " + safe(traduzirTipoAtividadeCardio(item.tipoAtividade)) + "<br>Sessão: " + safe(traduzirTipoSessaoCardio(item.tipoSessaoCardio || "corrida_leve")) + "<br>Distância: " + safe(item.distancia || 0) + " km<br>Tempo: " + safe(item.tempo || 0) + " min<br>Pace médio: " + safe(calcularPaceMedio(item) || "Não calculado") + "<br>Zona: " + safe(item.zonaCardio || "-") + " | RPE: " + safe(item.rpeCardio || "-") + "<br>Pernas: " + safe(item.sensacaoPernas || "-") + " | Dor articular: " + safe(item.dorArticular || "-") + "<br>Observação: " + safe(item.observacao || "Nenhuma");
+        }
+        caixa.appendChild(div);
+      });
+    });
+  };
+
+  function semanaKeyRegistro(item) {
+    const d = item && item.criadoEm ? new Date(Number(item.criadoEm)) : null;
+    if (!d || isNaN(d.getTime())) return "";
+    d.setHours(0,0,0,0);
+    const dia = d.getDay();
+    const ajuste = dia === 0 ? -6 : 1 - dia;
+    d.setDate(d.getDate() + ajuste);
+    return d.toISOString().slice(0,10);
+  }
+
+  window.analisarConquistas = function(treinos, cardios) {
+    treinos = treinos || [];
+    cardios = (cardios || []).filter(function(i){ return i.tipo !== "sem_cardio" && i.tipo !== "sem_corrida"; });
+    const corridas = cardios.filter(function(i){ return i.tipoAtividade !== "recuperacao"; });
+    const recs = cardios.filter(function(i){ return i.tipoAtividade === "recuperacao"; });
+    const distanciaMax = corridas.reduce(function(max, i){ return Math.max(max, Number(i.distancia || 0)); }, 0);
+    const tempoZona2 = corridas.filter(function(i){ return i.zonaCardio === "zona2" || i.intensidade === "leve"; }).reduce(function(s, i){ return s + Number(i.tempo || 0); }, 0);
+    const semanas = {};
+    treinos.forEach(function(t){ const k = semanaKeyRegistro(t); if (!k) return; semanas[k] = semanas[k] || {f:0,c:0,r:0}; semanas[k].f += 1; });
+    corridas.forEach(function(c){ const k = semanaKeyRegistro(c); if (!k) return; semanas[k] = semanas[k] || {f:0,c:0,r:0}; semanas[k].c += 1; });
+    recs.forEach(function(r){ const k = semanaKeyRegistro(r); if (!k) return; semanas[k] = semanas[k] || {f:0,c:0,r:0}; semanas[k].r += 1; });
+    const semanasHibridas = Object.keys(semanas).filter(function(k){ return semanas[k].f >= 2 && semanas[k].c >= 1; }).length;
+    const semanasCompletas = Object.keys(semanas).filter(function(k){ return semanas[k].f >= 2 && semanas[k].c >= 2; }).length;
+    const totalForca = treinos.length;
+    const totalCorrida = corridas.length;
+    const totalRec = recs.length;
+    const lista = [
+      { id:"forca_1", categoria:"Força", icone:"💪", nome:"Primeiro treino de força", desc:"Salvou o primeiro treino de musculação.", progresso: totalForca, alvo:1 },
+      { id:"forca_10", categoria:"Força", icone:"🏋️", nome:"10 treinos de força", desc:"Construiu consistência na musculação.", progresso: totalForca, alvo:10 },
+      { id:"forca_50", categoria:"Força", icone:"🦾", nome:"50 treinos de força", desc:"Base sólida de força no histórico.", progresso: totalForca, alvo:50 },
+      { id:"corrida_1", categoria:"Corrida", icone:"🏃", nome:"Primeira corrida/cardio", desc:"Registrou a primeira sessão de corrida/cardio.", progresso: totalCorrida, alvo:1 },
+      { id:"corrida_1km", categoria:"Corrida", icone:"1️⃣", nome:"Primeiro 1 km", desc:"Registrou pelo menos 1 km em uma sessão.", progresso: distanciaMax, alvo:1 },
+      { id:"corrida_3km", categoria:"Corrida", icone:"3️⃣", nome:"Primeiro 3 km", desc:"Registrou pelo menos 3 km em uma sessão.", progresso: distanciaMax, alvo:3 },
+      { id:"corrida_5km", categoria:"Corrida", icone:"5️⃣", nome:"Primeiro 5 km", desc:"Registrou pelo menos 5 km em uma sessão.", progresso: distanciaMax, alvo:5 },
+      { id:"corrida_10km", categoria:"Corrida", icone:"🔟", nome:"Primeiro 10 km", desc:"Registrou pelo menos 10 km em uma sessão.", progresso: distanciaMax, alvo:10 },
+      { id:"zona2_30", categoria:"Corrida", icone:"💚", nome:"30 min de base leve", desc:"Acumulou 30 minutos em zona leve/base.", progresso: tempoZona2, alvo:30 },
+      { id:"hybrid_week_1", categoria:"Híbrida", icone:"⚡", nome:"Semana híbrida", desc:"Fez força e corrida na mesma semana.", progresso: semanasHibridas, alvo:1 },
+      { id:"hybrid_week_4", categoria:"Híbrida", icone:"🔥", nome:"4 semanas híbridas", desc:"Repetiu semanas com força + corrida.", progresso: semanasHibridas, alvo:4 },
+      { id:"hybrid_2_2", categoria:"Híbrida", icone:"🎯", nome:"2 força + 2 corridas", desc:"Completou uma semana com pelo menos 2 treinos de força e 2 corridas.", progresso: semanasCompletas, alvo:1 },
+      { id:"recovery_1", categoria:"Recuperação", icone:"🧘", nome:"Primeira recuperação registrada", desc:"Registrou caminhada, mobilidade, alongamento ou descanso ativo.", progresso: totalRec, alvo:1 },
+      { id:"recovery_7", categoria:"Recuperação", icone:"🌙", nome:"7 recuperações", desc:"Criou histórico de recuperação para treinar com mais segurança.", progresso: totalRec, alvo:7 },
+      { id:"checkin_1", categoria:"Recuperação", icone:"✅", nome:"Primeiro check-in", desc:"Usou o check-in para decidir melhor o treino do dia.", progresso: checkinRespondidoHoje && checkinRespondidoHoje() ? 1 : totalRec > 0 ? 1 : 0, alvo:1 }
+    ];
+    return lista.map(function(c){ c.desbloqueada = Number(c.progresso || 0) >= Number(c.alvo || 1); return c; });
+  };
+
+  window.inicializarV03 = function() {
+    renderizarBibliotecaCorrida(); renderizarBibliotecaRecuperacao(); atualizarTextoRecuperacao();
+    const botao = byId("botaoIrTreino"); if (botao) { botao.textContent = "➡️ Ver plano sugerido"; botao.onclick = irParaPlano; }
+  };
+
+  window.addEventListener("load", function() { setTimeout(inicializarV03, 200); });
+})();
+</script>
+
+
+<script>
+(function(){
+  function safe(texto) { return window.limparTextoSeguro ? limparTextoSeguro(texto) : String(texto || ""); }
+  window.categoriaPermitidaPelaDor = function(categoria, dor) {
+    const cat = normalizarCategoriaTreino(categoria);
+    const d = String(dor || "nenhuma");
+    if (d === "nenhuma") return true;
+    if (d === "joelho" || d === "pernas") return ["superior", "core_estabilidade", "recuperacao", "descanso"].indexOf(cat) !== -1;
+    if (d === "bracos" || d === "ombro") return ["inferior_moderado", "core_estabilidade", "recuperacao", "descanso"].indexOf(cat) !== -1;
+    if (d === "coluna" || d === "lombar") return ["superior", "recuperacao", "descanso"].indexOf(cat) !== -1;
+    return true;
+  };
+  window.renderizarHoje = function() {
+    const resumo = document.getElementById("resumoHojeApp");
+    if (resumo) resumo.innerHTML = montarResumoHojeBase();
+    const stats = estatisticasSemanaAtualPorPlano();
+    const pct = stats.planejadas ? Math.min(100, Math.round((stats.concluidas / stats.planejadas) * 100)) : 0;
+    const progresso = document.getElementById("progressoSemanaHoje");
+    if (progresso) {
+      progresso.innerHTML =
+        "<div class='resumo-kpi'><strong>" + stats.forcaConcluida + "/" + stats.forcaPlanejada + "</strong><span>Força</span></div>" +
+        "<div class='resumo-kpi'><strong>" + stats.corridaConcluida + "/" + stats.corridaPlanejada + "</strong><span>Corrida</span></div>" +
+        "<div class='resumo-kpi'><strong>" + (stats.recuperacaoConcluida || 0) + "/" + (stats.recuperacaoPlanejada || 0) + "</strong><span>Recuperação</span></div>" +
+        "<div class='resumo-kpi'><strong>" + pct + "%</strong><span>Progresso híbrido</span></div>";
+    }
+    const insight = document.getElementById("insightHojeApp");
+    if (insight) {
+      if (stats.concluidas >= stats.planejadas && stats.planejadas > 0) insight.innerHTML = "Semana muito boa: força, corrida e recuperação estão em dia.";
+      else if (stats.puladas > 0) insight.innerHTML = "Você pulou uma sessão. Use Reorganizar semana se precisar redistribuir, sem compensar tudo de uma vez.";
+      else insight.innerHTML = "Boa rota híbrida: siga o foco de hoje e registre cada sessão no campo correto.";
+    }
+    obterHistoricoDaNuvem(function(treinos) { obterCardiosDaNuvem(function(cardios) { atualizarProximaConquistaHoje(treinos, cardios); }); });
+  };
+})();
+</script>
+
+<script>
+  const METATREINO_APP_VERSION = "0.3.0";
 
   function verificarAtualizacaoManual() {
     const status = document.getElementById("statusAtualizacaoManual");
