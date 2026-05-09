@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MetaTreino Hybrid</title>
-  <meta name="app-version" content="0.4.4">
+  <meta name="app-version" content="0.4.5">
   <meta name="theme-color" content="#020617">
-  <link rel="manifest" href="manifest.json?v=0.4.4">
-<link rel="icon" type="image/png" href="icon-512.png.png?v=0.4.4">
-<link rel="apple-touch-icon" href="icon-512.png.png?v=0.4.4">
+  <link rel="manifest" href="manifest.json?v=0.4.5">
+<link rel="icon" type="image/png" href="icon-512.png.png?v=0.4.5">
+<link rel="apple-touch-icon" href="icon-512.png.png?v=0.4.5">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -1506,7 +1506,7 @@
   <div class="container">
     <div class="app-hero">
       <div>
-        <span class="app-badge">MetaTreino Hybrid • Beta 0.4.4</span>
+        <span class="app-badge">MetaTreino Hybrid • Beta 0.4.5</span>
         <h1><span class="hero-meta-word">Meta</span>Treino <span class="hero-hybrid-word">Hybrid</span></h1>
         <p>Musculação e corrida no mesmo plano: força, shape, fôlego e recuperação sem bagunçar sua semana.</p>
       </div>
@@ -1709,7 +1709,7 @@
         <h2>✨ Versão atual</h2>
         <p class="small"><strong>Regra fixa de atualizações:</strong> dentro do app será mostrada somente a versão atual. O histórico completo fica no arquivo CHANGELOG que acompanha o pacote da versão.</p>
         <div class="plano-topo">
-          <strong>MetaTreino Hybrid 0.4.4 Beta</strong><br>
+          <strong>MetaTreino Hybrid 0.4.5 Beta</strong><br>
           <span class="tag beta">Hybrid</span>
           <p><strong>Atualizada em:</strong> 09/05/2026</p>
           <ul class="versao-atual-lista">
@@ -8333,7 +8333,7 @@
 </script>
 
 <script>
-  const METATREINO_APP_VERSION = "0.4.4";
+  const METATREINO_APP_VERSION = "0.4.5";
 
   function verificarAtualizacaoManual() {
     const status = document.getElementById("statusAtualizacaoManual");
@@ -8604,7 +8604,7 @@
 <script id="mt-v042-final-corrections">
 (function(){
   const byId = function(id){ return document.getElementById(id); };
-  const APP_VERSION_V042 = '0.4.4';
+  const APP_VERSION_V042 = '0.4.5';
   function safe(texto){ return typeof limparTextoSeguro === 'function' ? limparTextoSeguro(texto) : String(texto || ''); }
   function catNorm(c){ return typeof normalizarCategoriaTreino === 'function' ? normalizarCategoriaTreino(c || '') : String(c || ''); }
   function isStrength(c){ return typeof isForca === 'function' ? isForca(c) : ['superior','inferior','inferior_forca','inferior_moderado','core_abdomen','core_estabilidade','full_body','funcional'].indexOf(catNorm(c)) !== -1; }
@@ -9008,6 +9008,240 @@
 
   document.addEventListener('DOMContentLoaded', function(){
     setTimeout(function(){ try { if(typeof window.renderizarHoje === 'function') window.renderizarHoje(); } catch(e){} }, 120);
+  });
+})();
+</script>
+
+
+<style id="mt-v045-date-and-session-fix">
+  .hoje-data-titulo { color:#7dd3fc !important; font-weight:900 !important; }
+  .pendencia-zero-box {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(56, 189, 248, .16) !important;
+    background: rgba(8, 47, 73, .10) !important;
+  }
+  .pendencia-zero-box .small { color:#cbd5e1 !important; }
+</style>
+
+<script id="mt-v045-date-and-session-fix">
+(function(){
+  const byId = function(id){ return document.getElementById(id); };
+  const safe = function(texto){ return typeof limparTextoSeguro === 'function' ? limparTextoSeguro(texto) : String(texto || ''); };
+  const catNorm = function(c){ return typeof normalizarCategoriaTreino === 'function' ? normalizarCategoriaTreino(c || '') : String(c || ''); };
+  const isStrength = function(c){
+    return typeof isForca === 'function'
+      ? isForca(c)
+      : ['superior','inferior','inferior_forca','inferior_moderado','core_abdomen','core_estabilidade','full_body','funcional'].indexOf(catNorm(c)) !== -1;
+  };
+
+  function pad2(n){ return String(n).padStart(2, '0'); }
+
+  function hojeISOv045(){
+    try {
+      if (typeof hojeISO2 === 'function') {
+        const v = hojeISO2();
+        if (/^\d{4}-\d{2}-\d{2}$/.test(String(v || ''))) return v;
+      }
+      if (typeof hojeKey === 'function') {
+        const v = hojeKey();
+        if (/^\d{4}-\d{2}-\d{2}$/.test(String(v || ''))) return v;
+      }
+    } catch(e) {}
+    const d = new Date();
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+
+  function dataBRv045(iso, completo){
+    if (/^\d{4}-\d{2}-\d{2}$/.test(String(iso || ''))) {
+      const p = iso.split('-');
+      return completo ? p[2] + '/' + p[1] + '/' + p[0] : p[2] + '/' + p[1];
+    }
+    try {
+      const d = new Date();
+      return pad2(d.getDate()) + '/' + pad2(d.getMonth() + 1) + '/' + d.getFullYear();
+    } catch(e) {
+      return '';
+    }
+  }
+
+  function itemHojeV045(){
+    try { return typeof obterItemPlanoHoje === 'function' ? obterItemPlanoHoje() : null; }
+    catch(e) { return null; }
+  }
+
+  function treinoLocalV045(){
+    try { return typeof lerResumoTreinoAtualLocal === 'function' ? lerResumoTreinoAtualLocal() : null; }
+    catch(e) { return null; }
+  }
+
+  function nomeCorridaSubtipoV045(subtipo){
+    const s = String(subtipo || '').toLowerCase();
+    if (typeof textoSubtipoCorrida === 'function') {
+      try {
+        const texto = textoSubtipoCorrida(s || 'corrida_leve');
+        if (texto && texto !== s) return texto;
+      } catch(e) {}
+    }
+    const mapa = {
+      caminhada_leve: 'Caminhada Leve',
+      corrida_leve: 'Corrida Leve',
+      regenerativa: 'Corrida Regenerativa',
+      corrida_regenerativa: 'Corrida Regenerativa',
+      intervalado: 'Tiros / Intervalado',
+      tiros: 'Tiros / Intervalado',
+      ritmo: 'Corrida de Ritmo',
+      tempo: 'Corrida de Ritmo',
+      progressiva: 'Corrida Progressiva',
+      longo: 'Longão',
+      longao: 'Longão',
+      teste: 'Teste de Corrida'
+    };
+    return mapa[s] || 'Corrida Leve';
+  }
+
+  function descCorridaSubtipoV045(subtipo){
+    const s = String(subtipo || 'corrida_leve').toLowerCase();
+    if (typeof descricaoCorridaSubtipo === 'function') {
+      try {
+        const texto = descricaoCorridaSubtipo(s);
+        if (texto && !/sess[aã]o sugerida para hoje/i.test(texto)) return texto;
+      } catch(e) {}
+    }
+    const mapa = {
+      caminhada_leve: 'Caminhada confortável para recuperação ativa ou início gradual.',
+      corrida_leve: 'Zona 1–2, confortável, dá para conversar. Constrói base aeróbica sem atrapalhar a musculação.',
+      regenerativa: 'Muito leve, para soltar as pernas e recuperar sem buscar performance.',
+      corrida_regenerativa: 'Muito leve, para soltar as pernas e recuperar sem buscar performance.',
+      intervalado: 'Alterna esforço forte e pausa leve. Use apenas quando as pernas estiverem bem.',
+      tiros: 'Alterna esforço forte e pausa leve. Use apenas quando as pernas estiverem bem.',
+      ritmo: 'Ritmo moderado/forte sustentado para melhorar pace sem virar sprint.',
+      tempo: 'Ritmo moderado/forte sustentado para melhorar pace sem virar sprint.',
+      progressiva: 'Começa leve e termina um pouco mais forte, treinando controle de ritmo.',
+      longo: 'Sessão mais longa da semana para desenvolver resistência.',
+      longao: 'Sessão mais longa da semana para desenvolver resistência.',
+      teste: 'Sessão para avaliar seu nível e ajustar as próximas sugestões.'
+    };
+    return mapa[s] || mapa.corrida_leve;
+  }
+
+  function nomeSessaoV045(item){
+    if (!item) return 'Sessão do dia';
+    const cat = catNorm(item.categoria || item.tipo || '');
+    if (cat === 'cardio' || cat === 'corrida') {
+      return nomeCorridaSubtipoV045(item.subtipoCorrida || item.tipoSessaoCardio || item.subtipo || 'corrida_leve');
+    }
+    if (cat === 'recuperacao') {
+      if (typeof nomeRecuperacao === 'function') {
+        try { return nomeRecuperacao(item.tipoRecuperacao || 'caminhada_leve'); } catch(e) {}
+      }
+      return 'Recuperação Ativa';
+    }
+    if (cat === 'descanso') return 'Descanso Total';
+    if (typeof nomeItemPlanoHibrido === 'function') {
+      try {
+        const n = nomeItemPlanoHibrido(item);
+        if (n && !/^cardio$/i.test(n)) return n;
+      } catch(e) {}
+    }
+    if (typeof nomeAmigavelTreino === 'function') {
+      try { return nomeAmigavelTreino(cat); } catch(e) {}
+    }
+    return item.titulo || 'Sessão do dia';
+  }
+
+  function descSessaoV045(item){
+    if (!item) return '';
+    const cat = catNorm(item.categoria || item.tipo || '');
+    if (cat === 'cardio' || cat === 'corrida') {
+      return descCorridaSubtipoV045(item.subtipoCorrida || item.tipoSessaoCardio || item.subtipo || 'corrida_leve');
+    }
+    if (cat === 'recuperacao') return item.descricao || 'Sessão leve para reduzir fadiga e manter consistência.';
+    if (cat === 'descanso') return 'Sem treino obrigatório. Use check-in se quiser registrar como está.';
+    if (typeof descricaoPlanoItemHibrido === 'function') {
+      try { return descricaoPlanoItemHibrido(item); } catch(e) {}
+    }
+    return item.descricao || 'Sessão sugerida para hoje.';
+  }
+
+  function classeBadgeV045(categoria){
+    const c = catNorm(categoria);
+    if (c === 'cardio' || c === 'corrida') return 'corrida';
+    if (c === 'recuperacao') return 'recuperacao';
+    if (c === 'descanso') return 'descanso';
+    return 'forca';
+  }
+
+  function textoBadgeV045(categoria){
+    const c = catNorm(categoria);
+    if (c === 'cardio' || c === 'corrida') return 'CORRIDA';
+    if (c === 'recuperacao') return 'RECUPERAÇÃO';
+    if (c === 'descanso') return 'DESCANSO';
+    return 'FORÇA';
+  }
+
+  function treinoCompativelV045(local, item){
+    if (!local || !item) return false;
+    const catItem = catNorm(item.categoria || '');
+    const catLocal = catNorm(local.categoria || local.letra || '');
+    const mesmoDia = local.data === hojeISOv045();
+    return mesmoDia && isStrength(catItem) && isStrength(catLocal) && catItem === catLocal;
+  }
+
+  function blocoPendenteV045(local, item){
+    if (!local || !item || treinoCompativelV045(local, item)) return '';
+    const catLocal = catNorm(local.categoria || local.letra || '');
+    if (!isStrength(catLocal)) return '';
+    const concluidos = Array.isArray(local.concluidos) ? local.concluidos.filter(Boolean).length : 0;
+    const total = Array.isArray(local.treino) ? local.treino.length : 0;
+
+    if (concluidos <= 0) {
+      return "<div class='pendencia-zero-box'><strong>Pendência anterior detectada</strong><br><span class='small'>Você abriu um treino de força, mas não iniciou de fato. Ele não substitui o foco de hoje.</span><div class='plano-acoes-principais'><button type='button' class='botao-secundario' onclick='if(confirm(\"Descartar esse treino de força não iniciado?\")){localStorage.removeItem(\"metatreinoTreinoAtual\"); if(typeof renderizarHoje === \"function\") renderizarHoje();}'>Descartar</button><button type='button' class='botao-secundario' onclick='irParaPlano()'>Reagendar no plano</button></div></div>";
+    }
+
+    const nome = typeof nomeAmigavelTreino === 'function' ? nomeAmigavelTreino(catLocal) : catLocal;
+    return "<div class='pendente-anterior-box'><strong>Treino anterior em andamento</strong><br>" + safe(nome) + " • " + concluidos + "/" + total + " exercício(s)<br><span class='small'>Como esse treino já tinha sido iniciado em outro dia, ele fica apenas como lembrete e não substitui o foco principal de hoje.</span><button type='button' class='botao-secundario' onclick='irParaTreino()'>Retomar treino anterior</button></div>";
+  }
+
+  window.montarResumoHojeBase = function(){
+    const item = itemHojeV045();
+    const local = treinoLocalV045();
+    const dataBase = item && /^\d{4}-\d{2}-\d{2}$/.test(String(item.dataISO || '')) ? item.dataISO : hojeISOv045();
+    const dataTopo = "<span class='hoje-data-titulo'>Hoje — " + safe(dataBRv045(dataBase, true)) + "</span>";
+
+    if (item) {
+      const categoria = catNorm(item.categoria || item.tipo || '');
+      let html = dataTopo;
+      html += "<span class='session-badge " + classeBadgeV045(categoria) + "'>" + textoBadgeV045(categoria) + "</span><br>";
+      html += "<strong>Foco principal de hoje</strong><br>" + safe(nomeSessaoV045(item)) + "<br>";
+      html += safe(descSessaoV045(item));
+      html += blocoPendenteV045(local, item);
+      return html;
+    }
+
+    if (local) {
+      const categoria = catNorm(local.categoria || local.letra || '');
+      const concluidos = (local.concluidos || []).filter(Boolean).length;
+      const total = local.treino ? local.treino.length : 0;
+      const nome = typeof nomeAmigavelTreino === 'function' ? nomeAmigavelTreino(categoria) : categoria;
+      return dataTopo + "<span class='session-badge forca'>FORÇA</span><br><strong>Treino em andamento</strong><br>" + safe(nome) + "<br>Progresso: " + concluidos + " de " + total + " exercício(s).";
+    }
+
+    return dataTopo + "<strong>Comece pelo plano ou check-in</strong><br>Não encontrei sessão definida para hoje.";
+  };
+
+  const oldRenderizarHojeV045 = window.renderizarHoje;
+  window.renderizarHoje = function(){
+    if (typeof oldRenderizarHojeV045 === 'function') oldRenderizarHojeV045();
+    const resumo = byId('resumoHojeApp');
+    if (resumo) resumo.innerHTML = window.montarResumoHojeBase();
+    const insight = byId('insightHojeApp');
+    if (insight) insight.innerHTML = 'Hoje o app prioriza o que está no Plano. A data e o nome da sessão agora usam fallback seguro para não ficarem em branco.';
+  };
+
+  window.addEventListener('load', function(){
+    setTimeout(function(){ try { if (typeof window.renderizarHoje === 'function') window.renderizarHoje(); } catch(e){} }, 250);
   });
 })();
 </script>

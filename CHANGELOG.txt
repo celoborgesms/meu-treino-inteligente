@@ -1,3 +1,13 @@
+v0.4.5 beta - Correção da data na aba Hoje e fallback da sessão
+
+- Corrigida a aba Hoje para sempre mostrar a data completa, por exemplo: Hoje — 09/05/2026.
+- Corrigido fallback de sessão de corrida: quando o plano retorna categoria cardio sem subtipo explícito, a tela Hoje mostra Corrida Leve em vez de cardio.
+- Corrigida descrição de corrida para mostrar orientação útil em vez de texto genérico.
+- Pendência anterior com 0 exercício(s) agora aparece como ação discreta de Descartar/Reagendar, sem competir com o foco principal do dia.
+- Mantida a paleta grafite + azul/ciano premium.
+- Mantidas as duas imagens embutidas diretamente no index.html como data URI.
+- Manifest e service worker atualizados para v0.4.5.
+
 v0.4.4 beta - Imagens embutidas no index e pacote final alinhado
 
 - As duas imagens da nova identidade visual agora estão embutidas diretamente no index.html como data URI.
