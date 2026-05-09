@@ -1,3 +1,13 @@
+v0.4.2 beta - Correção de coerência visual e lógica híbrida
+
+- Aba Hoje agora usa o Plano do dia como fonte principal da verdade.
+- Treino de força em andamento não sobrescreve uma corrida planejada; aparece apenas como pendência separada.
+- Datas foram adicionadas aos dias do plano e à tela Hoje.
+- Visual preto/grafite com vermelho foi reforçado em botões, badges, cards, barras, inputs e destaques.
+- Aba Corrida recebeu sugestão mais contextual por objetivo, desafio, plano do dia e último cardio registrado.
+- Desafio de corrida permanece salvo até a data marcada e orienta sugestões futuras.
+- Histórico/compartilhamento do dia permanece centralizado na Evolução.
+
 v0.4.1 beta - Correções de fluxo, visual preto/vermelho e treino híbrido real
 
 - Visual atualizado para preto/grafite com vermelho de destaque.
