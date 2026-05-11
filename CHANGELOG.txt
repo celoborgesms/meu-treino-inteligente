@@ -1,3 +1,12 @@
+v0.4.5-fixed - Consolidação dos overrides de renderizarHoje
+
+- Eliminada a cadeia de 4 sobreescritas (override chain) da função renderizarHoje que causava bugs silenciosos.
+- renderizarHoje agora é uma função única e definitiva (v045), sem dependência de versões anteriores.
+- Insight da aba Hoje é dinâmico: reflete o item do plano, status da semana ou orienta montar o plano.
+- montarResumoHojeBase do script intermediário protegido com guard (não sobrescreve a versão mais robusta do v045).
+- Removido o listener de load duplicado do bloco v042 (evitava duplo disparo de renderização).
+- Nenhuma lógica de negócio foi alterada: plano, force, cardio, recuperação e conquistas funcionam igual.
+
 v0.4.5 beta - Correção da data na aba Hoje e fallback da sessão
 
 - Corrigida a aba Hoje para sempre mostrar a data completa, por exemplo: Hoje — 09/05/2026.

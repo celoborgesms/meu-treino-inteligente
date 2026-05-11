@@ -8298,7 +8298,6 @@
 
 <script>
 (function(){
-  function safe(texto) { return window.limparTextoSeguro ? limparTextoSeguro(texto) : String(texto || ""); }
   window.categoriaPermitidaPelaDor = function(categoria, dor) {
     const cat = normalizarCategoriaTreino(categoria);
     const d = String(dor || "nenhuma");
@@ -8307,27 +8306,6 @@
     if (d === "bracos" || d === "ombro") return ["inferior_moderado", "core_estabilidade", "recuperacao", "descanso"].indexOf(cat) !== -1;
     if (d === "coluna" || d === "lombar") return ["superior", "recuperacao", "descanso"].indexOf(cat) !== -1;
     return true;
-  };
-  window.renderizarHoje = function() {
-    const resumo = document.getElementById("resumoHojeApp");
-    if (resumo) resumo.innerHTML = montarResumoHojeBase();
-    const stats = estatisticasSemanaAtualPorPlano();
-    const pct = stats.planejadas ? Math.min(100, Math.round((stats.concluidas / stats.planejadas) * 100)) : 0;
-    const progresso = document.getElementById("progressoSemanaHoje");
-    if (progresso) {
-      progresso.innerHTML =
-        "<div class='resumo-kpi'><strong>" + stats.forcaConcluida + "/" + stats.forcaPlanejada + "</strong><span>Força</span></div>" +
-        "<div class='resumo-kpi'><strong>" + stats.corridaConcluida + "/" + stats.corridaPlanejada + "</strong><span>Corrida</span></div>" +
-        "<div class='resumo-kpi'><strong>" + (stats.recuperacaoConcluida || 0) + "/" + (stats.recuperacaoPlanejada || 0) + "</strong><span>Recuperação</span></div>" +
-        "<div class='resumo-kpi'><strong>" + pct + "%</strong><span>Progresso híbrido</span></div>";
-    }
-    const insight = document.getElementById("insightHojeApp");
-    if (insight) {
-      if (stats.concluidas >= stats.planejadas && stats.planejadas > 0) insight.innerHTML = "Semana muito boa: força, corrida e recuperação estão em dia.";
-      else if (stats.puladas > 0) insight.innerHTML = "Você pulou uma sessão. Use Reorganizar semana se precisar redistribuir, sem compensar tudo de uma vez.";
-      else insight.innerHTML = "Boa rota híbrida: siga o foco de hoje e registre cada sessão no campo correto.";
-    }
-    obterHistoricoDaNuvem(function(treinos) { obterCardiosDaNuvem(function(cardios) { atualizarProximaConquistaHoje(treinos, cardios); }); });
   };
 })();
 </script>
@@ -8705,16 +8683,19 @@
     return html;
   };
 
-  window.renderizarHoje = function(){
-    const resumo = byId('resumoHojeApp'); if(resumo) resumo.innerHTML = window.montarResumoHojeBase();
+  // renderizarHoje centralizada v042 — será refinada pelo patch v045 abaixo
+  window.__renderizarHojeBase = function(){
+    const resumo = byId('resumoHojeApp');
+    if(resumo && typeof window.montarResumoHojeBase === 'function') resumo.innerHTML = window.montarResumoHojeBase();
     const stats = typeof estatisticasSemanaAtualPorPlano === 'function' ? estatisticasSemanaAtualPorPlano() : {planejadas:0,concluidas:0,forcaConcluida:0,forcaPlanejada:0,corridaConcluida:0,corridaPlanejada:0,recuperacaoConcluida:0,recuperacaoPlanejada:0,pendentes:0,puladas:0};
     const pct = stats.planejadas ? Math.min(100, Math.round((stats.concluidas / stats.planejadas) * 100)) : 0;
     const progresso = byId('progressoSemanaHoje');
     if(progresso){ progresso.innerHTML = "<div class='resumo-kpi'><strong>" + stats.forcaConcluida + "/" + stats.forcaPlanejada + "</strong><span>Força</span></div><div class='resumo-kpi'><strong>" + stats.corridaConcluida + "/" + stats.corridaPlanejada + "</strong><span>Corrida</span></div><div class='resumo-kpi'><strong>" + (stats.recuperacaoConcluida || 0) + "/" + (stats.recuperacaoPlanejada || 0) + "</strong><span>Recuperação</span></div><div class='resumo-kpi'><strong>" + pct + "%</strong><span>Progresso híbrido</span></div>"; }
     const insight = byId('insightHojeApp');
-    if(insight){ const item = itemPlanoHojeV042(); insight.innerHTML = item ? "Hoje o foco principal vem do Plano: " + safe(nomePlanoDia(item)) + ". Se houver treino pendente antigo, ele aparece separado e não substitui o treino do dia." : "Monte o plano semanal para a aba Hoje seguir a sessão correta."; }
+    if(insight){ const item = itemPlanoHojeV042(); const nome = item ? safe(nomePlanoDia(item)) : ''; insight.innerHTML = item ? "Foco de hoje pelo plano: <strong>" + nome + "</strong>. Pendência anterior (se houver) aparece separada abaixo." : stats.concluidas >= stats.planejadas && stats.planejadas > 0 ? "Semana muito boa: força, corrida e recuperação estão em dia." : stats.puladas > 0 ? "Você pulou uma sessão. Use Reorganizar semana para redistribuir sem compensar tudo de uma vez." : "Monte o plano semanal para a aba Hoje seguir a sessão correta."; }
     try { obterHistoricoDaNuvem(function(treinos){ obterCardiosDaNuvem(function(cardios){ if(typeof atualizarProximaConquistaHoje === 'function') atualizarProximaConquistaHoje(treinos, cardios); }); }); } catch(e){}
   };
+  window.renderizarHoje = window.__renderizarHojeBase;
 
   const oldGerarTexto = window.gerarTextoSugestaoCardio;
   window.gerarTextoSugestaoCardio = function(){
@@ -8773,7 +8754,6 @@
     const nav = byId('navegacaoPrincipal'); if(nav) Array.from(nav.querySelectorAll('button')).forEach(function(btn){ if(/Recuperação/i.test(btn.textContent || '')) btn.remove(); });
     const botao = byId('botaoIrTreino'); if(botao){ botao.textContent='➡️ Ver plano sugerido'; botao.onclick=irParaPlano; }
   });
-  window.addEventListener('load', function(){ setTimeout(function(){ try { renderizarHoje(); } catch(e){} }, 350); });
 })();
 </script>
 
@@ -8968,43 +8948,31 @@
     return "<div class='pendente-anterior-box'><strong>Treino anterior em andamento</strong><br>" + safe(nome) + " • " + concluidos + "/" + total + " exercício(s)<br><span class='small'>Como esse treino já tinha sido iniciado em outro dia, ele fica apenas como lembrete e não substitui o foco principal de hoje.</span><button type='button' class='botao-secundario' onclick='irParaTreino()'>Retomar treino anterior</button></div>";
   };
 
-  window.montarResumoHojeBase = function(){
-    const item = itemHoje();
-    const local = treinoLocal();
-    const dataHoje = typeof formatarDataBR2 === 'function' && typeof hojeISO2 === 'function' ? formatarDataBR2(hojeISO2(), true) : '';
-    const dataTopo = "<span class='hoje-data-titulo'>Hoje — " + safe(dataHoje) + "</span>";
-
-    if(item){
-      const categoria = catNorm(item.categoria);
-      let html = dataTopo;
-      html += "<span class='session-badge " + classeBadge(categoria) + "'>" + rotuloBadge(categoria) + "</span><br>";
-      html += "<strong>Foco principal de hoje</strong><br>" + safe(typeof nomePlanoDia === 'function' ? nomePlanoDia(item) : (item.titulo || item.categoria || 'Sessão do dia')) + "<br>";
-      html += safe(typeof descPlanoDia === 'function' ? descPlanoDia(item) : (item.descricao || 'Sessão sugerida para hoje.'));
-      html += blocoPendenteAnterior(local, item);
-      return html;
-    }
-
-    if(local){
-      const categoria = catNorm(local.categoria || local.letra || '');
-      const concluidos = (local.concluidos || []).filter(function(x){ return x === true; }).length;
-      const total = local.treino ? local.treino.length : 0;
-      return dataTopo + "<span class='session-badge forca'>FORÇA</span><br><strong>Treino em andamento</strong><br>" + safe(typeof nomeAmigavelTreino === 'function' ? nomeAmigavelTreino(categoria) : categoria) + "<br>Progresso: " + concluidos + " de " + total + " exercício(s).";
-    }
-
-    return dataTopo + "<strong>Comece pelo plano ou check-in</strong><br>Não encontrei sessão definida para hoje.";
-  };
-
-  const oldRenderizarHoje = window.renderizarHoje;
-  window.renderizarHoje = function(){
-    if(typeof oldRenderizarHoje === 'function') oldRenderizarHoje();
-    const insight = byId('insightHojeApp');
-    if(insight){
+  // montarResumoHojeBase desta versão intermediária — será sobrescrita pelo v045 abaixo (versão mais robusta)
+  if (!window.montarResumoHojeBase) {
+    window.montarResumoHojeBase = function(){
       const item = itemHoje();
-      insight.innerHTML = item
-        ? "Hoje o app prioriza o que está no Plano. Treino antigo só aparece como lembrete se já tiver sido realmente iniciado." 
-        : "Monte o plano semanal para a aba Hoje seguir a sessão correta.";
-    }
-  };
+      const local = treinoLocal();
+      const dataHoje = typeof formatarDataBR2 === 'function' && typeof hojeISO2 === 'function' ? formatarDataBR2(hojeISO2(), true) : '';
+      const dataTopo = "<span class='hoje-data-titulo'>Hoje — " + safe(dataHoje) + "</span>";
+      if(item){
+        const categoria = catNorm(item.categoria);
+        let html = dataTopo;
+        html += "<span class='session-badge " + classeBadge(categoria) + "'>" + rotuloBadge(categoria) + "</span><br>";
+        html += "<strong>Foco principal de hoje</strong><br>" + safe(typeof nomePlanoDia === 'function' ? nomePlanoDia(item) : (item.titulo || item.categoria || 'Sessão do dia')) + "<br>";
+        html += safe(typeof descPlanoDia === 'function' ? descPlanoDia(item) : (item.descricao || 'Sessão sugerida para hoje.'));
+        html += blocoPendenteAnterior(local, item);
+        return html;
+      }
+      if(local){
+        const categoria = catNorm(local.categoria || local.letra || '');
+        const concluidos = (local.concluidos || []).filter(function(x){ return x === true; }).length;
+        const total = local.treino ? local.treino.length : 0;
+        return dataTopo + "<span class='session-badge forca'>FORÇA</span><br><strong>Treino em andamento</strong><br>" + safe(typeof nomeAmigavelTreino === 'function' ? nomeAmigavelTreino(categoria) : categoria) + "<br>Progresso: " + concluidos + " de " + total + " exercício(s).";
+      }
+      return dataTopo + "<strong>Comece pelo plano ou check-in</strong><br>Não encontrei sessão definida para hoje.";
+    };
+  }
 
   document.addEventListener('DOMContentLoaded', function(){
     setTimeout(function(){ try { if(typeof window.renderizarHoje === 'function') window.renderizarHoje(); } catch(e){} }, 120);
@@ -9231,18 +9199,64 @@
     return dataTopo + "<strong>Comece pelo plano ou check-in</strong><br>Não encontrei sessão definida para hoje.";
   };
 
-  const oldRenderizarHojeV045 = window.renderizarHoje;
+  // ── renderizarHoje FINAL (v0.4.5) ──────────────────────────────────────────
+  // Versão consolidada e definitiva. Não chama versões anteriores.
+  // Combina: montarResumoHojeBase (v045 com fallbacks robustos),
+  //          KPIs de progresso da semana (v042), insight dinâmico (v042),
+  //          atualização de conquistas (original).
   window.renderizarHoje = function(){
-    if (typeof oldRenderizarHojeV045 === 'function') oldRenderizarHojeV045();
+    // 1. Resumo principal com data e sessão do dia
     const resumo = byId('resumoHojeApp');
     if (resumo) resumo.innerHTML = window.montarResumoHojeBase();
+
+    // 2. KPIs da semana
+    const stats = (function(){
+      try {
+        return typeof estatisticasSemanaAtualPorPlano === 'function'
+          ? estatisticasSemanaAtualPorPlano()
+          : null;
+      } catch(e) { return null; }
+    })() || { planejadas:0, concluidas:0, forcaConcluida:0, forcaPlanejada:0, corridaConcluida:0, corridaPlanejada:0, recuperacaoConcluida:0, recuperacaoPlanejada:0, pendentes:0, puladas:0 };
+
+    const pct = stats.planejadas ? Math.min(100, Math.round((stats.concluidas / stats.planejadas) * 100)) : 0;
+    const progresso = byId('progressoSemanaHoje');
+    if (progresso) {
+      progresso.innerHTML =
+        "<div class='resumo-kpi'><strong>" + stats.forcaConcluida + "/" + stats.forcaPlanejada + "</strong><span>Força</span></div>" +
+        "<div class='resumo-kpi'><strong>" + stats.corridaConcluida + "/" + stats.corridaPlanejada + "</strong><span>Corrida</span></div>" +
+        "<div class='resumo-kpi'><strong>" + (stats.recuperacaoConcluida || 0) + "/" + (stats.recuperacaoPlanejada || 0) + "</strong><span>Recuperação</span></div>" +
+        "<div class='resumo-kpi'><strong>" + pct + "%</strong><span>Progresso híbrido</span></div>";
+    }
+
+    // 3. Insight dinâmico baseado no estado real da semana
     const insight = byId('insightHojeApp');
-    if (insight) insight.innerHTML = 'Hoje o app prioriza o que está no Plano. A data e o nome da sessão agora usam fallback seguro para não ficarem em branco.';
+    if (insight) {
+      const item = itemHojeV045();
+      if (item) {
+        const nomeS = safe(nomeSessaoV045(item));
+        insight.innerHTML = "Foco de hoje pelo plano: <strong>" + nomeS + "</strong>. Pendência anterior (se houver) aparece separada abaixo.";
+      } else if (stats.concluidas >= stats.planejadas && stats.planejadas > 0) {
+        insight.innerHTML = "Semana muito boa: força, corrida e recuperação estão em dia.";
+      } else if (stats.puladas > 0) {
+        insight.innerHTML = "Você pulou uma sessão. Use Reorganizar semana para redistribuir sem compensar tudo de uma vez.";
+      } else {
+        insight.innerHTML = "Monte o plano semanal para a aba Hoje seguir a sessão correta.";
+      }
+    }
+
+    // 4. Próxima conquista
+    try {
+      obterHistoricoDaNuvem(function(treinos) {
+        obterCardiosDaNuvem(function(cardios) {
+          if (typeof atualizarProximaConquistaHoje === 'function') {
+            atualizarProximaConquistaHoje(treinos, cardios);
+          }
+        });
+      });
+    } catch(e) {}
   };
 
-  window.addEventListener('load', function(){
-    setTimeout(function(){ try { if (typeof window.renderizarHoje === 'function') window.renderizarHoje(); } catch(e){} }, 250);
-  });
+  window.addEventListener('load', function(){ setTimeout(function(){ try { if (typeof window.renderizarHoje === 'function') window.renderizarHoje(); } catch(e){} }, 300); });
 })();
 </script>
 
