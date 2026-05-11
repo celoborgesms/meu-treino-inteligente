@@ -1447,10 +1447,10 @@
   }
   body {
     background:
-      radial-gradient(circle at 12% 8%, rgba(239, 68, 68, .20), transparent 31%),
-      radial-gradient(circle at 84% 6%, rgba(127, 29, 29, .30), transparent 28%),
-      radial-gradient(circle at bottom, rgba(220, 38, 38, .13), transparent 34%),
-      linear-gradient(180deg, #050506 0%, #0b0b0d 48%, #130709 100%);
+      radial-gradient(circle at 14% 6%, rgba(239,68,68,.08), transparent 28%),
+      radial-gradient(circle at 86% 5%, rgba(100,100,110,.10), transparent 26%),
+      radial-gradient(circle at bottom, rgba(15,15,20,.90), transparent 30%),
+      linear-gradient(180deg, #050506 0%, #09090b 50%, #0d0d10 100%);
     color: #f8fafc;
   }
   .app-badge { background: rgba(239,68,68,.14); color: #fecaca; border-color: rgba(248,113,113,.28); }
@@ -1524,154 +1524,195 @@
 
       <div id="cardDadosPessoa" class="card hidden">
         <h2>⚙️ Perfil híbrido</h2>
-        <p class="small">Preencha seus dados para o app equilibrar musculação, corrida e recuperação conforme seu nível.</p>
+        <p class="small">Preencha em 3 passos rápidos para o app equilibrar musculação, corrida e recuperação.</p>
 
-        <label for="nome">Nome</label>
-        <input id="nome" type="text" placeholder="Ex: Usuário">
-
-        <label for="sexo">Sexo</label>
-        <select id="sexo">
-          <option value="">Escolher</option>
-          <option value="masculino">Masculino</option>
-          <option value="feminino">Feminino</option>
-          <option value="nao_responder">Prefiro não responder</option>
-        </select>
-
-        <label for="dataNascimento">Data de nascimento</label>
-        <input id="dataNascimento" type="date">
-        <p class="small">A idade será calculada automaticamente pela data de nascimento.</p>
-
-        <label for="peso">Peso atual (kg)</label>
-        <input id="peso" type="number" min="1" max="700" placeholder="Ex: 80">
-
-        <label for="altura">Altura atual (cm)</label>
-        <input id="altura" type="number" placeholder="Ex: 175">
-
-        <label for="metaPrincipal">Principal meta híbrida</label>
-        <select id="metaPrincipal">
-          <option value="hibrido_shape" selected>Shape + fôlego</option>
-          <option value="hibrido_performance">Performance híbrida geral</option>
-          <option value="massa">Ganhar massa sem abandonar corrida</option>
-          <option value="perder_peso">Emagrecimento híbrido</option>
-          <option value="definicao">Definição + condicionamento</option>
-          <option value="forca">Força com condicionamento</option>
-          <option value="corrida_5k">Correr 5 km mantendo força</option>
-          <option value="corrida_10k">Correr 10 km mantendo massa</option>
-        </select>
-
-        <label for="rotinaAtual">Rotina atual de treino</label>
-        <select id="rotinaAtual">
-          <option value="nunca">Nunca treinei</option>
-          <option value="dificuldade">Já treinei, mas tive dificuldades para manter</option>
-          <option value="voltando">Estou voltando a treinar</option>
-          <option value="regular">Já treino regularmente</option>
-        </select>
-
-        <label for="tempoExperiencia">Tempo de experiência</label>
-        <select id="tempoExperiencia">
-          <option value="menos_1">Menos de 1 ano</option>
-          <option value="1_2">De 1 a 2 anos</option>
-          <option value="2_4">De 2 a 4 anos</option>
-          <option value="4_mais">4 anos ou mais</option>
-        </select>
-
-        <label for="localTreino">Onde costuma treinar?</label>
-        <select id="localTreino">
-          <option value="sem_equipamento">Peso corporal / sem equipamentos</option>
-          <option value="academia_basica">Academia básica / equipamentos simples</option>
-          <option value="academia_grande">Academia completa</option>
-        </select>
-
-        <label for="diasTreinoSemana">Meta de dias ativos na semana</label>
-        <select id="diasTreinoSemana">
-          <option value="2">2 dias por semana</option>
-          <option value="3">3 dias por semana</option>
-          <option value="4" selected>4 dias por semana</option>
-          <option value="5">5 dias por semana</option>
-          <option value="6">6 dias por semana</option>
-        </select>
-        <p class="small">Conta musculação, corrida e recuperação ativa planejada.</p>
-
-        <label for="diasCorridaSemana">Quantos dias de corrida/cardio por semana?</label>
-        <select id="diasCorridaSemana">
-          <option value="1">1 dia de corrida/cardio</option>
-          <option value="2" selected>2 dias de corrida/cardio</option>
-          <option value="3">3 dias de corrida/cardio</option>
-          <option value="4">4 dias de corrida/cardio</option>
-        </select>
-
-        <label for="prioridadeHibrida">Prioridade do plano</label>
-        <select id="prioridadeHibrida">
-          <option value="equilibrado" selected>Equilibrado: força + corrida</option>
-          <option value="forca_shape">Mais força/shape, corrida como complemento</option>
-          <option value="corrida_performance">Mais corrida/performance, força como suporte</option>
-        </select>
-
-        <label for="nivelCorridaPerfil">Nível atual na corrida</label>
-        <select id="nivelCorridaPerfil">
-          <option value="iniciante">Estou começando agora</option>
-          <option value="voltando">Estou voltando a correr</option>
-          <option value="regular">Já corro regularmente</option>
-          <option value="avancado">Tenho experiência/provas</option>
-        </select>
-
-        <label for="objetivoCorridaPerfil">Objetivo de corrida</label>
-        <select id="objetivoCorridaPerfil">
-          <option value="comecar">Começar com segurança</option>
-          <option value="3k">Completar 3 km</option>
-          <option value="5k" selected>Completar 5 km</option>
-          <option value="10k">Correr 10 km</option>
-          <option value="meia">Evoluir para meia maratona</option>
-          <option value="pace">Melhorar ritmo / pace</option>
-        </select>
-
-        <label for="distanciaCorridaConfortavel">Maior distância confortável hoje (km)</label>
-        <input id="distanciaCorridaConfortavel" type="number" min="0" step="0.1" placeholder="Ex: 3, 5 ou 10">
-
-        <label for="paceCorridaMedio">Pace médio aproximado, se souber</label>
-        <input id="paceCorridaMedio" type="text" placeholder="Ex: 6:30/km ou deixe em branco">
-
-        <label>Dias que você costuma conseguir treinar</label>
-        <div class="checkbox-grid" id="diasDisponiveisGrid">
-          <label><input type="checkbox" name="diasDisponiveis" value="1" checked>Segunda</label>
-          <label><input type="checkbox" name="diasDisponiveis" value="2" checked>Terça</label>
-          <label><input type="checkbox" name="diasDisponiveis" value="3" checked>Quarta</label>
-          <label><input type="checkbox" name="diasDisponiveis" value="4" checked>Quinta</label>
-          <label><input type="checkbox" name="diasDisponiveis" value="5" checked>Sexta</label>
-          <label><input type="checkbox" name="diasDisponiveis" value="6">Sábado</label>
-          <label><input type="checkbox" name="diasDisponiveis" value="0">Domingo</label>
+        <!-- Indicador de progresso -->
+        <div class="wizard-progress">
+          <div class="wizard-step-dot">
+            <div class="wizard-dot-circle ativo" id="wdot1">1</div>
+            <span class="wizard-dot-label ativo" id="wlbl1">Básico</span>
+          </div>
+          <div class="wizard-step-dot">
+            <div class="wizard-dot-circle" id="wdot2">2</div>
+            <span class="wizard-dot-label" id="wlbl2">Objetivos</span>
+          </div>
+          <div class="wizard-step-dot">
+            <div class="wizard-dot-circle" id="wdot3">3</div>
+            <span class="wizard-dot-label" id="wlbl3">Corrida</span>
+          </div>
         </div>
-        <p class="small">O plano semanal usa esses dias para organizar treino, cardio e recuperação sem ficar rígido demais.</p>
 
-        <label>Equipamentos que você tem acesso</label>
-        <div class="checkbox-grid" id="equipamentosDisponiveisGrid">
-          <label><input type="checkbox" name="equipamentosDisponiveis" value="peso_corporal" checked>Peso corporal</label>
-          <label><input type="checkbox" name="equipamentosDisponiveis" value="halteres" checked>Halteres</label>
-          <label><input type="checkbox" name="equipamentosDisponiveis" value="barra">Barra</label>
-          <label><input type="checkbox" name="equipamentosDisponiveis" value="banco">Banco</label>
-          <label><input type="checkbox" name="equipamentosDisponiveis" value="elastico">Elástico</label>
-          <label><input type="checkbox" name="equipamentosDisponiveis" value="polia">Polia/cabo</label>
-          <label><input type="checkbox" name="equipamentosDisponiveis" value="maquinas">Máquinas</label>
-          <label><input type="checkbox" name="equipamentosDisponiveis" value="esteira">Esteira</label>
-          <label><input type="checkbox" name="equipamentosDisponiveis" value="bicicleta">Bicicleta</label>
+        <!-- Passo 1: Dados básicos -->
+        <div class="wizard-passo visivel" id="wzPasso1">
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" placeholder="Ex: João">
+
+          <label for="sexo">Sexo</label>
+          <select id="sexo">
+            <option value="">Escolher</option>
+            <option value="masculino">Masculino</option>
+            <option value="feminino">Feminino</option>
+            <option value="nao_responder">Prefiro não responder</option>
+          </select>
+
+          <label for="dataNascimento">Data de nascimento</label>
+          <input id="dataNascimento" type="date">
+          <p class="small">A idade é calculada automaticamente.</p>
+
+          <label for="peso">Peso atual (kg)</label>
+          <input id="peso" type="number" min="1" max="700" placeholder="Ex: 80">
+
+          <label for="altura">Altura atual (cm)</label>
+          <input id="altura" type="number" placeholder="Ex: 175">
+
+          <label for="localTreino">Onde você treina?</label>
+          <select id="localTreino">
+            <option value="sem_equipamento">Peso corporal / sem equipamentos</option>
+            <option value="academia_basica">Academia básica / equipamentos simples</option>
+            <option value="academia_grande">Academia completa</option>
+          </select>
+
+          <div class="wizard-nav">
+            <button type="button" class="botao-principal" onclick="wizardProximo(1)">Próximo →</button>
+          </div>
         </div>
-        <p class="small">Isso melhora a escolha e a substituição quando a academia estiver cheia ou quando faltar equipamento.</p>
 
-        <label for="exerciciosPreferidos">Exercícios que você gosta ou prefere</label>
-        <textarea id="exerciciosPreferidos" placeholder="Ex: leg press, remada baixa, bicicleta, supino com halteres..."></textarea>
+        <!-- Passo 2: Objetivos e rotina -->
+        <div class="wizard-passo" id="wzPasso2">
+          <label for="metaPrincipal">Principal meta</label>
+          <select id="metaPrincipal">
+            <option value="hibrido_shape" selected>Shape + fôlego</option>
+            <option value="hibrido_performance">Performance híbrida geral</option>
+            <option value="massa">Ganhar massa sem abandonar corrida</option>
+            <option value="perder_peso">Emagrecimento híbrido</option>
+            <option value="definicao">Definição + condicionamento</option>
+            <option value="forca">Força com condicionamento</option>
+            <option value="corrida_5k">Correr 5 km mantendo força</option>
+            <option value="corrida_10k">Correr 10 km mantendo massa</option>
+          </select>
 
-        <label for="exerciciosBloqueados">Exercícios que você não quer ou não pode fazer</label>
-        <textarea id="exerciciosBloqueados" placeholder="Ex: agachamento livre, afundo, corrida, desenvolvimento acima da cabeça..."></textarea>
+          <label for="rotinaAtual">Sua rotina hoje</label>
+          <select id="rotinaAtual">
+            <option value="nunca">Nunca treinei</option>
+            <option value="dificuldade">Já treinei, mas tive dificuldade para manter</option>
+            <option value="voltando">Estou voltando a treinar</option>
+            <option value="regular">Já treino regularmente</option>
+          </select>
 
-        <label for="limitacoesUsuario">Limitações, dores recorrentes ou observações importantes</label>
-        <textarea id="limitacoesUsuario" placeholder="Ex: dor no joelho, ombro sensível, lombar, sem agachamento profundo... Deixe em branco se não houver."></textarea>
-        <p class="small">Esse campo não faz diagnóstico. Ele apenas ajuda o app a evitar exercícios mais sensíveis.</p>
+          <label for="tempoExperiencia">Experiência com treino</label>
+          <select id="tempoExperiencia">
+            <option value="menos_1">Menos de 1 ano</option>
+            <option value="1_2">De 1 a 2 anos</option>
+            <option value="2_4">De 2 a 4 anos</option>
+            <option value="4_mais">4 anos ou mais</option>
+          </select>
 
-        <button type="button" onclick="calcularPerfil()">Calcular e salvar perfil</button>
+          <label for="diasTreinoSemana">Meta de dias ativos por semana</label>
+          <select id="diasTreinoSemana">
+            <option value="2">2 dias</option>
+            <option value="3">3 dias</option>
+            <option value="4" selected>4 dias</option>
+            <option value="5">5 dias</option>
+            <option value="6">6 dias</option>
+          </select>
+          <p class="small">Conta musculação, corrida e recuperação planejada.</p>
+
+          <label for="diasCorridaSemana">Dias de corrida/cardio por semana</label>
+          <select id="diasCorridaSemana">
+            <option value="1">1 dia</option>
+            <option value="2" selected>2 dias</option>
+            <option value="3">3 dias</option>
+            <option value="4">4 dias</option>
+          </select>
+
+          <label for="prioridadeHibrida">Prioridade do plano</label>
+          <select id="prioridadeHibrida">
+            <option value="equilibrado" selected>Equilibrado: força + corrida</option>
+            <option value="forca_shape">Mais força/shape, corrida como complemento</option>
+            <option value="corrida_performance">Mais corrida/performance, força como suporte</option>
+          </select>
+
+          <div class="wizard-nav">
+            <button type="button" class="botao-secundario" onclick="wizardVoltar(2)">← Voltar</button>
+            <button type="button" class="botao-principal" onclick="wizardProximo(2)">Próximo →</button>
+          </div>
+        </div>
+
+        <!-- Passo 3: Corrida + detalhes opcionais -->
+        <div class="wizard-passo" id="wzPasso3">
+          <label for="nivelCorridaPerfil">Seu nível de corrida hoje</label>
+          <select id="nivelCorridaPerfil">
+            <option value="iniciante">Estou começando agora</option>
+            <option value="voltando">Estou voltando a correr</option>
+            <option value="regular">Já corro regularmente</option>
+            <option value="avancado">Tenho experiência / provas</option>
+          </select>
+
+          <label for="objetivoCorridaPerfil">Objetivo de corrida</label>
+          <select id="objetivoCorridaPerfil">
+            <option value="comecar">Começar com segurança</option>
+            <option value="3k">Completar 3 km</option>
+            <option value="5k" selected>Completar 5 km</option>
+            <option value="10k">Correr 10 km</option>
+            <option value="meia">Evoluir para meia maratona</option>
+            <option value="pace">Melhorar ritmo / pace</option>
+          </select>
+
+          <label for="distanciaCorridaConfortavel">Maior distância confortável hoje (km)</label>
+          <input id="distanciaCorridaConfortavel" type="number" min="0" step="0.1" placeholder="Ex: 3, 5 ou 10 — deixe 0 se não souber">
+
+          <label>Dias disponíveis para treinar</label>
+          <div class="checkbox-grid" id="diasDisponiveisGrid">
+            <label><input type="checkbox" name="diasDisponiveis" value="1" checked>Segunda</label>
+            <label><input type="checkbox" name="diasDisponiveis" value="2" checked>Terça</label>
+            <label><input type="checkbox" name="diasDisponiveis" value="3" checked>Quarta</label>
+            <label><input type="checkbox" name="diasDisponiveis" value="4" checked>Quinta</label>
+            <label><input type="checkbox" name="diasDisponiveis" value="5" checked>Sexta</label>
+            <label><input type="checkbox" name="diasDisponiveis" value="6">Sábado</label>
+            <label><input type="checkbox" name="diasDisponiveis" value="0">Domingo</label>
+          </div>
+
+          <!-- Detalhes opcionais recolhíveis -->
+          <button type="button" class="colapsavel-toggle" onclick="toggleColapsavel('detalhesOpcPerfil', this)">
+            <span class="seta">▶</span> Detalhes opcionais (equipamentos, exercícios, limitações)
+          </button>
+          <div class="colapsavel-corpo" id="detalhesOpcPerfil">
+            <label>Equipamentos disponíveis</label>
+            <div class="checkbox-grid" id="equipamentosDisponiveisGrid">
+              <label><input type="checkbox" name="equipamentosDisponiveis" value="peso_corporal" checked>Peso corporal</label>
+              <label><input type="checkbox" name="equipamentosDisponiveis" value="halteres" checked>Halteres</label>
+              <label><input type="checkbox" name="equipamentosDisponiveis" value="barra">Barra</label>
+              <label><input type="checkbox" name="equipamentosDisponiveis" value="banco">Banco</label>
+              <label><input type="checkbox" name="equipamentosDisponiveis" value="elastico">Elástico</label>
+              <label><input type="checkbox" name="equipamentosDisponiveis" value="polia">Polia/cabo</label>
+              <label><input type="checkbox" name="equipamentosDisponiveis" value="maquinas">Máquinas</label>
+              <label><input type="checkbox" name="equipamentosDisponiveis" value="esteira">Esteira</label>
+              <label><input type="checkbox" name="equipamentosDisponiveis" value="bicicleta">Bicicleta</label>
+            </div>
+            <p class="small">Melhora a escolha de exercícios quando faltar equipamento.</p>
+
+            <label for="paceCorridaMedio">Pace médio (opcional)</label>
+            <input id="paceCorridaMedio" type="text" placeholder="Ex: 6:30/km — deixe em branco se não souber">
+
+            <label for="exerciciosPreferidos">Exercícios que você gosta</label>
+            <textarea id="exerciciosPreferidos" placeholder="Ex: leg press, remada baixa, supino com halteres..."></textarea>
+
+            <label for="exerciciosBloqueados">Exercícios que não quer ou não pode fazer</label>
+            <textarea id="exerciciosBloqueados" placeholder="Ex: agachamento livre, afundo, desenvolvimento acima da cabeça..."></textarea>
+
+            <label for="limitacoesUsuario">Limitações ou dores recorrentes</label>
+            <textarea id="limitacoesUsuario" placeholder="Ex: dor no joelho, ombro sensível, lombar... Deixe em branco se não houver."></textarea>
+            <p class="small">Ajuda o app a evitar exercícios mais sensíveis. Não substitui orientação médica.</p>
+          </div>
+
+          <div class="wizard-nav">
+            <button type="button" class="botao-secundario" onclick="wizardVoltar(3)">← Voltar</button>
+            <button type="button" class="botao-principal" onclick="calcularPerfil()">✅ Salvar perfil</button>
+          </div>
+        </div>
 
         <div id="resultadoPerfil" class="alerta hidden"></div>
         <div id="mensagemPeso" class="alerta hidden"></div>
-
         <button id="botaoIrTreino" type="button" class="hidden botao-principal" onclick="irParaPlano()">➡️ Ver plano sugerido</button>
         <button type="button" class="botao-secundario" onclick="apagarPerfilSalvo()">Apagar perfil salvo</button>
       </div>
@@ -1731,7 +1772,7 @@
         <h2>🔥 Hoje</h2>
         <p class="small">Abra o app e veja o foco híbrido do dia: força, corrida ou recuperação.</p>
         <div id="resumoHojeApp" class="hoje-hero">Carregando recomendação de hoje...</div>
-        <button type="button" class="botao-principal" onclick="acaoPrincipalHoje()">Começar agora</button>
+        <button type="button" class="botao-principal" onclick="abrirCheckinRapido()">Começar agora</button>
         <button type="button" class="botao-secundario" onclick="irParaCheckin()">Adaptar check-in / recalcular</button>
         <button type="button" class="botao-secundario" onclick="irParaCardio()">Fazer corrida/cardio hoje</button>
       </div>
@@ -1926,7 +1967,7 @@
         <label for="tipoSessaoCardio">Tipo de sessão</label>
         <select id="tipoSessaoCardio">
           <option value="automatico" selected>Automático pelo objetivo</option>
-          <option value="corrida_leve">Corrida Leve — zona 1–2</option>
+          <option value="corrida_leve">Corrida Leve — ritmo confortável (dá para conversar)</option>
           <option value="corrida_regenerativa">Corrida Regenerativa — soltar as pernas</option>
           <option value="intervalado">Tiros / Intervalado — velocidade e fôlego</option>
           <option value="ritmo">Corrida de Ritmo — sustentar pace</option>
@@ -2096,6 +2137,28 @@
       </div>
 
       <div class="card">
+        <h2>📈 Evolução de carga</h2>
+        <p class="small">Selecione um exercício para ver como sua carga progrediu ao longo do tempo.</p>
+        <div class="evolucao-select-wrap">
+          <label for="selectExercicioGrafico">Exercício:</label>
+          <select id="selectExercicioGrafico" onchange="renderGraficoCarga()" style="flex:1;margin:0;">
+            <option value="">Selecione um exercício</option>
+          </select>
+        </div>
+        <div class="evolucao-chart-wrap">
+          <div id="graficoCargaBox"><p class="evolucao-vazio">Salve treinos com carga para ver a evolução aqui.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🏃 Evolução na corrida</h2>
+        <p class="small">Distância total acumulada por mês e sua maior distância em sessão única.</p>
+        <div class="evolucao-chart-wrap">
+          <div id="graficoCorridaBox"><p class="evolucao-vazio">Salve corridas para ver a evolução aqui.</p></div>
+        </div>
+      </div>
+
+      <div class="card">
         <h2>📤 Compartilhar evolução</h2>
         <p class="small">Crie um card visual do resumo da semana, treino, cardio ou conquistas. O card não mostra peso, IMC, dores, limitações nem cargas por padrão.</p>
         <div class="compartilhar-grid">
@@ -2178,6 +2241,57 @@
   </div>
 
 
+
+  <!-- Modal Check-in Rápido -->
+  <div id="modalCheckinRapido" class="modal-overlay hidden">
+    <div class="modal-card">
+      <span class="session-badge recuperacao">Check-in rápido</span>
+      <h2>Como você está agora?</h2>
+      <p class="small">Dois sinais rápidos. O app ajusta o treino de hoje se precisar.</p>
+
+      <strong style="display:block;margin-bottom:8px;font-size:13px;color:#94a3b8;">⚡ Energia do dia</strong>
+      <div class="checkin-rapido-grid" id="crEnergiaGrid">
+        <div class="checkin-opcao selecionado" data-val="bem" onclick="crSelecionarEnergia(this)">
+          <span class="checkin-opcao-icone">💪</span>
+          <div class="checkin-opcao-texto"><strong>Estou bem</strong><span>Pronto para o treino planejado</span></div>
+        </div>
+        <div class="checkin-opcao" data-val="cansado" onclick="crSelecionarEnergia(this)">
+          <span class="checkin-opcao-icone">😐</span>
+          <div class="checkin-opcao-texto"><strong>Cansado</strong><span>Posso treinar, mas mais leve</span></div>
+        </div>
+        <div class="checkin-opcao" data-val="mal" onclick="crSelecionarEnergia(this)">
+          <span class="checkin-opcao-icone">😴</span>
+          <div class="checkin-opcao-texto"><strong>Mal</strong><span>Prefiro recuperação ou descanso</span></div>
+        </div>
+      </div>
+
+      <strong style="display:block;margin:14px 0 8px;font-size:13px;color:#94a3b8;">🦵 Sente alguma dor?</strong>
+      <div class="checkin-rapido-grid" id="crDorGrid">
+        <div class="checkin-opcao selecionado" data-val="nenhuma" onclick="crSelecionarDor(this)">
+          <span class="checkin-opcao-icone">✅</span>
+          <div class="checkin-opcao-texto"><strong>Nenhuma dor</strong><span>Tudo bem</span></div>
+        </div>
+        <div class="checkin-opcao" data-val="pernas" onclick="crSelecionarDor(this)">
+          <span class="checkin-opcao-icone">🦵</span>
+          <div class="checkin-opcao-texto"><strong>Pernas/joelho</strong><span>Prefiro superiores hoje</span></div>
+        </div>
+        <div class="checkin-opcao" data-val="bracos" onclick="crSelecionarDor(this)">
+          <span class="checkin-opcao-icone">💪</span>
+          <div class="checkin-opcao-texto"><strong>Braços/ombro</strong><span>Prefiro inferiores hoje</span></div>
+        </div>
+        <div class="checkin-opcao" data-val="coluna" onclick="crSelecionarDor(this)">
+          <span class="checkin-opcao-icone">🔙</span>
+          <div class="checkin-opcao-texto"><strong>Coluna/lombar</strong><span>Evitar cargas axiais</span></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:18px;">
+        <button type="button" class="botao-principal" onclick="crConfirmarEIniciar()" style="flex:2">✅ Confirmar e começar</button>
+        <button type="button" class="botao-secundario" onclick="fecharModalCheckinRapido()" style="flex:1">Pular</button>
+      </div>
+      <p class="small" style="margin-top:10px;text-align:center;">Para ajustes completos, use a aba de check-in.</p>
+    </div>
+  </div>
 
   <div id="modalAvisoInicial" class="modal-overlay hidden">
     <div class="modal-card">
@@ -7620,7 +7734,7 @@
 
   window.descricaoCorridaSubtipo = function(subtipo) {
     const mapa = {
-      corrida_leve: "Zona 1–2, confortável, dá para conversar. Constrói base aeróbica sem atrapalhar a musculação.",
+      corrida_leve: "Ritmo confortável: você consegue falar frases inteiras sem perder o fôlego. Constrói base aeróbica sem atrapalhar a musculação.",
       corrida_regenerativa: "Muito leve, para soltar as pernas depois de treino pesado ou semana cansativa.",
       intervalado: "Alterna esforço forte com recuperação. Evite colar em Pernas — Força ou Longão.",
       corrida_intervalado: "Alterna esforço forte com recuperação. Evite colar em Pernas — Força ou Longão.",
@@ -7638,7 +7752,7 @@
 
   window.descricaoRecuperacao = function(tipo) {
     const mapa = {
-      caminhada_leve: "Caminhada leve em zona 1–2. Registre tempo, distância opcional, esforço e sensação das pernas.",
+      caminhada_leve: "Caminhada leve em ritmo confortável. Registre tempo, distância opcional, esforço e sensação das pernas.",
       mobilidade: "Mobilidade de quadril, tornozelo, posterior e lombar. Registre duração e sensação final.",
       alongamento: "Alongamento leve e sem dor. Registre duração, região trabalhada e sensação final.",
       recuperacao_pernas: "Foco em pernas cansadas: mobilidade, soltura e caminhada curta, sem transformar em treino forte.",
@@ -8432,7 +8546,16 @@
     const nome = typeof textoSubtipoCorrida === 'function' ? textoSubtipoCorrida(tipoSessao) : tipoSessao; const desc = typeof descricaoCorridaSubtipo === 'function' ? descricaoCorridaSubtipo(tipoSessao) : 'Sessão sugerida para hoje.'; const tempo = tipoSessao === 'intervalado' ? '25–35 min' : tipoSessao === 'longo' ? '40–75 min' : tipoSessao === 'ritmo' ? '25–40 min' : tipoSessao === 'corrida_regenerativa' ? '20–30 min' : tipoSessao === 'caminhada_leve' ? '20–35 min' : '20–40 min';
     const ultima = lista.length ? lista[0] : null; const ultimoTexto = ultima ? (Number(ultima.distancia || 0).toFixed(1) + ' km em ' + Number(ultima.tempo || 0) + ' min') : 'Ainda sem cardio salvo recentemente'; let estrutura = 'Aquecimento de 5–8 min + bloco principal + desaquecimento.'; if(tipoSessao === 'intervalado') estrutura = 'Aquecimento de 8 min + 5 a 8 tiros curtos controlados com pausa leve + desaquecimento.'; if(tipoSessao === 'longo') estrutura = 'Ritmo confortável. Termine com sensação de que ainda conseguiria continuar.'; if(tipoSessao === 'ritmo') estrutura = 'Aquecimento + bloco contínuo em ritmo sustentado + desaquecimento, sem sprint final.'; if(tipoSessao === 'corrida_regenerativa') estrutura = 'Sessão curta, solta e confortável para ativar e recuperar as pernas.'; if(tipoSessao === 'caminhada_leve') estrutura = 'Caminhe leve e contínuo, mantendo respiração confortável.';
     const comp = catHoje === 'inferior_forca' ? 'Hoje há Pernas — Força no plano. Evite tiros ou ritmo forte.' : catHoje === 'cardio' ? 'Sessão alinhada ao plano do dia. Registre zona e sensação das pernas.' : 'Mantenha controle se houver treino de força perto.'; let desafioTxt = ''; if(des){ const faltam = diasAte(des.dataDesafio); const nomeDes = typeof traduzirObjetivoCardio === 'function' ? traduzirObjetivoCardio(des.distanciaDesafio || '5k') : (des.distanciaDesafio || 'desafio'); desafioTxt = '<br><br><strong>Desafio ativo:</strong> ' + safe(nomeDes) + ' em ' + safe(typeof formatarDataBrasileira === 'function' ? formatarDataBrasileira(des.dataDesafio) : des.dataDesafio) + (faltam !== null ? ' • faltam ' + faltam + ' dia(s).' : '.') + '<br><strong>Orientação:</strong> o desafio permanece salvo até a data acontecer, enquanto as sugestões mudam conforme os registros.'; }
-    return '<strong>' + safe(nome) + '</strong><br>' + safe(desc) + '<br><br><strong>Duração sugerida:</strong> ' + tempo + '<br><strong>Como executar:</strong> ' + safe(estrutura) + '<br><strong>Compatibilidade híbrida:</strong> ' + safe(comp) + '<br><strong>Último cardio registrado:</strong> ' + safe(ultimoTexto) + desafioTxt + '<br><br><span class="small">Depois registre distância, tempo, zona, esforço, sensação das pernas e dor articular.</span>'; }
+    return '<strong>' + safe(nome) + '</strong><br>' + safe(desc) + '<br>' +
+      '<button type="button" class="colapsavel-toggle" onclick="toggleColapsavel(\'detalheSessaoCardio\',this)" style="margin-top:10px;">' +
+      '<span class="seta">▶</span> Ver orientação da sessão</button>' +
+      '<div class="colapsavel-corpo" id="detalheSessaoCardio">' +
+      '<br><strong>Duração sugerida:</strong> ' + tempo +
+      '<br><strong>Como executar:</strong> ' + safe(estrutura) +
+      (nivel === 'iniciante' || objetivo === 'comecar' ? '<br><strong>Dica para iniciante:</strong> Comece intercalando 1 min de corrida com 2 min de caminhada. Aumente o tempo de corrida gradualmente a cada semana.' : '') +
+      '<br><strong>Compatibilidade com musculação:</strong> ' + safe(comp) +
+      '<br><strong>Último cardio registrado:</strong> ' + safe(ultimoTexto) + desafioTxt + '</div>' +
+      '<br><span class="small">Depois registre distância, tempo, esforço e sensação das pernas.</span>'; }
   window.gerarTextoSugestaoCardio = sugestaoCardio;
   window.gerarTreinoCardio = function() { const c = byId('sugestaoCardio'); if(!c) return; c.className = 'alerta alerta-sucesso'; c.innerHTML = sugestaoCardio(); renderDesafio(); };
 
@@ -8449,7 +8572,260 @@
     return CONQUISTAS.map(function(c){ const atual=Number(valores[c.tipo]||0); return Object.assign({}, c, { progresso:atual, desbloqueada:atual>=c.alvo }); }); };
   window.renderizarConquistas = function() { const contador=byId('contadorConquistas'); if(contador) contador.innerHTML='🏆 Conquistas carregando...'; obterHistoricoDaNuvem(function(treinos){ obterCardiosDaNuvem(function(cardios){ const lista=atualizarDatas(window.analisarConquistas(treinos||[], cardios||[])); const desbloq=lista.filter(function(c){return c.desbloqueada;}).sort(function(a,b){return Number(b.desbloqueadaEm||0)-Number(a.desbloqueadaEm||0);}); const bloq=lista.filter(function(c){return !c.desbloqueada;}).sort(function(a,b){return (Number(b.progresso||0)/Number(b.alvo||1))-(Number(a.progresso||0)/Number(a.alvo||1));}); if(contador) contador.innerHTML='🏆 '+desbloq.length+' de '+lista.length+' conquistas desbloqueadas.'; const u=byId('ultimasConquistas'); if(u) u.innerHTML=desbloq.length?desbloq.slice(0,12).map(function(c){return htmlConquistaV041(c,false);}).join(''):"<p class='small'>Nenhuma conquista desbloqueada ainda. Salve seu primeiro treino ou cardio para começar.</p>"; const b=byId('conquistasBloqueadas'); if(b) b.innerHTML=bloq.length?bloq.slice(0,18).map(function(c){return htmlConquistaV041(c,true);}).join(''):"<p class='small'>Parabéns! Você desbloqueou todas as conquistas disponíveis.</p>"; }); }); };
 
-  document.addEventListener('DOMContentLoaded', function(){ aplicarContextoCardio(); const nav = byId('navegacaoPrincipal'); if(nav) Array.from(nav.querySelectorAll('button')).forEach(function(btn){ if(/Recuperação/i.test(btn.textContent || '')) btn.remove(); }); const botao = byId('botaoIrTreino'); if(botao){ botao.textContent = '➡️ Ver plano sugerido'; botao.onclick = irParaPlano; } });
+  // ── Wizard de Onboarding ──────────────────────────────────────────────────
+  window.wizardProximo = function(passoAtual) {
+    var campos1 = ['nome'];
+    if (passoAtual === 1) {
+      var n = document.getElementById('nome');
+      if (!n || !n.value.trim()) { alert('Por favor, preencha seu nome antes de continuar.'); return; }
+    }
+    var atual = document.getElementById('wzPasso' + passoAtual);
+    var proximo = document.getElementById('wzPasso' + (passoAtual + 1));
+    if (!proximo) return;
+    if (atual) atual.classList.remove('visivel');
+    proximo.classList.add('visivel');
+    var dots = [1,2,3];
+    dots.forEach(function(i) {
+      var dot = document.getElementById('wdot' + i);
+      var lbl = document.getElementById('wlbl' + i);
+      if (!dot || !lbl) return;
+      dot.className = 'wizard-dot-circle' + (i < passoAtual + 1 ? ' feito' : i === passoAtual + 1 ? ' ativo' : '');
+      lbl.className = 'wizard-dot-label' + (i < passoAtual + 1 ? ' feito' : i === passoAtual + 1 ? ' ativo' : '');
+      dot.textContent = i < passoAtual + 1 ? '✓' : String(i);
+    });
+    window.scrollTo(0, 0);
+  };
+
+  window.wizardVoltar = function(passoAtual) {
+    var atual = document.getElementById('wzPasso' + passoAtual);
+    var anterior = document.getElementById('wzPasso' + (passoAtual - 1));
+    if (!anterior) return;
+    if (atual) atual.classList.remove('visivel');
+    anterior.classList.add('visivel');
+    var dots = [1,2,3];
+    dots.forEach(function(i) {
+      var dot = document.getElementById('wdot' + i);
+      var lbl = document.getElementById('wlbl' + i);
+      if (!dot || !lbl) return;
+      dot.className = 'wizard-dot-circle' + (i < passoAtual - 1 ? ' feito' : i === passoAtual - 1 ? ' ativo' : '');
+      lbl.className = 'wizard-dot-label' + (i < passoAtual - 1 ? ' feito' : i === passoAtual - 1 ? ' ativo' : '');
+      dot.textContent = i < passoAtual - 1 ? '✓' : String(i);
+    });
+    window.scrollTo(0, 0);
+  };
+
+  // ── Seções recolhíveis ────────────────────────────────────────────────────
+  window.toggleColapsavel = function(id, btn) {
+    var corpo = document.getElementById(id);
+    if (!corpo) return;
+    var aberto = corpo.classList.contains('visivel');
+    corpo.classList.toggle('visivel', !aberto);
+    if (btn) btn.classList.toggle('aberto', !aberto);
+  };
+
+  // ── Check-in rápido (modal) ───────────────────────────────────────────────
+  var __crEnergia = 'bem';
+  var __crDor = 'nenhuma';
+
+  window.abrirCheckinRapido = function() {
+    __crEnergia = 'bem';
+    __crDor = 'nenhuma';
+    // reset seleções visuais
+    ['crEnergiaGrid','crDorGrid'].forEach(function(gridId) {
+      var grid = document.getElementById(gridId);
+      if (!grid) return;
+      Array.from(grid.querySelectorAll('.checkin-opcao')).forEach(function(el, i) {
+        el.classList.toggle('selecionado', i === 0);
+      });
+    });
+    var modal = document.getElementById('modalCheckinRapido');
+    if (modal) modal.classList.remove('hidden');
+  };
+
+  window.fecharModalCheckinRapido = function() {
+    var modal = document.getElementById('modalCheckinRapido');
+    if (modal) modal.classList.add('hidden');
+    if (typeof acaoPrincipalHoje === 'function') acaoPrincipalHoje();
+  };
+
+  window.crSelecionarEnergia = function(el) {
+    var grid = document.getElementById('crEnergiaGrid');
+    if (grid) Array.from(grid.querySelectorAll('.checkin-opcao')).forEach(function(o) { o.classList.remove('selecionado'); });
+    el.classList.add('selecionado');
+    __crEnergia = el.getAttribute('data-val') || 'bem';
+  };
+
+  window.crSelecionarDor = function(el) {
+    var grid = document.getElementById('crDorGrid');
+    if (grid) Array.from(grid.querySelectorAll('.checkin-opcao')).forEach(function(o) { o.classList.remove('selecionado'); });
+    el.classList.add('selecionado');
+    __crDor = el.getAttribute('data-val') || 'nenhuma';
+  };
+
+  window.crConfirmarEIniciar = function() {
+    // Aplicar energia e dor no check-in real
+    var energiaEl = document.getElementById('energia');
+    var dorEl = document.getElementById('dor');
+    var radiosDor = document.querySelectorAll('input[name="dorCheckin"]');
+    if (energiaEl) energiaEl.value = __crEnergia;
+    if (dorEl) dorEl.value = __crDor;
+    if (radiosDor.length) {
+      Array.from(radiosDor).forEach(function(r) {
+        r.checked = (r.value === __crDor);
+      });
+    }
+    // Se mal → redirecionar para recuperação; se cansado → pode adaptar
+    var modal = document.getElementById('modalCheckinRapido');
+    if (modal) modal.classList.add('hidden');
+    if (__crEnergia === 'mal') {
+      if (typeof irParaCheckin === 'function') irParaCheckin();
+    } else {
+      // Aplicar ajuste de dor no plano e ir para treino
+      if (typeof gerarRecomendacaoCheckin === 'function') {
+        try { gerarRecomendacaoCheckin(); } catch(e) {}
+      }
+      if (typeof acaoPrincipalHoje === 'function') acaoPrincipalHoje();
+    }
+  };
+
+  // ── Gráficos de Evolução (SVG simples) ───────────────────────────────────
+  function criarSVGLinhas(pontos, largura, altura, corLinha, rotulosX, rotulosY) {
+    largura = largura || 320; altura = altura || 160;
+    var padT = 16, padR = 10, padB = 36, padL = 42;
+    var w = largura - padL - padR, h = altura - padT - padB;
+    if (!pontos || pontos.length < 2) return '<p class="evolucao-vazio">Dados insuficientes para gerar o gráfico.</p>';
+    var vals = pontos.map(function(p) { return p.y; });
+    var minV = Math.min.apply(null, vals), maxV = Math.max.apply(null, vals);
+    if (minV === maxV) { minV = Math.max(0, minV - 1); maxV = maxV + 1; }
+    var escX = function(i) { return padL + (i / (pontos.length - 1)) * w; };
+    var escY = function(v) { return padT + h - ((v - minV) / (maxV - minV)) * h; };
+    var polyline = pontos.map(function(p, i) { return escX(i) + ',' + escY(p.y); }).join(' ');
+    var area = 'M' + escX(0) + ',' + (padT + h) +
+      ' L' + pontos.map(function(p, i) { return escX(i) + ',' + escY(p.y); }).join(' L') +
+      ' L' + escX(pontos.length - 1) + ',' + (padT + h) + ' Z';
+
+    var svg = '<svg class="evolucao-chart-svg" viewBox="0 0 ' + largura + ' ' + altura + '" xmlns="http://www.w3.org/2000/svg">';
+    // Grid lines
+    [0, 0.5, 1].forEach(function(t) {
+      var y = padT + h * (1 - t);
+      var val = (minV + (maxV - minV) * t).toFixed(1);
+      svg += '<line x1="' + padL + '" y1="' + y + '" x2="' + (padL + w) + '" y2="' + y + '" stroke="rgba(255,255,255,.07)" stroke-width="1"/>';
+      svg += '<text x="' + (padL - 5) + '" y="' + (y + 4) + '" text-anchor="end" font-size="10" fill="#64748b">' + val + '</text>';
+    });
+    // Area fill
+    svg += '<defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="' + corLinha + '" stop-opacity=".28"/><stop offset="100%" stop-color="' + corLinha + '" stop-opacity=".02"/></linearGradient></defs>';
+    svg += '<path d="' + area + '" fill="url(#areaGrad)"/>';
+    // Line
+    svg += '<polyline points="' + polyline + '" fill="none" stroke="' + corLinha + '" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+    // Dots
+    pontos.forEach(function(p, i) {
+      svg += '<circle cx="' + escX(i) + '" cy="' + escY(p.y) + '" r="4" fill="' + corLinha + '" stroke="#050506" stroke-width="2"/>';
+    });
+    // X labels
+    var step = pontos.length > 8 ? Math.ceil(pontos.length / 6) : 1;
+    pontos.forEach(function(p, i) {
+      if (i % step !== 0 && i !== pontos.length - 1) return;
+      var lbl = p.label || String(i + 1);
+      if (lbl.length > 6) lbl = lbl.slice(0, 6);
+      svg += '<text x="' + escX(i) + '" y="' + (padT + h + 18) + '" text-anchor="middle" font-size="9" fill="#64748b">' + lbl + '</text>';
+    });
+    svg += '</svg>';
+    return svg;
+  }
+
+  window.renderGraficoCarga = function() {
+    var box = document.getElementById('graficoCargaBox');
+    if (!box) return;
+    var sel = document.getElementById('selectExercicioGrafico');
+    var exercicio = sel ? sel.value : '';
+    if (!exercicio) { box.innerHTML = '<p class="evolucao-vazio">Selecione um exercício acima.</p>'; return; }
+    box.innerHTML = '<p class="evolucao-vazio">Carregando...</p>';
+    obterHistoricoDaNuvem(function(treinos) {
+      treinos = (treinos || []).filter(function(t) {
+        return typeof normalizarTextoBusca === 'function'
+          ? normalizarTextoBusca(t.exercicioRegistro || '').indexOf(normalizarTextoBusca(exercicio)) !== -1
+          : (t.exercicioRegistro || '') === exercicio;
+      }).sort(function(a,b){ return Number(a.criadoEm||0) - Number(b.criadoEm||0); });
+      if (!treinos.length) { box.innerHTML = '<p class="evolucao-vazio">Nenhum registro encontrado para esse exercício.</p>'; return; }
+      var pontos = treinos.map(function(t) {
+        var d = new Date(Number(t.criadoEm) || 0);
+        var lbl = d.toLocaleDateString('pt-BR', {day:'2-digit', month:'2-digit'});
+        return { y: Number(t.carga || 0), label: lbl };
+      });
+      box.innerHTML = '<div class="evolucao-chart-titulo">Carga (kg) — ' + exercicio + '</div>' + criarSVGLinhas(pontos, null, 180, '#ef4444');
+    });
+  };
+
+  function renderGraficoCorrida(treinos, cardios) {
+    var box = document.getElementById('graficoCorridaBox');
+    if (!box) return;
+    var validos = (cardios || []).filter(function(c) {
+      return c.tipoAtividade !== 'recuperacao' && c.tipo !== 'sem_cardio' && c.tipo !== 'sem_corrida' && Number(c.distancia || 0) > 0;
+    });
+    if (validos.length < 2) { box.innerHTML = '<p class="evolucao-vazio">Salve pelo menos 2 corridas para ver o gráfico.</p>'; return; }
+    // Group by month
+    var porMes = {};
+    validos.forEach(function(c) {
+      var d = new Date(Number(c.criadoEm) || 0);
+      var mes = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+      if (!porMes[mes]) porMes[mes] = { total: 0, max: 0, label: d.toLocaleDateString('pt-BR', {month:'short', year:'2-digit'}) };
+      porMes[mes].total += Number(c.distancia || 0);
+      porMes[mes].max = Math.max(porMes[mes].max, Number(c.distancia || 0));
+    });
+    var meses = Object.keys(porMes).sort();
+    if (meses.length < 2) {
+      // Fall back to individual sessions
+      var pts = validos.sort(function(a,b){ return Number(a.criadoEm||0) - Number(b.criadoEm||0); }).map(function(c) {
+        var d = new Date(Number(c.criadoEm) || 0);
+        return { y: Number(c.distancia || 0), label: d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}) };
+      });
+      box.innerHTML = '<div class="evolucao-chart-titulo">Distância por sessão (km)</div>' + criarSVGLinhas(pts, null, 180, '#22c55e');
+      return;
+    }
+    var pontosMes = meses.map(function(m) { return { y: parseFloat(porMes[m].total.toFixed(1)), label: porMes[m].label }; });
+    box.innerHTML = '<div class="evolucao-chart-titulo">Volume mensal (km acumulados)</div>' + criarSVGLinhas(pontosMes, null, 180, '#22c55e');
+  }
+
+  function popularSelectExercicios(treinos) {
+    var sel = document.getElementById('selectExercicioGrafico');
+    if (!sel) return;
+    var nomes = {};
+    (treinos || []).forEach(function(t) {
+      var n = (t.exercicioRegistro || '').trim();
+      if (n) nomes[n] = true;
+    });
+    var lista = Object.keys(nomes).sort();
+    var existentes = Array.from(sel.options).map(function(o) { return o.value; }).filter(Boolean);
+    lista.forEach(function(n) {
+      if (existentes.indexOf(n) === -1) {
+        var opt = document.createElement('option');
+        opt.value = n; opt.textContent = n;
+        sel.appendChild(opt);
+      }
+    });
+  }
+
+  // Hook na renderizarProgressoGeral para popular os gráficos
+  var _origRenderProg = typeof window.renderizarProgressoGeral === 'function' ? window.renderizarProgressoGeral : null;
+  window.renderizarProgressoGeral = function() {
+    if (_origRenderProg) _origRenderProg();
+    obterHistoricoDaNuvem(function(treinos) {
+      obterCardiosDaNuvem(function(cardios) {
+        popularSelectExercicios(treinos);
+        renderGraficoCorrida(treinos, cardios);
+      });
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    aplicarContextoCardio();
+    var nav = document.getElementById('navegacaoPrincipal');
+    if (nav) Array.from(nav.querySelectorAll('button')).forEach(function(btn) {
+      if (/Recuperação/i.test(btn.textContent || '')) btn.remove();
+    });
+    var botao = document.getElementById('botaoIrTreino');
+    if (botao) { botao.textContent = '➡️ Ver plano sugerido'; botao.onclick = irParaPlano; }
+  });
 })();
 </script>
 
@@ -8468,6 +8844,47 @@
     --line: rgba(248,113,113,.18) !important;
     --glass: rgba(239,68,68,.10) !important;
   }
+
+  /* ── Wizard de Onboarding ───────────────────────────────────── */
+  .wizard-progress { display:flex; align-items:center; gap:0; margin:0 0 22px 0; }
+  .wizard-step-dot { display:flex; flex-direction:column; align-items:center; flex:1; position:relative; }
+  .wizard-step-dot::before { content:''; position:absolute; top:14px; left:50%; right:-50%; height:2px; background:rgba(255,255,255,.12); z-index:0; }
+  .wizard-step-dot:last-child::before { display:none; }
+  .wizard-dot-circle { width:28px; height:28px; border-radius:50%; border:2px solid rgba(255,255,255,.18); background:rgba(255,255,255,.07); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#94a3b8; z-index:1; transition:all .25s; }
+  .wizard-dot-circle.ativo { background:linear-gradient(135deg,#ef4444,#991b1b); border-color:#ef4444; color:#fff; box-shadow:0 0 0 4px rgba(239,68,68,.22); }
+  .wizard-dot-circle.feito { background:rgba(34,197,94,.18); border-color:#22c55e; color:#86efac; }
+  .wizard-dot-label { font-size:10px; color:#64748b; margin-top:5px; font-weight:700; text-align:center; }
+  .wizard-dot-label.ativo { color:#fca5a5; }
+  .wizard-dot-label.feito { color:#86efac; }
+  .wizard-passo { display:none; }
+  .wizard-passo.visivel { display:block; }
+  .wizard-nav { display:flex; gap:10px; margin-top:18px; }
+  .wizard-nav button { flex:1; }
+
+  /* ── Seções recolhíveis ─────────────────────────────────────── */
+  .colapsavel-toggle { display:flex; align-items:center; gap:8px; cursor:pointer; padding:10px 0 6px; border:none; background:transparent; color:#94a3b8; font-size:13px; font-weight:700; width:100%; text-align:left; }
+  .colapsavel-toggle .seta { font-size:11px; transition:transform .2s; }
+  .colapsavel-toggle.aberto .seta { transform:rotate(90deg); }
+  .colapsavel-corpo { display:none; padding:4px 0 8px; }
+  .colapsavel-corpo.visivel { display:block; }
+
+  /* ── Check-in rápido (popup modal) ─────────────────────────── */
+  #modalCheckinRapido { z-index:1100; }
+  .checkin-rapido-grid { display:grid; gap:8px; margin:12px 0; }
+  .checkin-opcao { display:flex; align-items:center; gap:10px; padding:11px 14px; border-radius:14px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); cursor:pointer; transition:all .18s; }
+  .checkin-opcao:hover { border-color:#ef4444; background:rgba(239,68,68,.10); }
+  .checkin-opcao.selecionado { border-color:#ef4444; background:rgba(239,68,68,.16); }
+  .checkin-opcao-icone { font-size:20px; flex-shrink:0; }
+  .checkin-opcao-texto strong { display:block; font-size:14px; color:#f8fafc; }
+  .checkin-opcao-texto span { font-size:12px; color:#94a3b8; }
+
+  /* ── Gráfico de evolução SVG ────────────────────────────────── */
+  .evolucao-chart-wrap { overflow-x:auto; margin:12px 0; }
+  .evolucao-chart-titulo { font-size:13px; font-weight:800; color:#f8fafc; margin-bottom:6px; }
+  .evolucao-chart-svg { width:100%; min-width:280px; }
+  .evolucao-select-wrap { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+  .evolucao-select-wrap label { font-size:12px; color:#94a3b8; }
+  .evolucao-vazio { color:#64748b; font-size:13px; padding:16px 0; text-align:center; }
   body {
     background:
       radial-gradient(circle at 16% 8%, rgba(239, 68, 68, .20), transparent 28%),
