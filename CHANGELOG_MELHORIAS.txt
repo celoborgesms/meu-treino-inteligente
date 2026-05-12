@@ -1,3 +1,23 @@
+MetaTreino Hybrid — v0.4.8 Beta
+Data: 12/05/2026
+
+Correção principal desta versão:
+1. Check-in com contexto correto
+   - Ao abrir o check-in por um card específico do Plano, a recomendação passa a usar aquele dia e aquela sessão.
+   - Corrige o bug em que o usuário abria treino de força/superiores e a recomendação mostrava corrida/caminhada de outro dia.
+
+2. Recomendação antiga limpa ao entrar no check-in
+   - O box de recomendação não fica mais reaproveitando resultado anterior.
+   - Evita aparecer sugestão de corrida quando o usuário ainda está ajustando força.
+
+3. Aviso visual no check-in
+   - A tela agora mostra qual sessão está sendo ajustada: tipo, data e foco.
+   - Isso reduz confusão entre aba Hoje, Plano e Check-in.
+
+4. Aplicação da recomendação no dia certo
+   - Ao aplicar o ajuste, o app atualiza a sessão selecionada, não necessariamente a data atual do aparelho.
+
+Histórico anterior:
 MetaTreino Hybrid — v0.4.7 Beta
 =================================
 
