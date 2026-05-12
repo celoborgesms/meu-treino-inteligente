@@ -122,3 +122,11 @@ MetaTreino Hybrid 0.5.5 Beta - hotfix navegacao/check-in
 - Corrigido: o check-in passa a respeitar a escolha manual de treino de forca mesmo quando o plano do dia recomenda corrida/cardio.
 - Melhorado: a recomendacao do dia agora mostra escolhas explicitas: aplicar recomendacao, fazer forca, fazer corrida/cardio, recuperacao ativa ou manter plano original.
 - Melhorado: ajuste gerado pelo check-in altera apenas a sessao selecionada, sem reorganizar a semana inteira.
+
+
+MetaTreino Hybrid 0.5.6 - hotfix força/check-in/navegação
+- Corrigida a geração travada em "Gerando Pernas — Força" ao usar divisões novas no check-in.
+- A aba Força agora é somente navegação livre; não tenta gerar treino ao tocar na aba.
+- O botão do check-in agora gera diretamente a sessão escolhida, sem abrir a etapa de recomendações.
+- A navegação inferior foi reinstalada de forma limpa para não ficar presa após erro de geração.
+- Adicionado gerador compatível de emergência caso o gerador principal demore ou falhe.
