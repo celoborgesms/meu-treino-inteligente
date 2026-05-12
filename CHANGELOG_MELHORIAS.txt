@@ -1,0 +1,108 @@
+MetaTreino Hybrid — v0.5.3 Beta (revisão de correções)
+Data: 12/05/2026
+
+Correções aplicadas nesta revisão:
+
+1. ÍCONE COM EXTENSÃO DUPLICADA
+   - Arquivo renomeado de icon-512.png.png para icon-512.png.
+   - Referências atualizadas no index.html, manifest.json e service-worker.js.
+
+2. VARIÁVEIS DE VERSÃO INCONSISTENTES
+   - VERSAO_MIDIA_LOCAL atualizada de "0.5.2" para "0.5.3", alinhando com VERSION_MIDIA_FIX.
+   - mediaVersion dos exercícios agora reflete a versão correta no objeto gerado.
+
+3. ALERT() SUBSTITUÍDOS POR TOAST NO FLUXO DE DEMONSTRAÇÃO
+   - Substituídos todos os alert() nativos relacionados à demonstração local por toasts
+     animados sobrepostos à tela, sem bloquear a navegação do usuário.
+   - Abrange o fallback de abrirVideoExercicio, abrirAulaCardio e abrirVideoExercicioLocalMetaTreino.
+
+4. MONKEY-PATCH COM RETRY AUTOMÁTICO
+   - Corrigido risco de mostrarTreinoNaTela não estar definida no momento em que o hotfix
+     executa: agora há retry em intervalos de 100ms por até 3 segundos.
+   - Garante que re-renders dinâmicos sempre recebam prepararTodos() mesmo em carregamentos lentos.
+
+5. SETIMEOUTS REDUNDANTES REMOVIDOS
+   - Reduzidos de 4 chamadas espalhadas (20ms, 300ms, 350ms, 1000ms) para 1 único timeout
+     de inicialização (350ms), mais o timeout interno de 50ms no monkey-patch.
+   - MutationObserver no #listaExercicios cobre todos os re-renders dinâmicos de forma
+     eficiente, sem polling repetido.
+
+6. LISTENER DE CLIQUE MIGRADO PARA FASE DE BUBBLE
+   - document.addEventListener("click", ..., true) substituído por fase de bubble (sem o
+     terceiro argumento), evitando interceptação prematura de outros handlers filhos como
+     checkboxes de conclusão de exercício.
+   - stopImmediatePropagation removido do caminho principal; cada card já tem onclick direto.
+
+7. SERVICE WORKER: CLONAGEM SEGURA DO RESPONSE
+   - Corrigido risco de "body already used": os dois clones para cache são criados antes
+     de qualquer consumo do body, e o response original é retornado intacto ao browser.
+
+8. PROMPT() DE CLIPBOARD SUBSTITUÍDO
+   - Substituído o fallback prompt("Copie a mensagem:", ...) por copiarTextoFallback(),
+     que usa document.execCommand("copy") com textarea temporário e exibe toast de confirmação.
+   - O caminho principal (navigator.clipboard.writeText) não foi alterado.
+
+9. MANIFEST COM ÍCONE MASKABLE
+   - Adicionada entrada de ícone com "purpose": "maskable" para adaptive icons no Android.
+   - Remove a borda branca ao instalar o PWA em launchers modernos.
+
+10. VERSÃO DE SCHEMA DOS PLANOS ATUALIZADA
+    - versaoGeracao, versaoPlano e versao nos objetos de treino e plano semanal atualizados
+      de "0.3.0-hybrid-real" para "0.5.3".
+    - Chave do localStorage preservada (metatreino-plano-semanal-0.3.0-hybrid-real-...) para
+      não quebrar dados salvos dos usuários existentes.
+
+---
+
+Histórico anterior:
+MetaTreino Hybrid — v0.5.3 Beta
+Data: 12/05/2026
+
+Correção principal desta versão:
+- Corrige o botão "Ver demonstração local" para abrir a animação dentro do próprio card do exercício.
+- O painel da demonstração agora é pré-anexado ao card em estado oculto e o botão apenas alterna mostrar/ocultar.
+- Adicionada captura de clique por delegação para evitar falha quando o PWA recria os cards depois da renderização.
+- Atualiza manifest e service worker para 0.5.3, forçando cache novo no celular.
+
+MetaTreino Hybrid — v0.5.2 Beta
+
+- Substitui o direcionamento principal ao YouTube por demonstrações animadas locais dentro dos cards de exercícios.
+- Adiciona banco interno MT_BANCO_MIDIAS_EXERCICIOS com tipos de mídia por padrão de movimento.
+- Enriquece os exercícios do treino com mediaType, mediaKey, mediaTitle e mediaLocal.
+- Troca os botões de cardio complementar para demonstrações locais, sem abrir YouTube.
+- Atualiza versão, manifest e service worker para 0.5.2, limpando cache antigo do PWA.
+
+MetaTreino Hybrid — v0.5.1 Beta
+- Check-in: voltou a pergunta de cardio junto com a força.
+- Força: resumo do treino mostra claramente se haverá cardio junto.
+- Força: cada exercício exibe prescrição prática de séries, repetições, descanso e esforço/RPE.
+- Aba Hoje: treino de força 100% concluído aparece como concluído.
+- Plano/Hoje: quando todos os exercícios são marcados, o app tenta sincronizar a sessão.
+
+MetaTreino Hybrid — v0.5.0 Beta
+Data: 12/05/2026
+1. Corrida como sessão guiada com cards detalhados.
+2. Botão "Registrar corrida" renomeado para "Ver treino de corrida".
+3. Sugestão adaptativa considerando nível, fadiga, RPE e proximidade de treino de pernas.
+4. Melhor relação força × corrida com alertas contextuais.
+5. Registro completo para evolução (distância, tempo, zona, RPE, sensação).
+
+MetaTreino Hybrid — v0.4.9 Beta
+- Corrigido bug de fuso horário na aba Hoje (data local do aparelho).
+- Consistência entre Hoje, Plano e Check-in.
+
+MetaTreino Hybrid — v0.4.8 Beta
+- Check-in com contexto correto por card do Plano.
+- Recomendação antiga limpa ao entrar no check-in.
+- Aviso visual indicando qual sessão está sendo ajustada.
+
+MetaTreino Hybrid — v0.4.7 Beta
+- Corrigido botão "Descartar" da pendência anterior.
+- Manifest e service worker atualizados para v0.4.7.
+
+MetaTreino Hybrid — v0.4.6 Beta
+- Fluxo da aba Hoje simplificado.
+- Check-in completo mais limpo com apenas duas ações principais.
+- Biblioteca de força mais híbrida com exercícios para corredores.
+- Melhorias de performance com cache curto para histórico.
+- Refinamentos visuais na identidade híbrida.

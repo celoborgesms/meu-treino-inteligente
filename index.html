@@ -7,8 +7,8 @@
   <meta name="app-version" content="0.5.3">
   <meta name="theme-color" content="#020617">
   <link rel="manifest" href="manifest.json?v=0.5.3">
-<link rel="icon" type="image/png" href="icon-512.png.png?v=0.5.3">
-<link rel="apple-touch-icon" href="icon-512.png.png?v=0.5.3">
+<link rel="icon" type="image/png" href="icon-512.png?v=0.5.3">
+<link rel="apple-touch-icon" href="icon-512.png?v=0.5.3">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -2529,7 +2529,7 @@
           treino: treinoAtual,
           letra: treinoAtual.letra || "",
           categoria: treinoAtual.categoria || treinoAtual.letra || "",
-          versaoGeracao: "0.3.0-hybrid-real",
+          versaoGeracao: "0.5.3",
           concluidos: exerciciosConcluidos || [],
           feedback: feedbackTreinoFinalAtual || "",
           salvoEm: Date.now()
@@ -2953,7 +2953,7 @@
     function exportarMeusDados() {
       const dadosBase = {
         app: "MetaTreino",
-        versao: "0.3.0-hybrid-real",
+        versao: "0.5.3",
         exportadoEm: new Date().toISOString(),
         usuario: usuarioAtual ? { uid: usuarioAtual.uid, email: usuarioAtual.email || "", nome: usuarioAtual.displayName || "" } : null,
         dadosLocais: coletarDadosLocaisPrivacidade(),
@@ -3572,14 +3572,33 @@
             mostrarMensagemPainel("📩 Mensagem de renovação copiada. Agora é só colar no WhatsApp do aluno.", "sucesso");
           })
           .catch(function() {
-            prompt("Copie a mensagem abaixo:", mensagem);
+            copiarTextoFallback(mensagem);
           });
       } else {
-        prompt("Copie a mensagem abaixo:", mensagem);
+        copiarTextoFallback(mensagem);
       }
     }
 
-    function renovarAlunoPainel(emailAluno, dias) {
+    function copiarTextoFallback(texto) {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = texto;
+        ta.style.position = "fixed";
+        ta.style.top = "0";
+        ta.style.left = "0";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        mostrarMensagemPainel("📩 Mensagem copiada. Cole no WhatsApp do aluno.", "sucesso");
+      } catch (e) {
+        mostrarMensagemPainel("Não foi possível copiar automaticamente. Copie o texto manualmente.", "aviso");
+      }
+    }
+
+        function renovarAlunoPainel(emailAluno, dias) {
       if (!usuarioAdmin || !db) {
         mostrarMensagemPainel("Você não tem permissão para renovar alunos.", "aviso");
         return;
@@ -4561,7 +4580,7 @@
       });
 
       const plano = {
-        versao: "0.3.0-hybrid-real",
+        versao: "0.5.3",
         inicioSemana: inicioSemanaAtualISO(),
         criadoEm: Date.now(),
         metaSemanal: dist.total,
@@ -6072,7 +6091,7 @@
 
     function abrirAulaCardio(tipo) {
       if (window.abrirAulaCardioLocalMetaTreino) return window.abrirAulaCardioLocalMetaTreino(tipo);
-      alert("A demonstração local será exibida dentro do card de cardio.");
+      (function(m){var t=document.createElement("div");t.textContent=m;t.style.cssText="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e3a5f;color:#f1f5f9;padding:10px 20px;border-radius:8px;font-size:.875rem;z-index:99999;max-width:90vw;box-shadow:0 4px 12px rgba(0,0,0,.4);pointer-events:none";document.body.appendChild(t);setTimeout(function(){try{document.body.removeChild(t);}catch(e){}},3000);})("Abra o treino e toque no card de cardio para ver a demonstração.");
     }
 
     function analisarProgressaoSemanal(callback) {
@@ -6814,7 +6833,7 @@
 
     function abrirVideoExercicio(nomeExercicio) {
       if (window.abrirVideoExercicioLocalMetaTreino) return window.abrirVideoExercicioLocalMetaTreino(nomeExercicio);
-      alert("A demonstração local será exibida dentro do card do exercício.");
+      (function(m){var t=document.createElement("div");t.textContent=m;t.style.cssText="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e3a5f;color:#f1f5f9;padding:10px 20px;border-radius:8px;font-size:.875rem;z-index:99999;max-width:90vw;box-shadow:0 4px 12px rgba(0,0,0,.4);pointer-events:none";document.body.appendChild(t);setTimeout(function(){try{document.body.removeChild(t);}catch(e){}},3000);})("Abra o treino e toque no card do exercício para ver a demonstração.");
     }
 
     function mostrarTreinoNaTela() {
@@ -7747,7 +7766,7 @@
 <script>
 (function() {
   const MT03 = {
-    versaoPlano: "0.3.0-hybrid-real",
+    versaoPlano: "0.5.3",
     forca: ["superior", "inferior_forca", "inferior_moderado", "full_body", "core_estabilidade", "funcional"],
     corrida: ["corrida_leve", "corrida_regenerativa", "intervalado", "ritmo", "longo", "progressiva", "teste", "caminhada_leve"],
     recuperacao: ["caminhada_leve", "mobilidade", "alongamento", "recuperacao_pernas", "soltura_muscular", "relaxamento", "descanso_total"]
@@ -11654,7 +11673,7 @@
 <script id="metatreino-midia-local-v052">
 (function(){
   "use strict";
-  var VERSAO_MIDIA_LOCAL = "0.5.2";
+  var VERSAO_MIDIA_LOCAL = "0.5.3";
 
   function normalizarMidiaMT(valor) {
     return String(valor || "")
@@ -12012,6 +12031,8 @@
   "use strict";
   var VERSION_MIDIA_FIX = "0.5.3";
 
+  // ── Utilitários ────────────────────────────────────────────────────────────
+
   function normalizar(valor) {
     return String(valor || "")
       .normalize("NFD")
@@ -12024,6 +12045,23 @@
     return String(valor == null ? "" : valor).replace(/[&<>"']/g, function(ch) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[ch];
     });
+  }
+
+  // FIX 3: toast inline em vez de alert()
+  function toastInline(mensagem, tipo) {
+    try {
+      var toast = document.createElement("div");
+      toast.textContent = mensagem;
+      toast.style.cssText = [
+        "position:fixed", "bottom:24px", "left:50%", "transform:translateX(-50%)",
+        "background:" + (tipo === "erro" ? "#7f1d1d" : "#1e3a5f"),
+        "color:#f1f5f9", "padding:10px 20px", "border-radius:8px",
+        "font-size:0.875rem", "z-index:99999", "max-width:90vw",
+        "box-shadow:0 4px 12px rgba(0,0,0,.4)", "pointer-events:none"
+      ].join(";");
+      document.body.appendChild(toast);
+      setTimeout(function(){ try { document.body.removeChild(toast); } catch(e){} }, 3000);
+    } catch(e) {}
   }
 
   function listaTreinoAtual() {
@@ -12049,20 +12087,20 @@
 
   function htmlFallbackMidia(exercicio) {
     var nome = exercicio && exercicio.nome ? exercicio.nome : "Demonstração local";
-    return '' +
-      '<div class="midia-exercicio-topo">' +
-        '<div><strong>Demonstração local do exercício</strong>' +
-        '<p class="small">' + escapar(nome) + '</p></div>' +
-        '<span class="midia-chip-local">OFFLINE</span>' +
-      '</div>' +
-      '<div class="midia-animacao-wrap">' +
-        '<svg class="mt-svg-demo mt-demo-agachamento" viewBox="0 0 240 160" aria-hidden="true">' +
-          '<line class="mt-line mt-thin" x1="28" y1="136" x2="212" y2="136"></line>' +
-          '<g class="mt-persona"><circle class="mt-head" cx="120" cy="42" r="12"></circle><line class="mt-body" x1="120" y1="56" x2="120" y2="92"></line><line class="mt-limb" x1="120" y1="70" x2="92" y2="86"></line><line class="mt-limb" x1="120" y1="70" x2="148" y2="86"></line><line class="mt-limb" x1="120" y1="92" x2="94" y2="132"></line><line class="mt-limb" x1="120" y1="92" x2="146" y2="132"></line></g>' +
-        '</svg>' +
-      '</div>' +
-      '<p><strong>Foco:</strong> execute com controle, postura firme e amplitude confortável.</p>' +
-      '<p class="midia-nota-seguranca"><strong>Segurança:</strong> use como apoio visual. Em caso de dor, tontura ou desconforto incomum, interrompa.</p>';
+    return "" +
+      "<div class=\"midia-exercicio-topo\">" +
+        "<div><strong>Demonstração local do exercício</strong>" +
+        "<p class=\"small\">" + escapar(nome) + "</p></div>" +
+        "<span class=\"midia-chip-local\">OFFLINE</span>" +
+      "</div>" +
+      "<div class=\"midia-animacao-wrap\">" +
+        "<svg class=\"mt-svg-demo mt-demo-agachamento\" viewBox=\"0 0 240 160\" aria-hidden=\"true\">" +
+          "<line class=\"mt-line mt-thin\" x1=\"28\" y1=\"136\" x2=\"212\" y2=\"136\"></line>" +
+          "<g class=\"mt-persona\"><circle class=\"mt-head\" cx=\"120\" cy=\"42\" r=\"12\"></circle><line class=\"mt-body\" x1=\"120\" y1=\"56\" x2=\"120\" y2=\"92\"></line><line class=\"mt-limb\" x1=\"120\" y1=\"70\" x2=\"92\" y2=\"86\"></line><line class=\"mt-limb\" x1=\"120\" y1=\"70\" x2=\"148\" y2=\"86\"></line><line class=\"mt-limb\" x1=\"120\" y1=\"92\" x2=\"94\" y2=\"132\"></line><line class=\"mt-limb\" x1=\"120\" y1=\"92\" x2=\"146\" y2=\"132\"></line></g>" +
+        "</svg>" +
+      "</div>" +
+      "<p><strong>Foco:</strong> execute com controle, postura firme e amplitude confortável.</p>" +
+      "<p class=\"midia-nota-seguranca\"><strong>Segurança:</strong> use como apoio visual. Em caso de dor, tontura ou desconforto incomum, interrompa.</p>";
   }
 
   function htmlMidia(exercicio) {
@@ -12074,6 +12112,8 @@
     } catch(e) {}
     return htmlFallbackMidia(exercicio);
   }
+
+  // ── Painel de demonstração ─────────────────────────────────────────────────
 
   function garantirPainel(card, nome) {
     if (!card) return null;
@@ -12133,7 +12173,8 @@
   window.abrirVideoExercicioLocalMetaTreino = function(nomeExercicio, origem) {
     var card = encontrarCard(nomeExercicio, origem);
     if (!card) {
-      alert("Abra um treino primeiro para ver a demonstração local do exercício.");
+      // FIX 3: toast no lugar de alert()
+      toastInline("Abra um treino para ver a demonstração do exercício.", "info");
       return false;
     }
     var nome = nomeExercicio || tituloDoCard(card);
@@ -12155,6 +12196,8 @@
     }
     return false;
   };
+
+  // ── Preparação dos cards ───────────────────────────────────────────────────
 
   function botaoEhDeMidia(btn) {
     if (!btn || !btn.closest || !btn.closest("#listaExercicios")) return false;
@@ -12199,29 +12242,45 @@
     cards.forEach(prepararCard);
   }
 
+  // FIX 6: usar fase de bubble (sem o terceiro argumento true) para não interceptar
+  // outros handlers filhos antes do tempo
   document.addEventListener("click", function(ev) {
     var alvo = ev.target;
     var btn = alvo && alvo.closest ? alvo.closest("button") : null;
     if (!botaoEhDeMidia(btn)) return;
     ev.preventDefault();
-    if (ev.stopImmediatePropagation) ev.stopImmediatePropagation();
-    else ev.stopPropagation();
-    window.abrirVideoExercicioLocalMetaTreino(btn.getAttribute("data-midia-nome") || tituloDoCard(btn.closest(".exercise")), btn);
-    return false;
-  }, true);
+    window.abrirVideoExercicioLocalMetaTreino(
+      btn.getAttribute("data-midia-nome") || tituloDoCard(btn.closest(".exercise")),
+      btn
+    );
+  }); // FIX 6: sem "true" — fase de bubble
 
-  var mostrarAnterior = window.mostrarTreinoNaTela;
-  if (typeof mostrarAnterior === "function" && !mostrarAnterior.__midiaLocalHotfixV053) {
-    var mostrarComMidiaHotfix = function() {
-      var retorno = mostrarAnterior.apply(this, arguments);
-      setTimeout(prepararTodos, 20);
-      setTimeout(prepararTodos, 300);
+  // FIX 4: monkey-patch com retry caso mostrarTreinoNaTela ainda não exista
+  function aplicarMonkeyPatch() {
+    var fn = window.mostrarTreinoNaTela;
+    if (typeof fn !== "function") return false;
+    if (fn.__midiaLocalHotfixV053) return true; // já aplicado
+    var wrapped = function() {
+      var retorno = fn.apply(this, arguments);
+      // FIX 5: apenas um setTimeout curto; MutationObserver cobre re-renders
+      setTimeout(prepararTodos, 50);
       return retorno;
     };
-    mostrarComMidiaHotfix.__midiaLocalHotfixV053 = true;
-    window.mostrarTreinoNaTela = mostrarComMidiaHotfix;
+    wrapped.__midiaLocalHotfixV053 = true;
+    window.mostrarTreinoNaTela = wrapped;
+    return true;
   }
 
+  // FIX 4: tentar imediatamente; se falhar, aguardar até 3s em intervalos
+  if (!aplicarMonkeyPatch()) {
+    var tentativas = 0;
+    var retryPatch = setInterval(function() {
+      tentativas++;
+      if (aplicarMonkeyPatch() || tentativas >= 30) clearInterval(retryPatch);
+    }, 100);
+  }
+
+  // MutationObserver para re-renders dinâmicos (substitui os múltiplos setTimeout)
   try {
     var lista = document.getElementById("listaExercicios");
     if (lista && typeof MutationObserver !== "undefined") {
@@ -12240,10 +12299,9 @@
     if (meta) meta.setAttribute("content", VERSION_MIDIA_FIX);
   });
 
+  // FIX 5: apenas um timeout de inicialização (MutationObserver cobre o resto)
   setTimeout(prepararTodos, 350);
-  setTimeout(prepararTodos, 1000);
 })();
 </script>
 
 </body>
-</html>

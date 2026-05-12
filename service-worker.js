@@ -4,7 +4,7 @@ const APP_SHELL = [
   "./",
   "./index.html?v=0.5.3",
   "./manifest.json?v=0.5.3",
-  "./icon-512.png.png?v=0.5.3"
+  "./icon-512.png?v=0.5.3"
 ];
 
 // INSTALACAO
@@ -52,10 +52,12 @@ self.addEventListener("fetch", function(event) {
     event.respondWith(
       fetch(event.request)
         .then(function(response) {
-          const copy = response.clone();
+          // FIX: criar dois clones antes de qualquer consumo do body
+          var cloneParaCache1 = response.clone();
+          var cloneParaCache2 = response.clone();
           caches.open(CACHE_NAME).then(function(cache) {
-            cache.put("./index.html?v=0.5.3", copy);
-            cache.put("./index.html", response.clone());
+            cache.put("./index.html?v=0.5.3", cloneParaCache1);
+            cache.put("./index.html", cloneParaCache2);
           });
           return response;
         })
@@ -82,7 +84,7 @@ self.addEventListener("fetch", function(event) {
     fetch(event.request)
       .then(function(response) {
         if (!response || response.status !== 200) return response;
-        const responseCopy = response.clone();
+        var responseCopy = response.clone();
         caches.open(CACHE_NAME).then(function(cache) {
           cache.put(event.request, responseCopy);
         });
