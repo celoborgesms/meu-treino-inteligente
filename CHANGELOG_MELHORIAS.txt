@@ -1,3 +1,15 @@
+MetaTreino Hybrid — v0.5.1 Beta
+
+Correções desta versão:
+- Check-in: voltou a pergunta de cardio junto com a força, com opções para não fazer, corrida leve, esteira ou bicicleta.
+- Força: o resumo do treino deixa de dizer "Cardio: opcional / não incluído" sem contexto; agora mostra claramente se haverá cardio junto.
+- Força: cada exercício volta a exibir prescrição prática de séries, repetições, descanso e esforço/RPE.
+- Força: os cards passam a usar instruções específicas por exercício, em vez de repetir apenas texto genérico de postura e segurança.
+- Aba Hoje: treino de força 100% concluído deixa de aparecer como "treino anterior em andamento" e passa a aparecer como concluído.
+- Plano/Hoje: quando todos os exercícios de força são marcados, o app tenta sincronizar a sessão como concluída no plano da semana.
+
+---
+
 MetaTreino Hybrid — v0.5.0 Beta
 Data: 12/05/2026
 

@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MetaTreino Hybrid</title>
-  <meta name="app-version" content="0.5.0">
+  <meta name="app-version" content="0.5.1">
   <meta name="theme-color" content="#020617">
-  <link rel="manifest" href="manifest.json?v=0.5.0">
-<link rel="icon" type="image/png" href="icon-512.png.png?v=0.5.0">
-<link rel="apple-touch-icon" href="icon-512.png.png?v=0.5.0">
+  <link rel="manifest" href="manifest.json?v=0.5.1">
+<link rel="icon" type="image/png" href="icon-512.png.png?v=0.5.1">
+<link rel="apple-touch-icon" href="icon-512.png.png?v=0.5.1">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -1506,7 +1506,7 @@
   <div class="container">
     <div class="app-hero">
       <div>
-        <span class="app-badge">MetaTreino Hybrid • Beta 0.5.0</span>
+        <span class="app-badge">MetaTreino Hybrid • Beta 0.5.1</span>
         <h1><span class="hero-meta-word">Meta</span>Treino <span class="hero-hybrid-word">Hybrid</span></h1>
         <p>Musculação e corrida no mesmo plano: força, shape, fôlego e recuperação sem bagunçar sua semana.</p>
       </div>
@@ -1750,15 +1750,15 @@
         <h2>✨ Versão atual</h2>
         <p class="small"><strong>Regra fixa de atualizações:</strong> dentro do app será mostrada somente a versão atual. O histórico completo fica no arquivo CHANGELOG que acompanha o pacote da versão.</p>
         <div class="plano-topo">
-          <strong>MetaTreino Hybrid 0.5.0 Beta</strong><br>
+          <strong>MetaTreino Hybrid 0.5.1 Beta</strong><br>
           <span class="tag beta">Hybrid</span>
           <p><strong>Atualizada em:</strong> 12/05/2026</p>
           <ul class="versao-atual-lista">
-            <li>Corrida agora aparece como <strong>sessão guiada</strong>, com duração, esforço alvo, objetivo, execução, alternativa se cansar e aviso híbrido com a musculação.</li>
-            <li>No Plano, o botão de corrida mudou de <strong>Registrar corrida</strong> para <strong>Ver treino de corrida</strong>, deixando claro que o usuário primeiro vê/começa a sessão e só registra depois.</li>
-            <li>As sugestões de corrida ficam mais inteligentes: consideram nível, objetivo, condição atual, último registro, RPE, sensação das pernas, dor articular e proximidade de treino pesado de pernas.</li>
-            <li>O app agora reduz a agressividade da corrida quando detecta pernas pesadas, dor articular, treino de pernas próximo ou cardio forte recente.</li>
-            <li>O registro de corrida continua salvando distância, tempo, zona, esforço, sensação das pernas e dor, para adaptar melhor as próximas sessões.</li>
+            <li>O check-in voltou a perguntar se haverá <strong>cardio junto com a força</strong>, com opções para não fazer, corrida leve, esteira ou bicicleta.</li>
+            <li>O resumo do treino de força agora mostra <strong>Cardio junto</strong> com clareza, em vez de exibir "opcional / não incluído" sem contexto.</li>
+            <li>Os cards de força voltaram a mostrar <strong>séries, repetições, descanso e esforço/RPE</strong>.</li>
+            <li>O campo <strong>Como fazer</strong> passou a usar instruções específicas por exercício, não apenas recomendações genéricas repetidas.</li>
+            <li>A aba Hoje reconhece treino de força 100% concluído e deixa de mostrar como "treino anterior em andamento".</li>
           </ul>
         </div>
         <button type="button" class="botao-principal" onclick="verificarAtualizacaoManual()">Verificar se há nova atualização</button>
@@ -10066,7 +10066,7 @@
 
 <script id="mt-v048-checkin-contexto-fix">
 (function(){
-  var VERSION = '0.5.0';
+  var VERSION = '0.5.1';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -10435,7 +10435,7 @@
 
 <script id="mt-v049-data-local-hoje-fix">
 (function(){
-  var VERSION = '0.5.0';
+  var VERSION = '0.5.1';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -10618,7 +10618,7 @@
       titulo: item ? nomeItem(item) : 'Sess\u00e3o do dia',
       descricao: item ? descricaoItem(item) : '',
       criadoEm: Date.now(),
-      origemVersao: '0.5.0-data-local'
+      origemVersao: '0.5.1-data-local'
     };
     window.__mtCheckinContextoV048 = ctx;
     try { localStorage.setItem(CONTEXT_KEY, JSON.stringify(ctx)); } catch(e) {}
@@ -10760,7 +10760,7 @@
 
 <script id="mt-v050-corrida-inteligente">
 (function(){
-  var VERSION_ATUAL = '0.5.0';
+  var VERSION_ATUAL = '0.5.1';
   try { window.VERSION = VERSION_ATUAL; } catch(e) {}
   try { if (typeof VERSION !== 'undefined') VERSION = VERSION_ATUAL; } catch(e) {}
 
@@ -11119,6 +11119,419 @@
     if (botaoCardioHoje) botaoCardioHoje.textContent = 'Ver treino de corrida/cardio';
     setTimeout(function(){ try { if (typeof window.renderizarPlanoSemanal === 'function') window.renderizarPlanoSemanal(); } catch(e) {} }, 300);
   });
+})();
+</script>
+
+
+
+<style id="mt-v051-forca-cardio-execucao-style">
+  .prescricao-forca-v051 {
+    margin: 10px 0 12px;
+    padding: 10px 12px;
+    border: 1px solid rgba(34, 211, 238, .18);
+    border-radius: 14px;
+    background: rgba(15, 23, 42, .55);
+    color: #dbeafe;
+    line-height: 1.45;
+  }
+  .prescricao-forca-v051 strong { color:#f8fafc; }
+  .prescricao-forca-v051 .linha { display:block; margin-top:3px; }
+  .checkin-cardio-wrap-v051 {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 18px;
+    border: 1px solid rgba(34, 211, 238, .20);
+    background: rgba(8, 47, 73, .16);
+  }
+  .treino-concluido-box-v051 {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px solid rgba(34, 197, 94, .32);
+    background: rgba(22, 101, 52, .16);
+    color: #dcfce7;
+  }
+  .treino-andamento-box-v051 {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px dashed rgba(125, 211, 252, .32);
+    background: rgba(8, 47, 73, .14);
+  }
+</style>
+
+<script id="mt-v051-forca-cardio-execucao-fix">
+(function(){
+  var VERSION_ATUAL = '0.5.1';
+  var PATCH_ID = 'mt-v051';
+
+  function byId(id){ return document.getElementById(id); }
+  function safe(texto){ return window.limparTextoSeguro ? window.limparTextoSeguro(texto) : String(texto == null ? '' : texto); }
+  function esc(texto){
+    if (window.limparTextoSeguro) return window.limparTextoSeguro(texto);
+    return String(texto == null ? '' : texto).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
+  }
+  function pad2(n){ return String(n).padStart(2, '0'); }
+  function hojeLocal(){
+    try { if (typeof window.hojeKey === 'function') return window.hojeKey(); } catch(e) {}
+    var d = new Date();
+    return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate());
+  }
+  function dataDeTimestamp(ts){
+    if (!ts) return '';
+    var d = new Date(Number(ts));
+    if (isNaN(d.getTime())) return '';
+    return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate());
+  }
+  function dataBR(iso){
+    iso = String(iso || '');
+    if (/^\d{4}-\d{2}-\d{2}$/.test(iso)) { var p = iso.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
+    return iso;
+  }
+  function norm(txt){
+    try { if (typeof window.normalizarCategoriaTreino === 'function') return window.normalizarCategoriaTreino(txt || ''); } catch(e) {}
+    return String(txt || '').toLowerCase();
+  }
+  function normNome(txt){
+    return String(txt || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+  function isForcaCat(cat){
+    cat = norm(cat);
+    try { if (typeof window.isForca === 'function') return window.isForca(cat); } catch(e) {}
+    return ['superior','inferior','inferior_forca','inferior_moderado','core_abdomen','core_estabilidade','full_body','funcional'].indexOf(cat) !== -1;
+  }
+  function categoriaAtualForca(){
+    try { if (typeof treinoAtual !== 'undefined' && treinoAtual) return norm(treinoAtual.categoria || treinoAtual.letra || ''); } catch(e) {}
+    var sel = byId('divisaoTreino');
+    return sel ? norm(sel.value) : '';
+  }
+  function valor(id, fallback){ var el = byId(id); return el ? el.value : fallback; }
+
+  function inserirCampoCardioCheckin(){
+    var divisao = byId('divisaoTreino');
+    if (!divisao || byId('cardioNoTreino')) return;
+    var wrap = document.createElement('div');
+    wrap.id = 'cardioNoTreinoWrap';
+    wrap.className = 'checkin-cardio-wrap-v051';
+    wrap.innerHTML =
+      '<label for="cardioNoTreino">Vai fazer cardio junto com a for&ccedil;a hoje?</label>' +
+      '<select id="cardioNoTreino">' +
+        '<option value="nao" selected>N&atilde;o — somente muscula&ccedil;&atilde;o</option>' +
+        '<option value="corrida">Corrida leve depois da for&ccedil;a</option>' +
+        '<option value="esteira">Esteira leve / inclinada</option>' +
+        '<option value="bicicleta">Bicicleta leve</option>' +
+      '</select>' +
+      '<p class="small">Isso impacta o volume da muscula&ccedil;&atilde;o: com cardio junto, o app reduz exerc&iacute;cios e evita levar o treino at&eacute; a falha.</p>';
+    divisao.parentNode.insertBefore(wrap, divisao.nextSibling);
+  }
+
+  var oldIrParaCheckinV051 = window.irParaCheckin;
+  window.irParaCheckin = function(){
+    var r;
+    if (typeof oldIrParaCheckinV051 === 'function') r = oldIrParaCheckinV051.apply(this, arguments);
+    setTimeout(inserirCampoCardioCheckin, 30);
+    return r;
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    inserirCampoCardioCheckin();
+    var badge = document.querySelector('.app-badge'); if (badge) badge.textContent = 'MetaTreino Hybrid \u2022 Beta ' + VERSION_ATUAL;
+    var meta = document.querySelector('meta[name="app-version"]'); if (meta) meta.setAttribute('content', VERSION_ATUAL);
+  });
+
+  window.montarResumoDoDia = function(letraTreino, tempo, cardioNoTreino, energia, progressaoSemanal){
+    var cardioMapa = {
+      nao: 'N\u00e3o — somente for\u00e7a',
+      corrida: 'Corrida leve depois da for\u00e7a',
+      esteira: 'Esteira leve / inclinada',
+      bicicleta: 'Bicicleta leve',
+      bike: 'Bicicleta leve'
+    };
+    var cardioTexto = cardioMapa[cardioNoTreino || 'nao'] || 'N\u00e3o — somente for\u00e7a';
+    var duracao = 0;
+    try { duracao = typeof estimarDuracaoTreino === 'function' ? estimarDuracaoTreino(tempo, cardioNoTreino) : (tempo === 'rapido' ? 30 : tempo === 'longo' ? 75 : 55); } catch(e) { duracao = tempo === 'rapido' ? 30 : tempo === 'longo' ? 75 : 55; }
+    var intensidade = 'moderada';
+    try { intensidade = typeof intensidadeTreinoTexto === 'function' ? intensidadeTreinoTexto(energia, progressaoSemanal, letraTreino) : intensidade; } catch(e) {}
+    var volume = 'normal';
+    if (tempo === 'rapido' || energia === 'cansado' || energia === 'mal' || (progressaoSemanal && progressaoSemanal.reduzirVolume) || (cardioNoTreino && cardioNoTreino !== 'nao')) volume = 'reduzido/inteligente';
+    return '<strong>Hoje voc\u00ea vai fazer:</strong><br>' +
+      '&#10004; ' + esc(typeof nomeAmigavelTreino === 'function' ? nomeAmigavelTreino(letraTreino) : letraTreino) + ' (' + esc(intensidade) + ')<br>' +
+      '&#10004; Cardio junto: ' + esc(cardioTexto) + '<br>' +
+      '&#10004; Volume: ' + esc(volume) + '<br>' +
+      '&#10004; Dura\u00e7\u00e3o estimada: aproximadamente ' + duracao + ' min';
+  };
+
+  function cardioEscolhido(){ return valor('cardioNoTreino', 'nao') || 'nao'; }
+  function prescricaoPadrao(exercicio){
+    var meta = (typeof perfilUsuario !== 'undefined' && perfilUsuario && perfilUsuario.metaPrincipal) || 'massa';
+    var energia = valor('energia', 'bem');
+    var tempo = valor('tempo', 'normal');
+    var cardio = cardioEscolhido();
+    var grupo = String(exercicio && exercicio.grupo || '');
+    var cat = categoriaAtualForca();
+    var leve = energia === 'cansado' || energia === 'mal' || tempo === 'rapido' || (cardio && cardio !== 'nao');
+    var pernas = /pernas|quadr|posterior|glute|panturrilha/i.test(normNome(grupo + ' ' + (exercicio && exercicio.nome || ''))) || cat === 'inferior_forca' || cat === 'inferior_moderado' || cat === 'inferior';
+    var series = '3 s\u00e9ries';
+    var reps = '10 a 15 repeti\u00e7\u00f5es';
+    var descanso = '60 a 90 s';
+    var rpe = 'RPE 7–8, pare com 1–2 repeti\u00e7\u00f5es sobrando';
+
+    if (meta === 'forca') { series = '4 s\u00e9ries'; reps = '4 a 8 repeti\u00e7\u00f5es'; descanso = '90 a 150 s'; rpe = 'RPE 8, sem falhar a t\u00e9cnica'; }
+    else if (meta === 'massa') { series = '3 a 4 s\u00e9ries'; reps = '8 a 12 repeti\u00e7\u00f5es'; descanso = '60 a 90 s'; rpe = 'RPE 7–8, pare com 1–2 repeti\u00e7\u00f5es sobrando'; }
+    else if (meta === 'definicao' || meta === 'perder_peso') { series = '3 s\u00e9ries'; reps = '10 a 15 repeti\u00e7\u00f5es'; descanso = '45 a 75 s'; rpe = 'RPE 7, ritmo controlado e sem falha'; }
+
+    if (leve) { series = pernas ? '2 a 3 s\u00e9ries' : '3 s\u00e9ries'; reps = pernas ? '10 a 12 repeti\u00e7\u00f5es' : reps; descanso = '60 a 90 s'; rpe = 'RPE 6–7, pare com 2–3 repeti\u00e7\u00f5es sobrando'; }
+    if (cat === 'inferior_moderado') { series = '2 a 3 s\u00e9ries'; reps = '10 a 12 repeti\u00e7\u00f5es'; rpe = 'RPE 6–7, n\u00e3o buscar falha para preservar a corrida'; }
+    if (cat === 'core_estabilidade' || /core|abd|prancha|pallof|dead bug/i.test(normNome(exercicio && exercicio.nome || ''))) { series = '2 a 3 s\u00e9ries'; reps = '20 a 40 s ou 8 a 12 reps por lado'; descanso = '45 a 60 s'; rpe = 'controle total, sem prender a respira\u00e7\u00e3o'; }
+    if (exercicio && exercicio.registravel === false) { series = 'Sugest\u00e3o'; reps = 'sem carga/repeti\u00e7\u00f5es'; descanso = 'leve'; rpe = 'recupera\u00e7\u00e3o'; }
+    return { series: series, reps: reps, descanso: descanso, rpe: rpe };
+  }
+
+  function passosEspecificos(nome, grupo){
+    var n = normNome(nome);
+    var g = normNome(grupo);
+    function base(){ return ['Ajuste a posi\u00e7\u00e3o antes de come\u00e7ar.', 'Execute a fase de subida e descida com controle.', 'Mantenha a t\u00e9cnica igual do in\u00edcio ao fim da s\u00e9rie.', 'Pare se sentir dor articular, tontura ou mal-estar.']; }
+    if (/supino|chest press/.test(n)) return ['Ajuste banco ou m\u00e1quina para as m\u00e3os ficarem na linha do peito.', 'Mantenha esc\u00e1pulas apoiadas, peito aberto e p\u00e9s firmes.', 'Empurre a carga sem tirar os ombros do apoio.', 'Volte devagar at\u00e9 sentir alongar o peitoral, sem perder controle.', 'Evite travar forte os cotovelos no final.'];
+    if (/flexao/.test(n)) return ['Apoie as m\u00e3os um pouco mais abertas que os ombros.', 'Mantenha corpo alinhado da cabe\u00e7a aos calcanhares.', 'Des\u00e7a com cotovelos em diagonal, sem deixar o quadril cair.', 'Empurre o ch\u00e3o e volte controlando.', 'Use apoio elevado se perder a postura.'];
+    if (/remada|row/.test(n)) return ['Comece com coluna neutra, peito aberto e abd\u00f4men firme.', 'Puxe a al\u00e7a ou peso em dire\u00e7\u00e3o ao abd\u00f4men.', 'Leve os cotovelos para tr\u00e1s sem encolher os ombros.', 'Segure 1 segundo contraindo as costas.', 'Volte devagar sem arredondar a lombar.'];
+    if (/puxada|pulldown|barra fixa/.test(n)) return ['Segure a barra com pegada firme e tronco est\u00e1vel.', 'Inicie puxando os ombros para baixo, longe das orelhas.', 'Puxe a barra em dire\u00e7\u00e3o ao alto do peito.', 'Controle a volta at\u00e9 alongar as costas.', 'Evite balan\u00e7ar o corpo para roubar o movimento.'];
+    if (/desenvolvimento|shoulder press|arnold/.test(n)) return ['Sente ou fique em p\u00e9 com abd\u00f4men firme.', 'Comece com a carga pr\u00f3xima da linha dos ombros.', 'Empurre para cima sem arquear a lombar.', 'Des\u00e7a controlando at\u00e9 a altura segura para seus omros.', 'Se houver dor no ombro, reduza amplitude ou substitua.'];
+    if (/elevacao lateral|eleva\u00e7\u00e3o lateral/.test(n)) return ['Mantenha cotovelos levemente flexionados.', 'Eleve os bra\u00e7os at\u00e9 perto da linha dos ombros.', 'Suba sem embalar o tronco.', 'Des\u00e7a devagar mantendo tens\u00e3o.', 'Use carga leve o suficiente para n\u00e3o roubar.'];
+    if (/rosca|biceps|b\u00edceps|scott/.test(n)) return ['Mantenha cotovelos perto do corpo ou apoiados, conforme o exerc\u00edcio.', 'Flexione o cotovelo sem jogar o tronco para tr\u00e1s.', 'Contraia o b\u00edceps no alto.', 'Des\u00e7a devagar at\u00e9 quase estender o cotovelo.', 'N\u00e3o use impulso da lombar.'];
+    if (/triceps|tr\u00edceps|frances|franc\u00eas|pulley/.test(n)) return ['Mantenha os cotovelos est\u00e1veis durante a s\u00e9rie.', 'Estenda os cotovelos at\u00e9 contrair o tr\u00edceps.', 'Volte controlando, sem abrir demais os cotovelos.', 'Mantenha ombros baixos e tronco firme.', 'Use carga que n\u00e3o cause desconforto no cotovelo.'];
+    if (/agachamento|goblet|sumo|sum\u00f4|hack/.test(n)) return ['Afaste os p\u00e9s em posi\u00e7\u00e3o confort\u00e1vel e firme.', 'Des\u00e7a levando quadril para baixo e para tr\u00e1s.', 'Mantenha joelhos acompanhando a linha dos p\u00e9s.', 'Suba empurrando o ch\u00e3o, sem jogar o tronco para frente.', 'Pare antes da amplitude que cause dor no joelho ou lombar.'];
+    if (/leg press/.test(n)) return ['Ajuste o banco para a lombar ficar bem apoiada.', 'Posicione os p\u00e9s na plataforma em base est\u00e1vel.', 'Des\u00e7a a carga controlando, sem tirar o quadril do banco.', 'Empurre a plataforma sem travar forte os joelhos.', 'Mantenha joelhos alinhados com os p\u00e9s.'];
+    if (/extensora/.test(n)) return ['Ajuste o encosto e o rolo na frente da canela.', 'Estenda os joelhos at\u00e9 contrair o quadr\u00edceps.', 'Segure 1 segundo no alto sem jogar o corpo.', 'Volte devagar sem deixar a carga bater.', 'Use carga moderada se houver sensibilidade no joelho.'];
+    if (/stiff|terra romeno|rdl/.test(n)) return ['Segure a carga perto do corpo e destrave levemente os joelhos.', 'Leve o quadril para tr\u00e1s mantendo coluna neutra.', 'Des\u00e7a at\u00e9 sentir alongar posterior, sem arredondar lombar.', 'Suba trazendo o quadril para frente.', 'N\u00e3o transforme em agachamento; o movimento vem do quadril.'];
+    if (/flexora|mesa flexora|cadeira flexora/.test(n)) return ['Ajuste a m\u00e1quina para o rolo ficar pr\u00f3ximo ao tornozelo.', 'Flexione os joelhos contraindo posterior de coxa.', 'Segure brevemente no ponto de maior contra\u00e7\u00e3o.', 'Volte devagar sem perder tens\u00e3o.', 'Evite tirar o quadril do banco.'];
+    if (/hip thrust|elevacao pelvica|eleva\u00e7\u00e3o p\u00e9lvica|ponte/.test(n)) return ['Apoie as costas no banco ou no ch\u00e3o com p\u00e9s firmes.', 'Suba o quadril contraindo gl\u00fateos.', 'Mantenha queixo levemente recolhido e costelas baixas.', 'Segure 1 segundo no alto sem hiperestender a lombar.', 'Des\u00e7a controlando at\u00e9 perto do ch\u00e3o.'];
+    if (/panturrilha/.test(n)) return ['Comece com p\u00e9s paralelos e apoio seguro.', 'Suba na ponta dos p\u00e9s at\u00e9 contrair a panturrilha.', 'Des\u00e7a devagar usando boa amplitude.', 'Fa\u00e7a pequena pausa embaixo sem relaxar totalmente.', 'Evite quicar ou usar impulso.'];
+    if (/abducao|abdu\u00e7\u00e3o|clamshell/.test(n)) return ['Mantenha quadril est\u00e1vel e abd\u00f4men firme.', 'Abra a perna ou joelho sentindo o gl\u00fateo lateral.', 'N\u00e3o gire a lombar para aumentar amplitude.', 'Volte devagar controlando.', 'Use el\u00e1stico/carga s\u00f3 se a t\u00e9cnica continuar limpa.'];
+    if (/step down/.test(n)) return ['Fique sobre um degrau baixo com um p\u00e9 apoiado.', 'Des\u00e7a o outro calcanhar devagar em dire\u00e7\u00e3o ao ch\u00e3o.', 'Mantenha joelho alinhado com o p\u00e9, sem cair para dentro.', 'Toque o ch\u00e3o de leve e suba controlando.', 'Reduza a altura se houver desconforto.'];
+    if (/nordic|n\u00f3rdico|flexao nordica|flex\u00e3o n\u00f3rdica/.test(n)) return ['Prenda os p\u00e9s com seguran\u00e7a ou use apoio de parceiro.', 'Mantenha tronco alinhado com quadril.', 'Des\u00e7a devagar resistindo com posterior de coxa.', 'Use as m\u00e3os para ajudar no retorno.', 'Fa\u00e7a poucas repeti\u00e7\u00f5es perfeitas, sem dor no joelho.'];
+    if (/copenhagen/.test(n)) return ['Apoie joelho ou perna de cima em banco baixo.', 'Alinhe ombro, quadril e joelhos como prancha lateral.', 'Eleve o quadril e mantenha o corpo firme.', 'Segure curto, respirando normalmente.', 'Comece pela vers\u00e3o com joelho apoiado.'];
+    if (/prancha/.test(n)) return ['Apoie antebra\u00e7os ou m\u00e3os com corpo alinhado.', 'Contraia abd\u00f4men e gl\u00fateos sem prender a respira\u00e7\u00e3o.', 'Mantenha pesco\u00e7o neutro.', 'Pare a s\u00e9rie se a lombar come\u00e7ar a cair.', 'Prefira menos tempo com t\u00e9cnica boa.'];
+    if (/dead bug/.test(n)) return ['Deite de barriga para cima com lombar controlada.', 'Eleve bra\u00e7os e pernas em posi\u00e7\u00e3o inicial.', 'Estenda bra\u00e7o e perna opostos devagar.', 'Volte sem perder controle da lombar.', 'Respire de forma constante.'];
+    if (/pallof/.test(n)) return ['Fique de lado para o cabo ou el\u00e1stico.', 'Segure a al\u00e7a no peito e firme abd\u00f4men.', 'Empurre as m\u00e3os para frente sem girar o tronco.', 'Segure curto e volte controlando.', 'Aumente a tens\u00e3o s\u00f3 se conseguir resistir \u00e0 rota\u00e7\u00e3o.'];
+    if (/marcha a/.test(n)) return ['Mantenha tronco alto e olhar para frente.', 'Eleve um joelho at\u00e9 perto da linha do quadril.', 'Use bra\u00e7os coordenados como na corrida.', 'Alterne lados com ritmo controlado.', 'Use como t\u00e9cnica/ativa\u00e7\u00e3o, n\u00e3o como sprint.'];
+    if (/abd|core|hollow|russian|bicicleta no ar|v up/.test(n) || /abd|core/.test(g)) return ['Comece com lombar e abd\u00f4men controlados.', 'Execute devagar, sem puxar o pesco\u00e7o.', 'Expire na fase de maior esfor\u00e7o.', 'Mantenha amplitude que n\u00e3o gere dor lombar.', 'Pare antes de perder controle do tronco.'];
+    return base();
+  }
+
+  function enriquecerExercicio(exercicio){
+    if (!exercicio) return exercicio;
+    var ex = Object.assign({}, exercicio);
+    if (ex.registravel !== false) {
+      var p = prescricaoPadrao(ex);
+      ex.series = p.series;
+      ex.reps = p.reps + ' \u2022 Descanso: ' + p.descanso + ' \u2022 Esfor\u00e7o: ' + p.rpe;
+      ex.prescricaoDetalhadaV051 = p;
+    }
+    var passos = passosEspecificos(ex.nome || '', ex.grupo || '');
+    if (passos && passos.length) ex.passos = passos;
+    return ex;
+  }
+
+  var oldObterBaseV051 = window.obterBaseTreinoPorCategoria;
+  if (typeof oldObterBaseV051 === 'function') {
+    window.obterBaseTreinoPorCategoria = function(categoria){
+      var lista = oldObterBaseV051.apply(this, arguments) || [];
+      return lista.map(enriquecerExercicio);
+    };
+  }
+
+  var oldMostrarV051 = window.mostrarTreinoNaTela;
+  window.mostrarTreinoNaTela = function(){
+    try {
+      if (typeof treinoAtual !== 'undefined' && Array.isArray(treinoAtual)) {
+        var letra = treinoAtual.letra, categoria = treinoAtual.categoria;
+        for (var i = 0; i < treinoAtual.length; i++) treinoAtual[i] = enriquecerExercicio(treinoAtual[i]);
+        treinoAtual.letra = letra;
+        treinoAtual.categoria = categoria;
+      }
+    } catch(e) {}
+    var r;
+    if (typeof oldMostrarV051 === 'function') r = oldMostrarV051.apply(this, arguments);
+    try {
+      var cards = document.querySelectorAll('#listaExercicios .exercise');
+      cards.forEach(function(card){
+        var strong = card.querySelector('strong');
+        if (!strong) return;
+        if (card.querySelector('.prescricao-forca-v051')) return;
+        var nome = strong.textContent || '';
+        var ex = null;
+        try { ex = (treinoAtual || []).find(function(item){ return item && item.nome === nome; }); } catch(e) {}
+        if (!ex || !ex.prescricaoDetalhadaV051 || ex.registravel === false) return;
+        var p = ex.prescricaoDetalhadaV051;
+        var bloco = document.createElement('div');
+        bloco.className = 'prescricao-forca-v051';
+        bloco.innerHTML = '<strong>Prescri\u00e7\u00e3o:</strong>' +
+          '<span class="linha">S\u00e9ries: ' + esc(p.series) + '</span>' +
+          '<span class="linha">Repeti\u00e7\u00f5es: ' + esc(p.reps) + '</span>' +
+          '<span class="linha">Descanso: ' + esc(p.descanso) + '</span>' +
+          '<span class="linha">Esfor\u00e7o: ' + esc(p.rpe) + '</span>';
+        var firstTag = card.querySelector('.tag');
+        card.insertBefore(bloco, firstTag || strong.nextSibling);
+      });
+    } catch(e) {}
+    return r;
+  };
+
+  function lerLocalTreino(){
+    try { if (typeof window.lerResumoTreinoAtualLocal === 'function') return window.lerResumoTreinoAtualLocal(); } catch(e) {}
+    return null;
+  }
+  var oldLerResumoV051 = window.lerResumoTreinoAtualLocal;
+  if (typeof oldLerResumoV051 === 'function') {
+    window.lerResumoTreinoAtualLocal = function(){
+      var dados = oldLerResumoV051.apply(this, arguments);
+      if (dados) {
+        dados.dataISO = dados.dataISO || dados.data || dataDeTimestamp(dados.salvoEm || dados.criadoEm) || hojeLocal();
+        dados.data = dados.data || dados.dataISO;
+        var total = Array.isArray(dados.treino) ? dados.treino.length : 0;
+        var feitos = Array.isArray(dados.concluidos) ? dados.concluidos.filter(Boolean).length : 0;
+        if (total > 0 && feitos >= total) dados.statusForca = 'concluido';
+      }
+      return dados;
+    };
+  }
+
+  function chaveTreino(){ try { if (typeof chaveTreinoAtual === 'function') return chaveTreinoAtual(); } catch(e) {} return null; }
+  function atualizarLocalStorageTreino(){
+    try {
+      var chave = chaveTreino();
+      if (!chave) return;
+      var bruto = localStorage.getItem(chave);
+      if (!bruto) return;
+      var dados = JSON.parse(bruto);
+      dados.dataISO = dados.dataISO || dados.data || hojeLocal();
+      dados.data = dados.data || dados.dataISO;
+      var total = Array.isArray(dados.treino) ? dados.treino.length : 0;
+      var feitos = Array.isArray(dados.concluidos) ? dados.concluidos.filter(Boolean).length : 0;
+      if (total > 0 && feitos >= total) dados.statusForca = 'concluido';
+      localStorage.setItem(chave, JSON.stringify(dados));
+    } catch(e) {}
+  }
+  var oldSalvarTreinoV051 = window.salvarTreinoAtualLocal;
+  if (typeof oldSalvarTreinoV051 === 'function') {
+    window.salvarTreinoAtualLocal = function(){
+      var r = oldSalvarTreinoV051.apply(this, arguments);
+      atualizarLocalStorageTreino();
+      return r;
+    };
+  }
+
+  function salvarPlano(plano){ try { if (typeof window.salvarPlanoSemanalLocal === 'function') window.salvarPlanoSemanalLocal(plano); } catch(e) {} }
+  function marcarPlanoForcaConcluido(local){
+    try {
+      if (typeof window.obterOuCriarPlanoSemanal !== 'function') return;
+      var plano = window.obterOuCriarPlanoSemanal(false);
+      var dias = plano && Array.isArray(plano.dias) ? plano.dias : [];
+      var data = (local && (local.dataISO || local.data)) || hojeLocal();
+      var catLocal = norm(local && (local.categoria || local.letra || ''));
+      var item = dias.find(function(d){ return d && d.dataISO === data && isForcaCat(d.categoria) && (!catLocal || norm(d.categoria) === catLocal); }) ||
+                 dias.find(function(d){ return d && d.dataISO === hojeLocal() && isForcaCat(d.categoria); });
+      if (item) { item.status = 'concluido'; item.concluidoComo = 'forca'; item.concluidoEm = Date.now(); salvarPlano(plano); }
+    } catch(e) {}
+  }
+  function checarConclusaoForca(){
+    var local = lerLocalTreino();
+    if (!local) return;
+    var total = Array.isArray(local.treino) ? local.treino.length : 0;
+    var feitos = Array.isArray(local.concluidos) ? local.concluidos.filter(Boolean).length : 0;
+    if (total > 0 && feitos >= total) {
+      atualizarLocalStorageTreino();
+      marcarPlanoForcaConcluido(local);
+      try { if (typeof window.renderizarHoje === 'function') window.renderizarHoje(); } catch(e) {}
+      try { if (typeof window.renderizarPlanoSemanal === 'function') window.renderizarPlanoSemanal(); } catch(e) {}
+    }
+  }
+  var oldMarcarExercicioV051 = window.marcarExercicioConcluido;
+  if (typeof oldMarcarExercicioV051 === 'function') {
+    window.marcarExercicioConcluido = function(index, concluido){
+      var r = oldMarcarExercicioV051.apply(this, arguments);
+      setTimeout(checarConclusaoForca, 60);
+      return r;
+    };
+  }
+
+  function nomeItemPlano(item){
+    try { if (typeof window.nomeItemPlanoHibrido === 'function') return window.nomeItemPlanoHibrido(item); } catch(e) {}
+    var c = norm(item && item.categoria);
+    try { if (typeof window.nomeAmigavelTreino === 'function') return window.nomeAmigavelTreino(c); } catch(e) {}
+    return item && (item.titulo || item.categoria) || 'Sess\u00e3o';
+  }
+  function descItemPlano(item){
+    try { if (typeof window.descricaoPlanoItemHibrido === 'function') return window.descricaoPlanoItemHibrido(item); } catch(e) {}
+    return item && item.descricao || '';
+  }
+  function badgeClasse(cat){
+    cat = norm(cat);
+    if (cat === 'cardio' || cat === 'corrida') return 'corrida';
+    if (cat === 'recuperacao') return 'recuperacao';
+    if (cat === 'descanso') return 'descanso';
+    return 'forca';
+  }
+  function textoBadge(cat){
+    cat = norm(cat);
+    if (cat === 'cardio' || cat === 'corrida') return 'CORRIDA';
+    if (cat === 'recuperacao') return 'RECUPERA\u00c7\u00c3O';
+    if (cat === 'descanso') return 'DESCANSO';
+    return 'FOR\u00c7A';
+  }
+  function itemHoje(){
+    try { if (typeof window.obterItemPlanoHoje === 'function') return window.obterItemPlanoHoje(); } catch(e) {}
+    return null;
+  }
+  function blocoLocal(local, item){
+    if (!local) return '';
+    var catLocal = norm(local.categoria || local.letra || '');
+    if (!isForcaCat(catLocal)) return '';
+    var total = Array.isArray(local.treino) ? local.treino.length : 0;
+    var feitos = Array.isArray(local.concluidos) ? local.concluidos.filter(Boolean).length : 0;
+    var dataLocal = local.dataISO || local.data || dataDeTimestamp(local.salvoEm || local.criadoEm) || hojeLocal();
+    var nome = typeof window.nomeAmigavelTreino === 'function' ? window.nomeAmigavelTreino(catLocal) : catLocal;
+    var itemCat = item ? norm(item.categoria || item.tipo || '') : '';
+    var compativel = item && dataLocal === hojeLocal() && isForcaCat(itemCat) && (!catLocal || itemCat === catLocal);
+    if (total > 0 && feitos >= total) {
+      return '<div class="treino-concluido-box-v051"><strong>Treino de for\u00e7a conclu\u00eddo</strong><br>' + esc(nome) + ' \u2022 ' + feitos + '/' + total + ' exerc\u00edcio(s)<br><span class="small">Esse treino j\u00e1 foi finalizado e conta como sess\u00e3o de for\u00e7a da semana.</span><button type="button" class="botao-secundario" onclick="descartarPendenciaTreinoHojeV047(this)">Limpar lembrete</button></div>';
+    }
+    if (feitos <= 0) {
+      return '<div class="pendencia-zero-box"><strong>Pend\u00eancia anterior detectada</strong><br><span class="small">Voc\u00ea abriu um treino de for\u00e7a, mas n\u00e3o iniciou de fato. Ele n\u00e3o substitui o foco de hoje.</span><div class="plano-acoes-principais"><button type="button" class="botao-secundario" onclick="descartarPendenciaTreinoHojeV047(this)">Descartar</button><button type="button" class="botao-secundario" onclick="irParaPlano()">Reagendar no plano</button></div></div>';
+    }
+    if (compativel) {
+      return '<div class="treino-andamento-box-v051"><strong>Treino de hoje em andamento</strong><br>' + esc(nome) + ' \u2022 ' + feitos + '/' + total + ' exerc\u00edcio(s)<br><span class="small">Continue de onde parou.</span><button type="button" class="botao-secundario" onclick="irParaTreino()">Retomar treino</button></div>';
+    }
+    return '<div class="pendente-anterior-box"><strong>Treino anterior em andamento</strong><br>' + esc(nome) + ' \u2022 ' + feitos + '/' + total + ' exerc\u00edcio(s)<br><span class="small">Como esse treino foi iniciado em outro dia, ele fica apenas como lembrete e n\u00e3o substitui o foco principal de hoje.</span><button type="button" class="botao-secundario" onclick="irParaTreino()">Retomar treino anterior</button></div>';
+  }
+  window.montarResumoHojeBase = function(){
+    var item = itemHoje();
+    var local = lerLocalTreino();
+    var hoje = hojeLocal();
+    var dataTopo = '<span class="hoje-data-titulo">Hoje \u2014 ' + esc(dataBR(hoje)) + '</span>';
+    if (item) {
+      var c = norm(item.categoria || item.tipo || '');
+      var status = item.status === 'concluido' ? '<br><span class="status-plano concluido">\u2705 Conclu\u00eddo</span>' : '';
+      var html = dataTopo + '<span class="session-badge ' + badgeClasse(c) + '">' + textoBadge(c) + '</span><br>' +
+        '<strong>Foco principal de hoje</strong><br>' + esc(nomeItemPlano(item)) + '<br>' + esc(descItemPlano(item)) + status;
+      html += blocoLocal(local, item);
+      return html;
+    }
+    if (local) {
+      var catLocal = norm(local.categoria || local.letra || '');
+      var total = Array.isArray(local.treino) ? local.treino.length : 0;
+      var feitos = Array.isArray(local.concluidos) ? local.concluidos.filter(Boolean).length : 0;
+      var nome = typeof window.nomeAmigavelTreino === 'function' ? window.nomeAmigavelTreino(catLocal) : catLocal;
+      if (total > 0 && feitos >= total) return dataTopo + '<span class="session-badge forca">FOR\u00c7A</span><br><strong>Treino conclu\u00eddo</strong><br>' + esc(nome) + '<br>Progresso: ' + feitos + ' de ' + total + ' exerc\u00edcio(s).';
+      return dataTopo + '<span class="session-badge forca">FOR\u00c7A</span><br><strong>Treino em andamento</strong><br>' + esc(nome) + '<br>Progresso: ' + feitos + ' de ' + total + ' exerc\u00edcio(s).';
+    }
+    return dataTopo + '<strong>Comece pelo plano ou check-in</strong><br>N\u00e3o encontrei sess\u00e3o definida para hoje.';
+  };
+
+  setTimeout(function(){
+    inserirCampoCardioCheckin();
+    try { checarConclusaoForca(); } catch(e) {}
+    try { if (typeof window.renderizarHoje === 'function') window.renderizarHoje(); } catch(e) {}
+  }, 400);
 })();
 </script>
 
