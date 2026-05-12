@@ -106,3 +106,12 @@ MetaTreino Hybrid — v0.4.6 Beta
 - Biblioteca de força mais híbrida com exercícios para corredores.
 - Melhorias de performance com cache curto para histórico.
 - Refinamentos visuais na identidade híbrida.
+
+
+============================================================
+MetaTreino Hybrid 0.5.4 Beta - hotfix navegacao/check-in
+============================================================
+- Corrigido: toque nas abas inferiores agora usa uma camada segura de navegacao, com fallback se alguma rotina antiga quebrar.
+- Corrigido: o check-in passa a respeitar a escolha manual de treino de forca mesmo quando o plano do dia recomenda corrida/cardio.
+- Melhorado: a recomendacao do dia agora mostra escolhas explicitas: aplicar recomendacao, fazer forca, fazer corrida/cardio, recuperacao ativa ou manter plano original.
+- Melhorado: ajuste gerado pelo check-in altera apenas a sessao selecionada, sem reorganizar a semana inteira.
