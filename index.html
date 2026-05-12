@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MetaTreino Hybrid</title>
-  <meta name="app-version" content="0.5.2">
+  <meta name="app-version" content="0.5.3">
   <meta name="theme-color" content="#020617">
-  <link rel="manifest" href="manifest.json?v=0.5.2">
-<link rel="icon" type="image/png" href="icon-512.png.png?v=0.5.2">
-<link rel="apple-touch-icon" href="icon-512.png.png?v=0.5.2">
+  <link rel="manifest" href="manifest.json?v=0.5.3">
+<link rel="icon" type="image/png" href="icon-512.png.png?v=0.5.3">
+<link rel="apple-touch-icon" href="icon-512.png.png?v=0.5.3">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -1620,7 +1620,7 @@
   <div class="container">
     <div class="app-hero">
       <div>
-        <span class="app-badge">MetaTreino Hybrid • Beta 0.5.2</span>
+        <span class="app-badge">MetaTreino Hybrid • Beta 0.5.3</span>
         <h1><span class="hero-meta-word">Meta</span>Treino <span class="hero-hybrid-word">Hybrid</span></h1>
         <p>Musculação e corrida no mesmo plano: força, shape, fôlego e recuperação sem bagunçar sua semana.</p>
       </div>
@@ -1864,7 +1864,7 @@
         <h2>✨ Versão atual</h2>
         <p class="small"><strong>Regra fixa de atualizações:</strong> dentro do app será mostrada somente a versão atual. O histórico completo fica no arquivo CHANGELOG que acompanha o pacote da versão.</p>
         <div class="plano-topo">
-          <strong>MetaTreino Hybrid 0.5.2 Beta</strong><br>
+          <strong>MetaTreino Hybrid 0.5.3 Beta</strong><br>
           <span class="tag beta">Hybrid</span>
           <p><strong>Atualizada em:</strong> 12/05/2026</p>
           <ul class="versao-atual-lista">
@@ -11996,6 +11996,252 @@
   }
 
   setTimeout(renderizarMidiasLocais, 350);
+})();
+</script>
+
+
+
+<style id="metatreino-midia-local-v053-hotfix-style">
+  .midia-exercicio-local.hidden { display: none !important; }
+  .midia-exercicio-local.midia-visivel { display: block !important; }
+  .midia-exercicio-local { scroll-margin-top: 18px; }
+</style>
+
+<script id="metatreino-midia-local-v053-hotfix">
+(function(){
+  "use strict";
+  var VERSION_MIDIA_FIX = "0.5.3";
+
+  function normalizar(valor) {
+    return String(valor || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  }
+
+  function escapar(valor) {
+    return String(valor == null ? "" : valor).replace(/[&<>"']/g, function(ch) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[ch];
+    });
+  }
+
+  function listaTreinoAtual() {
+    try { if (Array.isArray(window.treinoAtual)) return window.treinoAtual; } catch(e) {}
+    try { if (typeof treinoAtual !== "undefined" && Array.isArray(treinoAtual)) return treinoAtual; } catch(e) {}
+    return [];
+  }
+
+  function tituloDoCard(card) {
+    var strong = card && card.querySelector ? card.querySelector("strong") : null;
+    return strong ? (strong.textContent || "") : "";
+  }
+
+  function exercicioPorNome(nome) {
+    var alvo = normalizar(nome);
+    var lista = listaTreinoAtual();
+    for (var i = 0; i < lista.length; i++) {
+      var item = lista[i];
+      if (item && normalizar(item.nome) === alvo) return item;
+    }
+    return { nome: nome || "Demonstração", grupo: "" };
+  }
+
+  function htmlFallbackMidia(exercicio) {
+    var nome = exercicio && exercicio.nome ? exercicio.nome : "Demonstração local";
+    return '' +
+      '<div class="midia-exercicio-topo">' +
+        '<div><strong>Demonstração local do exercício</strong>' +
+        '<p class="small">' + escapar(nome) + '</p></div>' +
+        '<span class="midia-chip-local">OFFLINE</span>' +
+      '</div>' +
+      '<div class="midia-animacao-wrap">' +
+        '<svg class="mt-svg-demo mt-demo-agachamento" viewBox="0 0 240 160" aria-hidden="true">' +
+          '<line class="mt-line mt-thin" x1="28" y1="136" x2="212" y2="136"></line>' +
+          '<g class="mt-persona"><circle class="mt-head" cx="120" cy="42" r="12"></circle><line class="mt-body" x1="120" y1="56" x2="120" y2="92"></line><line class="mt-limb" x1="120" y1="70" x2="92" y2="86"></line><line class="mt-limb" x1="120" y1="70" x2="148" y2="86"></line><line class="mt-limb" x1="120" y1="92" x2="94" y2="132"></line><line class="mt-limb" x1="120" y1="92" x2="146" y2="132"></line></g>' +
+        '</svg>' +
+      '</div>' +
+      '<p><strong>Foco:</strong> execute com controle, postura firme e amplitude confortável.</p>' +
+      '<p class="midia-nota-seguranca"><strong>Segurança:</strong> use como apoio visual. Em caso de dor, tontura ou desconforto incomum, interrompa.</p>';
+  }
+
+  function htmlMidia(exercicio) {
+    try {
+      if (typeof window.obterMidiaLocalExercicio === "function" && typeof window.montarHtmlMidiaLocal === "function") {
+        var midia = window.obterMidiaLocalExercicio(exercicio);
+        return window.montarHtmlMidiaLocal(exercicio, midia);
+      }
+    } catch(e) {}
+    return htmlFallbackMidia(exercicio);
+  }
+
+  function garantirPainel(card, nome) {
+    if (!card) return null;
+    var box = card.querySelector(".midia-exercicio-local");
+    var exercicio = exercicioPorNome(nome || tituloDoCard(card));
+    if (!box) {
+      box = document.createElement("div");
+      box.className = "midia-exercicio-local hidden";
+      var aviso = card.querySelector(".aviso-video");
+      if (aviso && aviso.parentNode === card) aviso.insertAdjacentElement("afterend", box);
+      else {
+        var primeiroBotao = card.querySelector("button");
+        if (primeiroBotao && primeiroBotao.parentNode === card) card.insertBefore(box, primeiroBotao);
+        else card.appendChild(box);
+      }
+    }
+    box.innerHTML = htmlMidia(exercicio);
+    return box;
+  }
+
+  function encontrarCard(nome, origem) {
+    if (origem && origem.closest) {
+      var cardOrigem = origem.closest(".exercise");
+      if (cardOrigem) return cardOrigem;
+    }
+    try {
+      var ativo = document.activeElement;
+      if (ativo && ativo.closest) {
+        var cardAtivo = ativo.closest(".exercise");
+        if (cardAtivo) return cardAtivo;
+      }
+    } catch(e) {}
+    var alvo = normalizar(nome || "");
+    var cards = Array.prototype.slice.call(document.querySelectorAll("#listaExercicios .exercise"));
+    if (alvo) {
+      for (var i = 0; i < cards.length; i++) {
+        if (normalizar(tituloDoCard(cards[i])) === alvo) return cards[i];
+      }
+    }
+    return cards.length ? cards[0] : null;
+  }
+
+  function atualizarBotoes(card, aberto) {
+    var botoes = Array.prototype.slice.call(card.querySelectorAll("button"));
+    botoes.forEach(function(btn) {
+      var texto = normalizar(btn.textContent || "");
+      var attr = btn.getAttribute("onclick") || "";
+      var ehMidia = btn.classList.contains("botao-midia-local") || btn.hasAttribute("data-midia-nome") || attr.indexOf("abrirVideoExercicio") !== -1 || attr.indexOf("abrirAulaCardio") !== -1 || texto.indexOf("ver execucao") !== -1 || texto.indexOf("ver aula") !== -1 || texto.indexOf("ver cardio") !== -1 || texto.indexOf("ver demonstracao") !== -1 || texto.indexOf("ocultar demonstracao") !== -1;
+      if (!ehMidia) return;
+      btn.classList.add("botao-midia-local");
+      btn.setAttribute("aria-expanded", aberto ? "true" : "false");
+      btn.classList.toggle("ativo", aberto);
+      btn.textContent = aberto ? "Ocultar demonstração" : "Ver demonstração local";
+    });
+  }
+
+  window.abrirVideoExercicioLocalMetaTreino = function(nomeExercicio, origem) {
+    var card = encontrarCard(nomeExercicio, origem);
+    if (!card) {
+      alert("Abra um treino primeiro para ver a demonstração local do exercício.");
+      return false;
+    }
+    var nome = nomeExercicio || tituloDoCard(card);
+    var box = garantirPainel(card, nome);
+    if (!box) return false;
+    var estavaFechado = box.classList.contains("hidden") || box.style.display === "none" || !box.classList.contains("midia-visivel");
+    if (estavaFechado) {
+      box.classList.remove("hidden");
+      box.classList.add("midia-visivel");
+      box.style.display = "block";
+    } else {
+      box.classList.add("hidden");
+      box.classList.remove("midia-visivel");
+      box.style.display = "none";
+    }
+    atualizarBotoes(card, estavaFechado);
+    if (estavaFechado && box.scrollIntoView) {
+      setTimeout(function(){ try { box.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch(e) {} }, 50);
+    }
+    return false;
+  };
+
+  function botaoEhDeMidia(btn) {
+    if (!btn || !btn.closest || !btn.closest("#listaExercicios")) return false;
+    var texto = normalizar(btn.textContent || "");
+    var attr = btn.getAttribute("onclick") || "";
+    return btn.classList.contains("botao-midia-local") ||
+      btn.hasAttribute("data-midia-nome") ||
+      attr.indexOf("abrirVideoExercicio") !== -1 ||
+      attr.indexOf("abrirAulaCardio") !== -1 ||
+      texto.indexOf("ver execucao") !== -1 ||
+      texto.indexOf("ver aula") !== -1 ||
+      texto.indexOf("ver cardio") !== -1 ||
+      texto.indexOf("ver demonstracao local") !== -1 ||
+      texto.indexOf("ocultar demonstracao") !== -1;
+  }
+
+  function prepararCard(card) {
+    if (!card || !card.querySelector) return;
+    var nome = tituloDoCard(card) || "Demonstração";
+    var botoes = Array.prototype.slice.call(card.querySelectorAll("button"));
+    var botao = null;
+    for (var i = 0; i < botoes.length; i++) {
+      if (botaoEhDeMidia(botoes[i])) { botao = botoes[i]; break; }
+    }
+    if (!botao) return;
+    botao.type = "button";
+    botao.classList.add("botao-midia-local");
+    botao.setAttribute("data-midia-nome", nome);
+    botao.setAttribute("aria-expanded", "false");
+    botao.textContent = "Ver demonstração local";
+    botao.onclick = function(ev) {
+      if (ev && ev.preventDefault) ev.preventDefault();
+      return window.abrirVideoExercicioLocalMetaTreino(this.getAttribute("data-midia-nome") || nome, this);
+    };
+    var aviso = card.querySelector(".aviso-video");
+    if (aviso) aviso.innerHTML = "Demonstração animada local. Toque em Ver demonstração local para abrir aqui no card.";
+    garantirPainel(card, nome);
+  }
+
+  function prepararTodos() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll("#listaExercicios .exercise"));
+    cards.forEach(prepararCard);
+  }
+
+  document.addEventListener("click", function(ev) {
+    var alvo = ev.target;
+    var btn = alvo && alvo.closest ? alvo.closest("button") : null;
+    if (!botaoEhDeMidia(btn)) return;
+    ev.preventDefault();
+    if (ev.stopImmediatePropagation) ev.stopImmediatePropagation();
+    else ev.stopPropagation();
+    window.abrirVideoExercicioLocalMetaTreino(btn.getAttribute("data-midia-nome") || tituloDoCard(btn.closest(".exercise")), btn);
+    return false;
+  }, true);
+
+  var mostrarAnterior = window.mostrarTreinoNaTela;
+  if (typeof mostrarAnterior === "function" && !mostrarAnterior.__midiaLocalHotfixV053) {
+    var mostrarComMidiaHotfix = function() {
+      var retorno = mostrarAnterior.apply(this, arguments);
+      setTimeout(prepararTodos, 20);
+      setTimeout(prepararTodos, 300);
+      return retorno;
+    };
+    mostrarComMidiaHotfix.__midiaLocalHotfixV053 = true;
+    window.mostrarTreinoNaTela = mostrarComMidiaHotfix;
+  }
+
+  try {
+    var lista = document.getElementById("listaExercicios");
+    if (lista && typeof MutationObserver !== "undefined") {
+      var obs = new MutationObserver(function(){ prepararTodos(); });
+      obs.observe(lista, { childList: true, subtree: true });
+    }
+  } catch(e) {}
+
+  window.abrirVideoExercicio = window.abrirVideoExercicioLocalMetaTreino;
+
+  document.addEventListener("DOMContentLoaded", function(){
+    prepararTodos();
+    var badge = document.querySelector(".app-badge");
+    if (badge) badge.textContent = "MetaTreino Hybrid • Beta " + VERSION_MIDIA_FIX;
+    var meta = document.querySelector('meta[name="app-version"]');
+    if (meta) meta.setAttribute("content", VERSION_MIDIA_FIX);
+  });
+
+  setTimeout(prepararTodos, 350);
+  setTimeout(prepararTodos, 1000);
 })();
 </script>
 

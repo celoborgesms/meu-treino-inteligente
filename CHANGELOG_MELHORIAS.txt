@@ -1,3 +1,13 @@
+MetaTreino Hybrid — v0.5.3 Beta
+Data: 12/05/2026
+
+Correção principal desta versão:
+- Corrige o botão “Ver demonstração local” para abrir a animação dentro do próprio card do exercício.
+- O painel da demonstração agora é pré-anexado ao card em estado oculto e o botão apenas alterna mostrar/ocultar.
+- Adicionada captura de clique por delegação para evitar falha quando o PWA recria os cards depois da renderização.
+- Atualiza manifest e service worker para 0.5.3, forçando cache novo no celular.
+
+Histórico anterior:
 MetaTreino Hybrid — v0.5.2 Beta
 
 - Substitui o direcionamento principal ao YouTube por demonstrações animadas locais dentro dos cards de exercícios.
