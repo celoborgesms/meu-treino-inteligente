@@ -1,3 +1,20 @@
+MetaTreino Hybrid — v0.4.9 Beta
+Data: 12/05/2026
+
+Correção principal desta versão:
+1. Data local da aba Hoje
+   - Corrigido o bug em que a aba Hoje podia mostrar a sessão do dia seguinte quando o usuário estava em um fuso horário atrás do UTC.
+   - Agora a aba Hoje usa o dia local do aparelho, não new Date().toISOString().slice(0, 10).
+
+2. Consistência entre Hoje, Plano e Check-in
+   - A sessão exibida na aba Hoje passa a ser buscada pelo mesmo dia local que o plano mostra como "Hoje".
+   - Começar agora e Adaptar check-in / recalcular passam o contexto local correto para o check-in.
+
+3. Proteção contra regressão do v0.4.8
+   - O check-in continua respeitando cards específicos do Plano, mas sem contaminar a aba Hoje com a data do dia seguinte.
+   - Cache do PWA renovado para forçar atualização no celular.
+
+Histórico anterior:
 MetaTreino Hybrid — v0.4.8 Beta
 Data: 12/05/2026
 
