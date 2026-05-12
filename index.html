@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MetaTreino Hybrid</title>
-  <meta name="app-version" content="0.5.1">
+  <meta name="app-version" content="0.5.2">
   <meta name="theme-color" content="#020617">
-  <link rel="manifest" href="manifest.json?v=0.5.1">
-<link rel="icon" type="image/png" href="icon-512.png.png?v=0.5.1">
-<link rel="apple-touch-icon" href="icon-512.png.png?v=0.5.1">
+  <link rel="manifest" href="manifest.json?v=0.5.2">
+<link rel="icon" type="image/png" href="icon-512.png.png?v=0.5.2">
+<link rel="apple-touch-icon" href="icon-512.png.png?v=0.5.2">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -1500,13 +1500,127 @@
   .barra-progresso-fina > div, .grafico-barra { background: linear-gradient(90deg, #ef4444, #fb7185) !important; }
 </style>
 
+
+
+  <style id="metatreino-midia-local-v052">
+    .midia-exercicio-local {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.92));
+      border: 1px solid rgba(239, 68, 68, 0.38);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 14px 32px rgba(15,23,42,0.22);
+      color: #f8fafc;
+      overflow: hidden;
+    }
+    .midia-exercicio-local.hidden { display: none; }
+    .midia-exercicio-topo {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .midia-exercicio-topo strong {
+      color: #ffffff !important;
+      font-size: 16px !important;
+      margin: 0 !important;
+    }
+    .midia-exercicio-local .small,
+    .midia-exercicio-local p {
+      color: #dbeafe !important;
+      margin: 7px 0 0;
+      line-height: 1.45;
+    }
+    .midia-chip-local {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(239, 68, 68, 0.16);
+      color: #fecaca;
+      border: 1px solid rgba(248, 113, 113, 0.28);
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing: .03em;
+      white-space: nowrap;
+    }
+    .midia-animacao-wrap {
+      margin-top: 10px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 28% 10%, rgba(239,68,68,.24), transparent 34%), rgba(2, 6, 23, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      min-height: 170px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .mt-svg-demo {
+      width: min(100%, 330px);
+      height: 180px;
+      color: #f8fafc;
+    }
+    .mt-svg-demo .mt-line,
+    .mt-svg-demo .mt-body,
+    .mt-svg-demo .mt-limb,
+    .mt-svg-demo .mt-path {
+      stroke: currentColor;
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+    .mt-svg-demo .mt-thin { stroke-width: 4; opacity: .62; }
+    .mt-svg-demo .mt-head { fill: rgba(248,250,252,.96); stroke: none; }
+    .mt-svg-demo .mt-accent { fill: rgba(239,68,68,.92); stroke: none; }
+    .mt-svg-demo .mt-weight { stroke: #fecaca; stroke-width: 8; stroke-linecap: round; }
+    .mt-demo-agachamento .mt-persona { animation: mt-squat 1.55s ease-in-out infinite; transform-origin: 120px 92px; }
+    .mt-demo-empurrar .mt-carga { animation: mt-push 1.35s ease-in-out infinite; transform-origin: 120px 70px; }
+    .mt-demo-puxar .mt-puxada { animation: mt-pull 1.35s ease-in-out infinite; transform-origin: 120px 78px; }
+    .mt-demo-hinge .mt-torso-hinge { animation: mt-hinge 1.55s ease-in-out infinite; transform-origin: 104px 82px; }
+    .mt-demo-core .mt-prancha { animation: mt-core 1.7s ease-in-out infinite; transform-origin: 120px 86px; }
+    .mt-demo-corrida .mt-runner { animation: mt-run 1.05s ease-in-out infinite; transform-origin: 120px 82px; }
+    .mt-demo-mobilidade .mt-move { animation: mt-mobility 1.8s ease-in-out infinite; transform-origin: 120px 82px; }
+    .mt-demo-bracos .mt-braco { animation: mt-curl 1.25s ease-in-out infinite; transform-origin: 120px 72px; }
+    .mt-demo-panturrilha .mt-persona { animation: mt-calf 1.1s ease-in-out infinite; transform-origin: 120px 118px; }
+    @keyframes mt-squat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(22px) scaleY(.95); } }
+    @keyframes mt-push { 0%,100% { transform: translateY(18px); } 50% { transform: translateY(-8px); } }
+    @keyframes mt-pull { 0%,100% { transform: translateY(-12px); } 50% { transform: translateY(18px); } }
+    @keyframes mt-hinge { 0%,100% { transform: rotate(-10deg); } 50% { transform: rotate(20deg); } }
+    @keyframes mt-core { 0%,100% { transform: translateY(0) scaleX(1); } 50% { transform: translateY(-3px) scaleX(1.03); } }
+    @keyframes mt-run { 0%,100% { transform: translateX(-18px) rotate(-2deg); } 50% { transform: translateX(18px) rotate(3deg); } }
+    @keyframes mt-mobility { 0%,100% { transform: rotate(-10deg); } 50% { transform: rotate(12deg); } }
+    @keyframes mt-curl { 0%,100% { transform: rotate(26deg); } 50% { transform: rotate(-22deg); } }
+    @keyframes mt-calf { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    .botao-midia-local {
+      margin-top: 12px;
+    }
+    .botao-midia-local.ativo {
+      background: linear-gradient(135deg, #ef4444, #7f1d1d) !important;
+      color: #ffffff !important;
+      border-color: rgba(248,113,113,.55) !important;
+    }
+    .midia-exercicio-local .aviso-video,
+    .midia-nota-seguranca {
+      color: #cbd5e1 !important;
+      font-size: 12px;
+      margin-top: 9px;
+    }
+    .acoes-cardio-local {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+  </style>
+
 </head>
 <body>
 
   <div class="container">
     <div class="app-hero">
       <div>
-        <span class="app-badge">MetaTreino Hybrid • Beta 0.5.1</span>
+        <span class="app-badge">MetaTreino Hybrid • Beta 0.5.2</span>
         <h1><span class="hero-meta-word">Meta</span>Treino <span class="hero-hybrid-word">Hybrid</span></h1>
         <p>Musculação e corrida no mesmo plano: força, shape, fôlego e recuperação sem bagunçar sua semana.</p>
       </div>
@@ -1750,7 +1864,7 @@
         <h2>✨ Versão atual</h2>
         <p class="small"><strong>Regra fixa de atualizações:</strong> dentro do app será mostrada somente a versão atual. O histórico completo fica no arquivo CHANGELOG que acompanha o pacote da versão.</p>
         <div class="plano-topo">
-          <strong>MetaTreino Hybrid 0.5.1 Beta</strong><br>
+          <strong>MetaTreino Hybrid 0.5.2 Beta</strong><br>
           <span class="tag beta">Hybrid</span>
           <p><strong>Atualizada em:</strong> 12/05/2026</p>
           <ul class="versao-atual-lista">
@@ -5957,8 +6071,8 @@
     }
 
     function abrirAulaCardio(tipo) {
-      const busca = encodeURIComponent(tipo + " treino em casa para iniciantes queima gordura");
-      window.open("https://www.youtube.com/results?search_query=" + busca, "_blank");
+      if (window.abrirAulaCardioLocalMetaTreino) return window.abrirAulaCardioLocalMetaTreino(tipo);
+      alert("A demonstração local será exibida dentro do card de cardio.");
     }
 
     function analisarProgressaoSemanal(callback) {
@@ -6699,8 +6813,8 @@
     }
 
     function abrirVideoExercicio(nomeExercicio) {
-      const busca = encodeURIComponent("como fazer " + nomeExercicio + " exercício musculação corretamente");
-      window.open("https://www.youtube.com/results?search_query=" + busca, "_blank");
+      if (window.abrirVideoExercicioLocalMetaTreino) return window.abrirVideoExercicioLocalMetaTreino(nomeExercicio);
+      alert("A demonstração local será exibida dentro do card do exercício.");
     }
 
     function mostrarTreinoNaTela() {
@@ -10066,7 +10180,7 @@
 
 <script id="mt-v048-checkin-contexto-fix">
 (function(){
-  var VERSION = '0.5.1';
+  var VERSION = '0.5.2';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -10435,7 +10549,7 @@
 
 <script id="mt-v049-data-local-hoje-fix">
 (function(){
-  var VERSION = '0.5.1';
+  var VERSION = '0.5.2';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -10618,7 +10732,7 @@
       titulo: item ? nomeItem(item) : 'Sess\u00e3o do dia',
       descricao: item ? descricaoItem(item) : '',
       criadoEm: Date.now(),
-      origemVersao: '0.5.1-data-local'
+      origemVersao: '0.5.2-data-local'
     };
     window.__mtCheckinContextoV048 = ctx;
     try { localStorage.setItem(CONTEXT_KEY, JSON.stringify(ctx)); } catch(e) {}
@@ -10760,7 +10874,7 @@
 
 <script id="mt-v050-corrida-inteligente">
 (function(){
-  var VERSION_ATUAL = '0.5.1';
+  var VERSION_ATUAL = '0.5.2';
   try { window.VERSION = VERSION_ATUAL; } catch(e) {}
   try { if (typeof VERSION !== 'undefined') VERSION = VERSION_ATUAL; } catch(e) {}
 
@@ -11162,7 +11276,7 @@
 
 <script id="mt-v051-forca-cardio-execucao-fix">
 (function(){
-  var VERSION_ATUAL = '0.5.1';
+  var VERSION_ATUAL = '0.5.2';
   var PATCH_ID = 'mt-v051';
 
   function byId(id){ return document.getElementById(id); }
@@ -11532,6 +11646,356 @@
     try { checarConclusaoForca(); } catch(e) {}
     try { if (typeof window.renderizarHoje === 'function') window.renderizarHoje(); } catch(e) {}
   }, 400);
+})();
+</script>
+
+
+
+<script id="metatreino-midia-local-v052">
+(function(){
+  "use strict";
+  var VERSAO_MIDIA_LOCAL = "0.5.2";
+
+  function normalizarMidiaMT(valor) {
+    return String(valor || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+  }
+
+  function escaparMidiaMT(valor) {
+    return String(valor == null ? "" : valor).replace(/[&<>"']/g, function(ch) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[ch];
+    });
+  }
+
+  var BANCO_MIDIAS = {
+    agachamento: {
+      tipo: "agachamento",
+      titulo: "Demonstra\u00e7\u00e3o local: padr\u00e3o de agachamento",
+      foco: "Quadril para tr\u00e1s, joelhos alinhados e subida controlada.",
+      dica: "Use a anima\u00e7\u00e3o como refer\u00eancia visual. A amplitude deve ser confort\u00e1vel e sem dor."
+    },
+    empurrar: {
+      tipo: "empurrar",
+      titulo: "Demonstra\u00e7\u00e3o local: empurrar / supino / flex\u00e3o",
+      foco: "Esc\u00e1pulas firmes, cotovelos controlados e movimento sem trancos.",
+      dica: "Priorize controle na descida e n\u00e3o force amplitude se houver desconforto no ombro."
+    },
+    puxar: {
+      tipo: "puxar",
+      titulo: "Demonstra\u00e7\u00e3o local: puxada / remada",
+      foco: "Puxe com cotovelos, mantenha peito aberto e evite encolher os ombros.",
+      dica: "A lombar deve ficar est\u00e1vel. Se precisar roubar com o tronco, reduza a carga."
+    },
+    hinge: {
+      tipo: "hinge",
+      titulo: "Demonstra\u00e7\u00e3o local: dobradi\u00e7a de quadril / posterior",
+      foco: "Quadril vai para tr\u00e1s, coluna neutra e carga perto do corpo.",
+      dica: "Sinta posterior e gl\u00fateos. Pare antes de perder a postura da lombar."
+    },
+    core: {
+      tipo: "core",
+      titulo: "Demonstra\u00e7\u00e3o local: core / prancha / abd\u00f4men",
+      foco: "Abd\u00f4men firme, respira\u00e7\u00e3o constante e lombar protegida.",
+      dica: "Menos tempo com boa t\u00e9cnica vale mais que segurar muito tempo perdendo postura."
+    },
+    corrida: {
+      tipo: "corrida",
+      titulo: "Demonstra\u00e7\u00e3o local: cardio / corrida / aula curta",
+      foco: "Ritmo progressivo, postura alta e impacto controlado.",
+      dica: "Ajuste a intensidade pelo f\u00f4lego. Em casa, prefira baixo impacto se sentir joelho ou tornozelo."
+    },
+    mobilidade: {
+      tipo: "mobilidade",
+      titulo: "Demonstra\u00e7\u00e3o local: mobilidade / recupera\u00e7\u00e3o",
+      foco: "Movimento leve, controle respirat\u00f3rio e amplitude confort\u00e1vel.",
+      dica: "N\u00e3o force alongamento dolorido. A ideia \u00e9 recuperar, n\u00e3o transformar em treino pesado."
+    },
+    bracos: {
+      tipo: "bracos",
+      titulo: "Demonstra\u00e7\u00e3o local: bra\u00e7os / b\u00edceps / tr\u00edceps",
+      foco: "Cotovelos est\u00e1veis, punhos neutros e controle da carga.",
+      dica: "Evite impulso do tronco. A carga deve permitir repeti\u00e7\u00f5es limpas."
+    },
+    panturrilha: {
+      tipo: "panturrilha",
+      titulo: "Demonstra\u00e7\u00e3o local: panturrilha",
+      foco: "Suba na ponta dos p\u00e9s, controle a descida e evite quicar.",
+      dica: "Use apoio se precisar de equil\u00edbrio. Procure boa amplitude sem dor."
+    }
+  };
+
+  window.MT_BANCO_MIDIAS_EXERCICIOS = BANCO_MIDIAS;
+
+  function classificarMidiaExercicio(nome, grupo) {
+    var texto = normalizarMidiaMT((nome || "") + " " + (grupo || ""));
+    if (/corrida|caminhada|zumba|hiit|aero|bike|bicicleta|pedalada|mountain climber|cardio/.test(texto)) return "corrida";
+    if (/mobilidade|alongamento|respiracao|respiracao|bracing|regenerativa|recuperacao|bird dog|dead bug/.test(texto)) return "mobilidade";
+    if (/prancha|abdominal|abdomen|abd\u00f4men|crunch|core|hollow|russian|pallof|bicicleta no ar/.test(texto)) return "core";
+    if (/agachamento|leg press|extensora|afundo|passada|step-up|step up|pistol|isometria na parede/.test(texto)) return "agachamento";
+    if (/stiff|terra|romeno|bom dia|flexora|posterior|hip thrust|elevacao pelvica|elevacao p\u00e9lvica|ponte|glute|gluteo|gl\u00fateo|coice|abducao|abdu\u00e7\u00e3o/.test(texto)) return "hinge";
+    if (/panturrilha/.test(texto)) return "panturrilha";
+    if (/supino|flexao|flex\u00e3o|crucifixo|desenvolvimento|elevacao lateral|eleva\u00e7\u00e3o lateral|triceps banco|tr\u00edceps banco|push|press/.test(texto)) return "empurrar";
+    if (/remada|puxada|face pull|superman|barra fixa|pulldown|row|costas/.test(texto)) return "puxar";
+    if (/rosca|biceps|b\u00edceps|triceps|tr\u00edceps|pulley|testa|martelo/.test(texto)) return "bracos";
+    return "mobilidade";
+  }
+
+  function obterMidiaLocalExercicio(exercicioOuNome, grupoOpcional) {
+    var nome = typeof exercicioOuNome === "object" && exercicioOuNome ? exercicioOuNome.nome : exercicioOuNome;
+    var grupo = typeof exercicioOuNome === "object" && exercicioOuNome ? exercicioOuNome.grupo : grupoOpcional;
+    var chave = classificarMidiaExercicio(nome, grupo);
+    var base = BANCO_MIDIAS[chave] || BANCO_MIDIAS.mobilidade;
+    return {
+      mediaType: "animacao-local",
+      mediaKey: chave,
+      mediaVersion: VERSAO_MIDIA_LOCAL,
+      mediaTitle: base.titulo,
+      mediaFocus: base.foco,
+      mediaTip: base.dica,
+      youtubeFallback: false
+    };
+  }
+
+  window.obterMidiaLocalExercicio = obterMidiaLocalExercicio;
+
+  function svgDemoMidia(tipo) {
+    var trilha = '<line class="mt-line mt-thin" x1="28" y1="136" x2="212" y2="136"></line>';
+    if (tipo === "empurrar") {
+      return '<svg class="mt-svg-demo mt-demo-empurrar" viewBox="0 0 240 160" aria-hidden="true">' + trilha +
+        '<line class="mt-line mt-thin" x1="62" y1="118" x2="178" y2="118"></line>' +
+        '<g><circle class="mt-head" cx="86" cy="91" r="11"></circle><line class="mt-body" x1="98" y1="96" x2="150" y2="112"></line><line class="mt-limb" x1="118" y1="106" x2="103" y2="130"></line><line class="mt-limb" x1="142" y1="111" x2="164" y2="132"></line></g>' +
+        '<g class="mt-carga"><line class="mt-weight" x1="76" y1="70" x2="164" y2="70"></line><line class="mt-limb" x1="104" y1="92" x2="98" y2="70"></line><line class="mt-limb" x1="132" y1="102" x2="142" y2="70"></line></g>' +
+        '</svg>';
+    }
+    if (tipo === "puxar") {
+      return '<svg class="mt-svg-demo mt-demo-puxar" viewBox="0 0 240 160" aria-hidden="true">' + trilha +
+        '<line class="mt-line mt-thin" x1="120" y1="24" x2="120" y2="54"></line><line class="mt-weight" x1="75" y1="32" x2="165" y2="32"></line>' +
+        '<g><circle class="mt-head" cx="120" cy="78" r="12"></circle><line class="mt-body" x1="120" y1="91" x2="120" y2="120"></line><line class="mt-limb" x1="120" y1="120" x2="98" y2="136"></line><line class="mt-limb" x1="120" y1="120" x2="142" y2="136"></line></g>' +
+        '<g class="mt-puxada"><line class="mt-limb" x1="112" y1="92" x2="92" y2="52"></line><line class="mt-limb" x1="128" y1="92" x2="148" y2="52"></line></g>' +
+        '</svg>';
+    }
+    if (tipo === "hinge") {
+      return '<svg class="mt-svg-demo mt-demo-hinge" viewBox="0 0 240 160" aria-hidden="true">' + trilha +
+        '<g><line class="mt-limb" x1="112" y1="92" x2="98" y2="136"></line><line class="mt-limb" x1="112" y1="92" x2="137" y2="136"></line></g>' +
+        '<g class="mt-torso-hinge"><circle class="mt-head" cx="94" cy="64" r="12"></circle><line class="mt-body" x1="103" y1="76" x2="124" y2="98"></line><line class="mt-limb" x1="116" y1="89" x2="156" y2="110"></line><line class="mt-weight" x1="146" y1="118" x2="176" y2="118"></line></g>' +
+        '</svg>';
+    }
+    if (tipo === "core") {
+      return '<svg class="mt-svg-demo mt-demo-core" viewBox="0 0 240 160" aria-hidden="true">' + trilha +
+        '<g class="mt-prancha"><circle class="mt-head" cx="68" cy="92" r="11"></circle><line class="mt-body" x1="82" y1="94" x2="150" y2="104"></line><line class="mt-limb" x1="94" y1="96" x2="83" y2="126"></line><line class="mt-limb" x1="148" y1="105" x2="184" y2="130"></line><line class="mt-limb" x1="154" y1="106" x2="194" y2="123"></line></g>' +
+        '<path class="mt-path mt-thin" d="M74 44 C100 26, 142 26, 166 46"></path>' +
+        '</svg>';
+    }
+    if (tipo === "corrida") {
+      return '<svg class="mt-svg-demo mt-demo-corrida" viewBox="0 0 240 160" aria-hidden="true">' + trilha +
+        '<path class="mt-path mt-thin" d="M42 118 C78 96, 96 144, 132 120 S184 102, 202 124"></path>' +
+        '<g class="mt-runner"><circle class="mt-head" cx="112" cy="54" r="12"></circle><line class="mt-body" x1="111" y1="68" x2="126" y2="94"></line><line class="mt-limb" x1="118" y1="80" x2="91" y2="91"></line><line class="mt-limb" x1="119" y1="80" x2="145" y2="69"></line><line class="mt-limb" x1="126" y1="94" x2="97" y2="126"></line><line class="mt-limb" x1="126" y1="94" x2="160" y2="124"></line></g>' +
+        '</svg>';
+    }
+    if (tipo === "bracos") {
+      return '<svg class="mt-svg-demo mt-demo-bracos" viewBox="0 0 240 160" aria-hidden="true">' + trilha +
+        '<g><circle class="mt-head" cx="120" cy="50" r="12"></circle><line class="mt-body" x1="120" y1="64" x2="120" y2="104"></line><line class="mt-limb" x1="120" y1="104" x2="98" y2="136"></line><line class="mt-limb" x1="120" y1="104" x2="142" y2="136"></line><line class="mt-limb" x1="120" y1="75" x2="93" y2="92"></line><g class="mt-braco"><line class="mt-limb" x1="120" y1="75" x2="150" y2="91"></line><line class="mt-weight" x1="143" y1="96" x2="164" y2="96"></line></g></g>' +
+        '</svg>';
+    }
+    if (tipo === "panturrilha") {
+      return '<svg class="mt-svg-demo mt-demo-panturrilha" viewBox="0 0 240 160" aria-hidden="true">' + trilha +
+        '<g class="mt-persona"><circle class="mt-head" cx="120" cy="42" r="12"></circle><line class="mt-body" x1="120" y1="56" x2="120" y2="95"></line><line class="mt-limb" x1="120" y1="70" x2="95" y2="88"></line><line class="mt-limb" x1="120" y1="70" x2="145" y2="88"></line><line class="mt-limb" x1="120" y1="95" x2="102" y2="134"></line><line class="mt-limb" x1="120" y1="95" x2="138" y2="134"></line><circle class="mt-accent" cx="102" cy="137" r="5"></circle><circle class="mt-accent" cx="138" cy="137" r="5"></circle></g>' +
+        '</svg>';
+    }
+    if (tipo === "mobilidade") {
+      return '<svg class="mt-svg-demo mt-demo-mobilidade" viewBox="0 0 240 160" aria-hidden="true">' + trilha +
+        '<path class="mt-path mt-thin" d="M75 55 C95 28, 145 28, 165 55"></path><path class="mt-path mt-thin" d="M78 105 C100 130, 142 130, 164 105"></path>' +
+        '<g class="mt-move"><circle class="mt-head" cx="120" cy="49" r="12"></circle><line class="mt-body" x1="120" y1="63" x2="120" y2="105"></line><line class="mt-limb" x1="120" y1="76" x2="88" y2="62"></line><line class="mt-limb" x1="120" y1="76" x2="152" y2="62"></line><line class="mt-limb" x1="120" y1="105" x2="101" y2="136"></line><line class="mt-limb" x1="120" y1="105" x2="139" y2="136"></line></g>' +
+        '</svg>';
+    }
+    return '<svg class="mt-svg-demo mt-demo-agachamento" viewBox="0 0 240 160" aria-hidden="true">' + trilha +
+      '<g class="mt-persona"><circle class="mt-head" cx="120" cy="42" r="12"></circle><line class="mt-body" x1="120" y1="56" x2="120" y2="92"></line><line class="mt-limb" x1="120" y1="70" x2="92" y2="86"></line><line class="mt-limb" x1="120" y1="70" x2="148" y2="86"></line><line class="mt-limb" x1="120" y1="92" x2="94" y2="132"></line><line class="mt-limb" x1="120" y1="92" x2="146" y2="132"></line></g>' +
+      '</svg>';
+  }
+
+  function montarHtmlMidiaLocal(exercicioOuNome, midiaParam) {
+    var nome = typeof exercicioOuNome === "object" && exercicioOuNome ? exercicioOuNome.nome : exercicioOuNome;
+    var grupo = typeof exercicioOuNome === "object" && exercicioOuNome ? exercicioOuNome.grupo : "";
+    var midia = midiaParam || obterMidiaLocalExercicio(nome, grupo);
+    return '' +
+      '<div class="midia-exercicio-topo">' +
+        '<div><strong>' + escaparMidiaMT(midia.mediaTitle) + '</strong>' +
+        '<p class="small">' + escaparMidiaMT(nome || "Demonstra\u00e7\u00e3o") + '</p></div>' +
+        '<span class="midia-chip-local">OFFLINE</span>' +
+      '</div>' +
+      '<div class="midia-animacao-wrap">' + svgDemoMidia(midia.mediaKey) + '</div>' +
+      '<p><strong>Foco:</strong> ' + escaparMidiaMT(midia.mediaFocus) + '</p>' +
+      '<p class="midia-nota-seguranca"><strong>Seguran\u00e7a:</strong> ' + escaparMidiaMT(midia.mediaTip) + ' Em caso de dor, tontura ou desconforto incomum, interrompa.</p>';
+  }
+
+  window.montarHtmlMidiaLocal = montarHtmlMidiaLocal;
+
+  function anexarMidiaAoExercicio(exercicio) {
+    if (!exercicio) return exercicio;
+    var midia = obterMidiaLocalExercicio(exercicio);
+    exercicio.mediaType = midia.mediaType;
+    exercicio.mediaKey = midia.mediaKey;
+    exercicio.mediaTitle = midia.mediaTitle;
+    exercicio.mediaLocal = midia;
+    exercicio.youtubeUrl = "";
+    exercicio.youtubeFallback = false;
+    return exercicio;
+  }
+
+  var obterBaseAnterior = window.obterBaseTreinoPorCategoria;
+  if (typeof obterBaseAnterior === "function" && !obterBaseAnterior.__midiaLocalV052) {
+    var obterBaseComMidia = function() {
+      var lista = obterBaseAnterior.apply(this, arguments) || [];
+      return lista.map(function(exercicio) { return anexarMidiaAoExercicio(exercicio); });
+    };
+    obterBaseComMidia.__midiaLocalV052 = true;
+    window.obterBaseTreinoPorCategoria = obterBaseComMidia;
+  }
+
+  function encontrarExercicioAtualPorNome(nome) {
+    var alvo = normalizarMidiaMT(nome);
+    try {
+      if (!Array.isArray(window.treinoAtual)) return null;
+      for (var i = 0; i < window.treinoAtual.length; i++) {
+        var item = window.treinoAtual[i];
+        if (item && normalizarMidiaMT(item.nome) === alvo) return anexarMidiaAoExercicio(item);
+      }
+    } catch(e) {}
+    return { nome: nome, grupo: "" };
+  }
+
+  function alternarMidiaNoCard(card, exercicio) {
+    if (!card) return;
+    var nome = exercicio && exercicio.nome ? exercicio.nome : ((card.querySelector("strong") || {}).textContent || "Demonstra\u00e7\u00e3o");
+    var ex = anexarMidiaAoExercicio(exercicio || encontrarExercicioAtualPorNome(nome));
+    var box = card.querySelector(".midia-exercicio-local");
+    var botao = card.querySelector(".botao-midia-local");
+    if (!box) {
+      box = document.createElement("div");
+      box.className = "midia-exercicio-local";
+      box.innerHTML = montarHtmlMidiaLocal(ex, ex.mediaLocal);
+      var aviso = card.querySelector(".aviso-video");
+      if (aviso && aviso.parentNode === card) aviso.insertAdjacentElement("afterend", box);
+      else card.appendChild(box);
+    } else {
+      box.innerHTML = montarHtmlMidiaLocal(ex, ex.mediaLocal);
+      box.classList.toggle("hidden");
+    }
+    var aberto = !box.classList.contains("hidden");
+    if (botao) {
+      botao.classList.toggle("ativo", aberto);
+      botao.setAttribute("aria-expanded", aberto ? "true" : "false");
+      botao.textContent = aberto ? "Ocultar demonstra\u00e7\u00e3o" : "Ver demonstra\u00e7\u00e3o local";
+    }
+  }
+
+  function prepararCardExercicio(card) {
+    if (!card || card.__midiaLocalPreparada) return;
+    var titulo = card.querySelector("strong");
+    if (!titulo) return;
+    var nome = titulo.textContent || "";
+    var ex = anexarMidiaAoExercicio(encontrarExercicioAtualPorNome(nome));
+    var botoes = Array.prototype.slice.call(card.querySelectorAll("button"));
+    var botaoVideo = botoes.find(function(btn) {
+      var attr = btn.getAttribute("onclick") || "";
+      var texto = normalizarMidiaMT(btn.textContent || "");
+      return attr.indexOf("abrirVideoExercicio") !== -1 || texto.indexOf("ver execucao") !== -1 || texto.indexOf("ver execu") !== -1;
+    });
+    if (!botaoVideo) return;
+    botaoVideo.removeAttribute("onclick");
+    botaoVideo.type = "button";
+    botaoVideo.classList.add("botao-midia-local");
+    botaoVideo.textContent = "Ver demonstra\u00e7\u00e3o local";
+    botaoVideo.setAttribute("aria-expanded", "false");
+    botaoVideo.addEventListener("click", function() { alternarMidiaNoCard(card, ex); });
+    var aviso = card.querySelector(".aviso-video");
+    if (aviso) aviso.innerHTML = "Demonstra\u00e7\u00e3o animada local. Use como apoio visual; em caso de dor, pare o exerc\u00edcio.";
+    card.__midiaLocalPreparada = true;
+  }
+
+  function montarCardioLocal(card, nome, tipo) {
+    var ex = { nome: nome, grupo: "Cardio", mediaLocal: obterMidiaLocalExercicio(nome + " " + tipo, "Cardio") };
+    ex.mediaLocal.mediaKey = "corrida";
+    ex.mediaLocal.mediaTitle = "Demonstra\u00e7\u00e3o local: " + nome;
+    alternarMidiaNoCard(card, ex);
+  }
+
+  function prepararComplementoCardio() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll("#listaExercicios .exercise"));
+    cards.forEach(function(card) {
+      var strong = card.querySelector("strong");
+      if (!strong || normalizarMidiaMT(strong.textContent || "").indexOf("complemento opcional") === -1) return;
+      if (card.__midiaCardioLocalPreparada) return;
+      var botoes = Array.prototype.slice.call(card.querySelectorAll("button"));
+      botoes.forEach(function(btn) {
+        var textoOriginal = btn.textContent || "Cardio";
+        btn.removeAttribute("onclick");
+        btn.type = "button";
+        btn.classList.add("botao-midia-local");
+        btn.textContent = textoOriginal.replace(/^Ver aula/i, "Ver demonstra\u00e7\u00e3o local").replace(/^Ver cardio/i, "Ver demonstra\u00e7\u00e3o local");
+        btn.addEventListener("click", function() { montarCardioLocal(card, textoOriginal, textoOriginal); });
+      });
+      card.__midiaCardioLocalPreparada = true;
+    });
+  }
+
+  function renderizarMidiasLocais() {
+    try {
+      if (Array.isArray(window.treinoAtual)) window.treinoAtual.forEach(anexarMidiaAoExercicio);
+    } catch(e) {}
+    Array.prototype.slice.call(document.querySelectorAll("#listaExercicios .exercise")).forEach(prepararCardExercicio);
+    prepararComplementoCardio();
+  }
+
+  window.renderizarMidiasLocaisMetaTreino = renderizarMidiasLocais;
+
+  var abrirVideoAnterior = window.abrirVideoExercicio;
+  window.abrirVideoExercicioLocalMetaTreino = function(nomeExercicio) {
+    var card = null;
+    try {
+      var ativo = document.activeElement;
+      if (ativo && ativo.closest) card = ativo.closest(".exercise");
+    } catch(e) {}
+    if (!card) {
+      var cards = Array.prototype.slice.call(document.querySelectorAll("#listaExercicios .exercise"));
+      card = cards.find(function(item) {
+        var strong = item.querySelector("strong");
+        return strong && normalizarMidiaMT(strong.textContent || "") === normalizarMidiaMT(nomeExercicio || "");
+      });
+    }
+    if (card) alternarMidiaNoCard(card, encontrarExercicioAtualPorNome(nomeExercicio));
+    else if (typeof abrirVideoAnterior === "function") {
+      alert("Demonstra\u00e7\u00e3o local dispon\u00edvel ao abrir o card do exerc\u00edcio no treino.");
+    }
+  };
+
+  window.abrirAulaCardioLocalMetaTreino = function(tipo) {
+    var cards = Array.prototype.slice.call(document.querySelectorAll("#listaExercicios .exercise"));
+    var card = cards.find(function(item) {
+      var strong = item.querySelector("strong");
+      return strong && normalizarMidiaMT(strong.textContent || "").indexOf("complemento opcional") !== -1;
+    });
+    if (card) montarCardioLocal(card, "Cardio " + (tipo || "em casa"), tipo || "cardio");
+    else alert("Abra o complemento de cardio no treino para ver a demonstra\u00e7\u00e3o local.");
+  };
+
+  window.abrirVideoExercicio = window.abrirVideoExercicioLocalMetaTreino;
+  window.abrirAulaCardio = window.abrirAulaCardioLocalMetaTreino;
+
+  var mostrarAnterior = window.mostrarTreinoNaTela;
+  if (typeof mostrarAnterior === "function" && !mostrarAnterior.__midiaLocalV052) {
+    var mostrarComMidia = function() {
+      var retorno = mostrarAnterior.apply(this, arguments);
+      setTimeout(renderizarMidiasLocais, 0);
+      return retorno;
+    };
+    mostrarComMidia.__midiaLocalV052 = true;
+    window.mostrarTreinoNaTela = mostrarComMidia;
+  }
+
+  setTimeout(renderizarMidiasLocais, 350);
 })();
 </script>
 
