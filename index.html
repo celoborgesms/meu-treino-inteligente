@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MetaTreino</title>
-  <meta name="app-version" content="0.6.5">
+  <meta name="app-version" content="0.6.6">
   <meta name="theme-color" content="#020617">
-  <link rel="manifest" href="manifest.json?v=0.6.5">
-<link rel="icon" type="image/png" href="icon-512.png.png?v=0.6.5">
-<link rel="apple-touch-icon" href="icon-512.png.png?v=0.6.5">
+  <link rel="manifest" href="manifest.json?v=0.6.6">
+<link rel="icon" type="image/png" href="icon-512.png.png?v=0.6.6">
+<link rel="apple-touch-icon" href="icon-512.png.png?v=0.6.6">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -1819,7 +1819,7 @@
   <div class="container">
     <div class="app-hero">
       <div>
-        <span class="app-badge">MetaTreino • Beta 0.6.5</span>
+        <span class="app-badge">MetaTreino • Beta 0.6.6</span>
         <h1><span class="hero-meta-word">Meta</span>Treino</h1>
         <p>Treinos inteligentes para academia, corrida ou os dois. Você escolhe o foco e o app preserva seu histórico.</p>
       </div>
@@ -2072,7 +2072,7 @@
         <h2>✨ Versão atual</h2>
         <p class="small"><strong>Regra fixa de atualizações:</strong> dentro do app será mostrada somente a versão atual. O histórico completo fica no arquivo CHANGELOG que acompanha o pacote da versão.</p>
         <div class="plano-topo">
-          <strong>MetaTreino 0.6.5 Beta</strong><br>
+          <strong>MetaTreino 0.6.6 Beta</strong><br>
           <span class="tag beta">Modos</span>
           <p><strong>Atualizada em:</strong> 13/05/2026</p>
           <ul class="versao-atual-lista">
@@ -6730,6 +6730,175 @@
       if (modal) modal.classList.add("hidden");
     }
 
+
+    // v0.6.6 - Biblioteca visual aprimorada: mais cobertura por família de movimento,
+    // identificação clara de vídeo específico x vídeo por família e fallback mais seguro.
+    const DEMO_V066_MAPEAMENTO = {
+      squat: {
+        mp4: "assets/demos/squat-loop.mp4",
+        webm: "assets/demos/squat-loop.webm",
+        poster: "assets/demos/squat-poster.jpg",
+        titulo: "Agachamento / base de pernas",
+        musculos: "Quadríceps, glúteos e core",
+        familia: "joelho dominante / pernas"
+      },
+      row: {
+        mp4: "assets/demos/row-loop.mp4",
+        webm: "assets/demos/row-loop.webm",
+        poster: "assets/demos/row-poster.jpg",
+        titulo: "Remada / puxada",
+        musculos: "Costas, bíceps e antebraços",
+        familia: "puxar / costas"
+      },
+      bench: {
+        mp4: "assets/demos/bench-loop.mp4",
+        webm: "assets/demos/bench-loop.webm",
+        poster: "assets/demos/bench-poster.jpg",
+        titulo: "Supino / empurrar",
+        musculos: "Peitoral, tríceps e ombros",
+        familia: "empurrar / peito, ombros e tríceps"
+      },
+      calf: {
+        mp4: "assets/demos/calf-loop.mp4",
+        webm: "assets/demos/calf-loop.webm",
+        poster: "assets/demos/calf-poster.jpg",
+        titulo: "Panturrilha",
+        musculos: "Panturrilhas",
+        familia: "panturrilhas"
+      },
+      plank: {
+        mp4: "assets/demos/plank-loop.mp4",
+        webm: "assets/demos/plank-loop.webm",
+        poster: "assets/demos/plank-poster.jpg",
+        titulo: "Prancha / core",
+        musculos: "Abdômen, core e ombros",
+        familia: "core / estabilização"
+      }
+    };
+
+    function criarDemoV066(chave, cobertura, familiaUsada) {
+      const base = DEMO_V066_MAPEAMENTO[chave];
+      if (!base) return null;
+      return Object.assign({}, base, {
+        cobertura: cobertura || "familia",
+        familiaUsada: familiaUsada || base.familia
+      });
+    }
+
+    function obterMidiaDemoExercicio(tipo, exercicio) {
+      const nome = normalizarChaveDemo(exercicio && exercicio.nome);
+      const grupo = normalizarChaveDemo(exercicio && exercicio.grupo);
+      const texto = nome + " " + grupo;
+
+      // Vídeos mais específicos já disponíveis.
+      if (texto.includes("panturrilha") || texto.includes("gemeo") || texto.includes("gêmeo")) return criarDemoV066("calf", "especifico", "panturrilhas");
+      if (texto.includes("prancha")) return criarDemoV066("plank", "especifico", "prancha / core");
+      if (texto.includes("agachamento")) return criarDemoV066("squat", "especifico", "agachamento / pernas");
+      if (texto.includes("supino")) return criarDemoV066("bench", "especifico", "supino / empurrar horizontal");
+      if (texto.includes("remada")) return criarDemoV066("row", "especifico", "remada / puxar");
+
+      // Core e abdômen.
+      if (
+        texto.includes("abdominal") || texto.includes("abdomen") || texto.includes("abdômen") ||
+        texto.includes("core") || texto.includes("mountain") || texto.includes("superman") ||
+        texto.includes("infra") || texto.includes("crunch") || texto.includes("elevação de pernas") ||
+        texto.includes("elevacao de pernas") || texto.includes("canivete")
+      ) return criarDemoV066("plank", "familia", "core / estabilização");
+
+      // Costas, bíceps e puxadas.
+      if (
+        texto.includes("puxada") || texto.includes("pulldown") || texto.includes("pulley") ||
+        texto.includes("barra fixa") || texto.includes("face pull") || texto.includes("pullover") ||
+        texto.includes("serrote") || texto.includes("cavalinho") || texto.includes("costas") ||
+        texto.includes("biceps") || texto.includes("bíceps") || texto.includes("rosca") ||
+        texto.includes("martelo") || texto.includes("antebraco") || texto.includes("antebraço")
+      ) return criarDemoV066("row", "familia", "puxar / costas e bíceps");
+
+      // Peito, ombros e tríceps.
+      if (
+        texto.includes("flexao") || texto.includes("flexão") || texto.includes("crucifixo") ||
+        texto.includes("peck deck") || texto.includes("crossover") || texto.includes("voador") ||
+        texto.includes("desenvolvimento") || texto.includes("elevacao lateral") || texto.includes("elevação lateral") ||
+        texto.includes("elevacao frontal") || texto.includes("elevação frontal") || texto.includes("ombro") ||
+        texto.includes("deltoide") || texto.includes("triceps") || texto.includes("tríceps") ||
+        texto.includes("paralela") || texto.includes("mergulho") || texto.includes("supino") || texto.includes("peito")
+      ) return criarDemoV066("bench", "familia", "empurrar / peito, ombros e tríceps");
+
+      // Pernas, glúteos e quadril.
+      if (
+        texto.includes("afundo") || texto.includes("passada") || texto.includes("avanço") || texto.includes("avanco") ||
+        texto.includes("bulgaro") || texto.includes("búlgaro") || texto.includes("leg press") ||
+        texto.includes("extensora") || texto.includes("flexora") || texto.includes("stiff") ||
+        texto.includes("terra") || texto.includes("romeno") || texto.includes("ponte") ||
+        texto.includes("elevacao pelvica") || texto.includes("elevação pélvica") || texto.includes("hip thrust") ||
+        texto.includes("gluteo") || texto.includes("glúteo") || texto.includes("coice") ||
+        texto.includes("abdutora") || texto.includes("adutora") || texto.includes("perna") || texto.includes("quadriceps") || texto.includes("posterior")
+      ) return criarDemoV066("squat", "familia", "pernas / glúteos / quadril");
+
+      if (tipo === "calf") return criarDemoV066("calf", "familia", "panturrilhas");
+      if (tipo === "core") return criarDemoV066("plank", "familia", "core / estabilização");
+      if (tipo === "pull" || tipo === "curl") return criarDemoV066("row", "familia", "puxar / braços e costas");
+      if (tipo === "push" || tipo === "press") return criarDemoV066("bench", "familia", "empurrar / peito, ombros e tríceps");
+      if (tipo === "squat" || tipo === "lunge" || tipo === "hinge" || tipo === "bridge") return criarDemoV066("squat", "familia", "pernas / glúteos / quadril");
+
+      return null;
+    }
+
+    function obterHtmlBotaoDemoExercicio(exercicio, index) {
+      const tipo = obterTipoIlustracaoExercicio(exercicio.nome, exercicio.grupo);
+      const demo = obterMidiaDemoExercicio(tipo, exercicio);
+      const legenda = demo
+        ? (demo.cobertura === "especifico" ? "Demonstração específica disponível." : "Demonstração por família de movimento disponível.")
+        : "Demonstração visual genérica disponível como apoio.";
+      return "<div class='demo-trigger-wrap'>" +
+        "<button type='button' class='botao-demo-exercicio' onclick='abrirModalDemoExercicio(" + index + ")'>Ver modo de fazer</button>" +
+        "<p>" + legenda + " Use junto com as instruções escritas abaixo.</p>" +
+        "</div>";
+    }
+
+    function obterHtmlDemoVideoLocal(demo, descricao) {
+      const badge = demo.cobertura === "especifico"
+        ? "Vídeo específico do exercício"
+        : "Vídeo por família: " + demo.familiaUsada;
+      return `<div class="exercise-demo-media"><video id="videoModalDemoExercicio" class="exercise-demo-video" autoplay muted loop playsinline preload="metadata" poster="${demo.poster}" aria-label="${demo.titulo}" onloadeddata="ocultarFallbackDemoExercicio()" onerror="mostrarFallbackDemoExercicio()"><source src="${demo.webm}" type="video/webm"><source src="${demo.mp4}" type="video/mp4"></video></div><div class="demo-cobertura-badge">${badge}</div><div class="exercise-illustration-hint">Vídeo curto em loop, local no app, sem YouTube e sem anúncios.</div><div class="exercise-illustration-note">${descricao}</div>`;
+    }
+
+    function abrirModalDemoExercicio(index) {
+      if (!treinoAtual || !treinoAtual[index]) {
+        mostrarMensagem("Não encontrei este exercício para abrir a demonstração.");
+        return;
+      }
+
+      const exercicio = treinoAtual[index];
+      const tipo = obterTipoIlustracaoExercicio(exercicio.nome, exercicio.grupo);
+      const descricao = obterDescricaoIlustracaoExercicio(tipo, exercicio);
+      const demo = obterMidiaDemoExercicio(tipo, exercicio);
+      const modal = document.getElementById("modalDemoExercicio");
+      const titulo = document.getElementById("tituloModalDemoExercicio");
+      const musculos = document.getElementById("textoModalDemoMusculos");
+      const conteudo = document.getElementById("conteudoModalDemoExercicio");
+      const fallback = document.getElementById("fallbackModalDemoExercicio");
+      if (!modal || !titulo || !musculos || !conteudo || !fallback) return;
+
+      fallback.classList.add("hidden");
+      titulo.textContent = exercicio.nome || "Demonstração do exercício";
+
+      if (demo) {
+        musculos.innerHTML = "<strong>Músculos principais:</strong> " + demo.musculos + ".";
+        conteudo.innerHTML = obterHtmlDemoVideoLocal(demo, descricao);
+      } else {
+        musculos.textContent = "Demonstração visual genérica. Siga as instruções escritas para executar com segurança.";
+        conteudo.innerHTML = `<div class="exercise-illustration"><div class="exercise-illustration-top"><span class="exercise-illustration-title">Ilustração local do movimento</span><span class="tag tag-ilustracao">Ilustração local</span></div>${obterSvgIlustracaoExercicio(tipo)}<div class="exercise-illustration-note">${descricao}</div></div>`;
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function ocultarFallbackDemoExercicio() {
+      const fallback = document.getElementById("fallbackModalDemoExercicio");
+      if (fallback) fallback.classList.add("hidden");
+    }
+
     function obterComplementoCardioLocalHTML() {
       return `<div class="cardio-local-grid">
         <div class="cardio-local-card"><strong>Dança leve / Zumba</strong><p>Faça de 15 a 25 minutos em ritmo confortável, conseguindo conversar. Use músicas que você goste e mantenha impacto baixo.</p></div>
@@ -9202,7 +9371,7 @@
 </script>
 
 <script>
-  const METATREINO_APP_VERSION = "0.6.5";
+  const METATREINO_APP_VERSION = "0.6.6";
 
   function verificarAtualizacaoManual() {
     const status = document.getElementById("statusAtualizacaoManual");
@@ -10845,7 +11014,7 @@
 
 <script id="mt-v048-checkin-contexto-fix">
 (function(){
-  var VERSION = '0.6.5';
+  var VERSION = '0.6.6';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -11214,7 +11383,7 @@
 
 <script id="mt-v049-data-local-hoje-fix">
 (function(){
-  var VERSION = '0.6.5';
+  var VERSION = '0.6.6';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -11539,7 +11708,7 @@
 
 <script id="mt-v050-corrida-inteligente">
 (function(){
-  var VERSION_ATUAL = '0.6.5';
+  var VERSION_ATUAL = '0.6.6';
   try { window.VERSION = VERSION_ATUAL; } catch(e) {}
   try { if (typeof VERSION !== 'undefined') VERSION = VERSION_ATUAL; } catch(e) {}
 
@@ -11904,7 +12073,7 @@
 
 <script id="mt-v060-modos-preservacao">
 (function(){
-  var VERSION_NOVA = '0.6.5';
+  var VERSION_NOVA = '0.6.6';
   function byId(id){ return document.getElementById(id); }
   function esc(v){
     try { return typeof limparTextoSeguro === 'function' ? limparTextoSeguro(v) : String(v == null ? '' : v).replace(/[&<>"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; }); }
@@ -12443,7 +12612,7 @@
       if (preservarStatus && devePreservar(old)) copiarPreservado(dia, old);
     });
     var plano = {
-      versao: '0.6.5-demos-botao-local',
+      versao: '0.6.6-demos-melhorados',
       inicioSemana: typeof inicioSemanaAtualISO === 'function' ? inicioSemanaAtualISO() : hoje(),
       criadoEm: Date.now(),
       focoPrincipal: modo,
@@ -12482,7 +12651,7 @@
 </style>
 <script id="mt-v061-reagendamento-e-treino-manual-fix">
 (function(){
-  var VERSION_FIX = '0.6.5';
+  var VERSION_FIX = '0.6.6';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -12903,7 +13072,7 @@
 </style>
 <script id="mt-v062-restaurar-sugestao-original">
 (function(){
-  var VERSION_FIX = '0.6.5';
+  var VERSION_FIX = '0.6.6';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }

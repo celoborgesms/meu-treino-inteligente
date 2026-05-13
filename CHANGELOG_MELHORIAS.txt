@@ -1,3 +1,13 @@
+MetaTreino — v0.6.6 Beta
+
+MELHORIAS DESTA ENTREGA
+1) Biblioteca de demonstrações reorganizada e mapeada por família de movimento.
+2) Mais exercícios passam a abrir uma demonstração útil pelo botão "Ver modo de fazer".
+3) O modal agora diferencia vídeo específico do exercício e vídeo por família de movimento.
+4) Fallback reforçado para evitar tela vazia quando a mídia não carregar.
+5) Manifest, service worker e versão visual atualizados para 0.6.6.
+6) Nenhuma alteração feita no plano, perfil, histórico, check-in ou regras de treino.
+
 MetaTreino — v0.6.5 Beta
 
 NOVAS MELHORIAS DESTA ENTREGA
