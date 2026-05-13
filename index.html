@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MetaTreino</title>
-  <meta name="app-version" content="0.6.0">
+  <meta name="app-version" content="0.6.1">
   <meta name="theme-color" content="#020617">
-  <link rel="manifest" href="manifest.json?v=0.6.0">
-<link rel="icon" type="image/png" href="icon-512.png.png?v=0.6.0">
-<link rel="apple-touch-icon" href="icon-512.png.png?v=0.6.0">
+  <link rel="manifest" href="manifest.json?v=0.6.1">
+<link rel="icon" type="image/png" href="icon-512.png.png?v=0.6.1">
+<link rel="apple-touch-icon" href="icon-512.png.png?v=0.6.1">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -11681,6 +11681,433 @@
     try { if (typeof salvarPlanoSemanalLocal === 'function') salvarPlanoSemanalLocal(plano); } catch(e) {}
     return plano;
   };
+})();
+</script>
+
+
+
+<style id="mt-v061-flow-fix-style">
+  .mt-v061-aviso-manual {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(245, 158, 11, .40);
+    background: rgba(245, 158, 11, .12);
+    color: #fde68a;
+    line-height: 1.45;
+  }
+  .mt-v061-mini {
+    display: block;
+    margin-top: 6px;
+    color: #cbd5e1;
+    font-size: 13px;
+  }
+</style>
+<script id="mt-v061-reagendamento-e-treino-manual-fix">
+(function(){
+  var VERSION_FIX = '0.6.1';
+  var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
+
+  function byId(id){ return document.getElementById(id); }
+  function esc(v){
+    try {
+      if (typeof window.limparTextoSeguro === 'function') return window.limparTextoSeguro(v);
+      return String(v == null ? '' : v).replace(/[&<>"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; });
+    } catch(e) { return String(v == null ? '' : v); }
+  }
+  function cat(v){
+    try { return typeof window.normalizarCategoriaTreino === 'function' ? window.normalizarCategoriaTreino(v) : String(v || '').trim(); }
+    catch(e){ return String(v || '').trim(); }
+  }
+  function hojeISO(){
+    try { if (typeof window.hojeISO === 'function') return window.hojeISO(); } catch(e) {}
+    var d = new Date();
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var dia = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + dia;
+  }
+  function dataBR(iso){
+    if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(String(iso))) return String(iso || '');
+    var p = String(iso).split('-');
+    return p[2] + '/' + p[1] + '/' + p[0];
+  }
+  function planoAtual(){
+    try { if (typeof window.obterOuCriarPlanoSemanal === 'function') return window.obterOuCriarPlanoSemanal(false); } catch(e) {}
+    try { if (typeof window.lerPlanoSemanalLocal === 'function') return window.lerPlanoSemanalLocal(); } catch(e) {}
+    return null;
+  }
+  function salvarPlano(plano){
+    try { if (plano && typeof window.salvarPlanoSemanalLocal === 'function') window.salvarPlanoSemanalLocal(plano); } catch(e) {}
+  }
+  function renderizarTudo(){
+    try { if (typeof window.renderizarPlanoSemanal === 'function') window.renderizarPlanoSemanal(); } catch(e) {}
+    try { if (typeof window.renderizarHoje === 'function') window.renderizarHoje(); } catch(e) {}
+  }
+  function isForca(c){
+    c = cat(c);
+    return ['superior','inferior','inferior_forca','inferior_moderado','core_abdomen','core_estabilidade','full_body','funcional'].indexOf(c) !== -1;
+  }
+  function nomeCategoria(c){
+    c = cat(c);
+    try { if (typeof window.nomeAmigavelTreino === 'function') return window.nomeAmigavelTreino(c); } catch(e) {}
+    var mapa = {
+      superior:'Superiores', inferior:'Pernas', inferior_forca:'Pernas - Forca', inferior_moderado:'Pernas - Moderado',
+      core_abdomen:'Core', core_estabilidade:'Core e Estabilidade', full_body:'Corpo Todo', funcional:'Forca Funcional',
+      cardio:'Corrida/Cardio', recuperacao:'Recuperacao ativa', descanso:'Descanso'
+    };
+    return mapa[c] || c || 'Treino';
+  }
+  function snapshotSessao(dia){
+    dia = dia || {};
+    return {
+      categoria: dia.categoria,
+      focoHibrido: dia.focoHibrido,
+      subtipoCorrida: dia.subtipoCorrida,
+      tipoRecuperacao: dia.tipoRecuperacao,
+      protegidoPorCorrida: dia.protegidoPorCorrida,
+      ajustadoPeloCheckin: dia.ajustadoPeloCheckin,
+      adaptadoDeDescanso: dia.adaptadoDeDescanso
+    };
+  }
+  function aplicarSnapshot(dia, snap){
+    if (!dia || !snap) return;
+    ['categoria','focoHibrido','subtipoCorrida','tipoRecuperacao','protegidoPorCorrida','ajustadoPeloCheckin','adaptadoDeDescanso'].forEach(function(k){
+      if (snap[k] !== undefined) dia[k] = snap[k];
+      else delete dia[k];
+    });
+  }
+  function limparCamposReagendamento(dia){
+    if (!dia) return;
+    delete dia.reagendadoDe;
+    delete dia.reagendadoPara;
+    delete dia.mtReagendamento;
+  }
+  function destinoLivre(dia){
+    var c = cat(dia && dia.categoria);
+    return c === 'descanso' || c === 'recuperacao';
+  }
+  function encontrarDestinoReagendado(plano, origem){
+    if (!plano || !Array.isArray(plano.dias) || !origem) return -1;
+    var idx = -1;
+    if (origem.reagendadoPara) {
+      idx = plano.dias.findIndex(function(d){ return d && d.dataISO === origem.reagendadoPara; });
+      if (idx >= 0) return idx;
+    }
+    return plano.dias.findIndex(function(d){ return d && d.reagendadoDe === origem.dataISO; });
+  }
+  function restaurarReagendamento(plano, indice, silencioso){
+    if (!plano || !Array.isArray(plano.dias) || !plano.dias[indice]) return false;
+    var origem = plano.dias[indice];
+    var destinoIndex = encontrarDestinoReagendado(plano, origem);
+    var destino = destinoIndex >= 0 ? plano.dias[destinoIndex] : null;
+    var dadosOrigem = origem.mtReagendamento && origem.mtReagendamento.original
+      ? origem.mtReagendamento.original
+      : (destino && destino.mtReagendamento && destino.mtReagendamento.origemOriginal ? destino.mtReagendamento.origemOriginal : null);
+    if (!dadosOrigem && destino) dadosOrigem = snapshotSessao(destino);
+    if (!dadosOrigem) return false;
+
+    var dadosDestino = origem.mtReagendamento && origem.mtReagendamento.destinoOriginal
+      ? origem.mtReagendamento.destinoOriginal
+      : (destino && destino.mtReagendamento && destino.mtReagendamento.destinoOriginal ? destino.mtReagendamento.destinoOriginal : null);
+    if (!dadosDestino) dadosDestino = { categoria:'recuperacao', focoHibrido:'recuperacao', tipoRecuperacao:'caminhada_leve' };
+
+    aplicarSnapshot(origem, dadosOrigem);
+    origem.status = 'pendente';
+    limparCamposReagendamento(origem);
+
+    if (destino && destino !== origem) {
+      aplicarSnapshot(destino, dadosDestino);
+      destino.status = 'pendente';
+      limparCamposReagendamento(destino);
+    }
+    salvarPlano(plano);
+    renderizarTudo();
+    if (!silencioso) alert('Reagendamento desfeito. O treino original voltou para ' + dataBR(origem.dataISO) + '.');
+    return true;
+  }
+
+  window.desfazerReagendamentoPlanoV061 = function(indice){
+    var plano = planoAtual();
+    if (!restaurarReagendamento(plano, Number(indice), false)) alert('Nao encontrei os dados para desfazer esse reagendamento. Use Reorganizar pendentes para reconstruir a semana preservando o historico.');
+  };
+
+  window.reagendarItemPlano = function(indice){
+    indice = Number(indice);
+    var plano = planoAtual();
+    if (!plano || !Array.isArray(plano.dias) || !plano.dias[indice]) return;
+    var origem = plano.dias[indice];
+    var origemCat = cat(origem.categoria);
+
+    if (origem.status === 'reagendado' || origem.reagendadoPara) {
+      restaurarReagendamento(plano, indice, false);
+      return;
+    }
+    if (origemCat === 'descanso') {
+      alert('Esse dia esta como descanso total. Use check-in opcional se quiser treinar manualmente.');
+      return;
+    }
+    if (!confirm('Reagendar esta sessao para o proximo dia livre? O dia original vira recuperacao/descanso, mas voce podera desfazer pelo botao Reabrir.')) return;
+
+    var destinoIndex = -1;
+    for (var i = indice + 1; i < plano.dias.length; i++) {
+      if (destinoLivre(plano.dias[i]) && String(plano.dias[i].status || 'pendente') !== 'concluido') { destinoIndex = i; break; }
+    }
+    if (destinoIndex < 0) {
+      alert('Nao encontrei um dia livre de recuperacao/descanso nesta semana. Use Reorganizar pendentes para recalcular sem apagar historico.');
+      return;
+    }
+
+    var destino = plano.dias[destinoIndex];
+    var origemOriginal = snapshotSessao(origem);
+    var destinoOriginal = snapshotSessao(destino);
+    var dataOrigem = origem.dataISO;
+    var dataDestino = destino.dataISO;
+
+    aplicarSnapshot(destino, origemOriginal);
+    destino.status = 'pendente';
+    destino.reagendadoDe = dataOrigem;
+    destino.mtReagendamento = {
+      papel:'destino',
+      origemDataISO:dataOrigem,
+      destinoDataISO:dataDestino,
+      origemOriginal:origemOriginal,
+      destinoOriginal:destinoOriginal
+    };
+
+    aplicarSnapshot(origem, destinoOriginal && destinoOriginal.categoria ? destinoOriginal : { categoria:'recuperacao', focoHibrido:'recuperacao', tipoRecuperacao:'caminhada_leve' });
+    if (cat(origem.categoria) === 'descanso') origem.focoHibrido = 'descanso';
+    else {
+      origem.categoria = cat(origem.categoria) === 'recuperacao' ? origem.categoria : 'recuperacao';
+      origem.focoHibrido = 'recuperacao';
+      origem.tipoRecuperacao = origem.tipoRecuperacao || 'caminhada_leve';
+    }
+    origem.status = 'reagendado';
+    origem.reagendadoPara = dataDestino;
+    origem.mtReagendamento = {
+      papel:'origem',
+      origemDataISO:dataOrigem,
+      destinoDataISO:dataDestino,
+      original:origemOriginal,
+      destinoOriginal:destinoOriginal
+    };
+
+    salvarPlano(plano);
+    renderizarTudo();
+    alert('Sessao reagendada para ' + dataBR(dataDestino) + '. Para desfazer, clique em Reabrir no dia original.');
+  };
+
+  window.marcarStatusPlanoDia = function(indice, status){
+    indice = Number(indice);
+    status = status || 'pendente';
+    var plano = planoAtual();
+    if (!plano || !Array.isArray(plano.dias) || !plano.dias[indice]) return;
+    var item = plano.dias[indice];
+
+    if (item.status === 'reagendado' || item.reagendadoPara) {
+      var restaurou = restaurarReagendamento(plano, indice, true);
+      plano = planoAtual();
+      item = plano && plano.dias ? plano.dias[indice] : item;
+      if (!restaurou) {
+        alert('Nao consegui restaurar automaticamente esse reagendamento. Tente Reorganizar pendentes.');
+        return;
+      }
+      if (status === 'pendente') {
+        renderizarTudo();
+        alert('Treino original restaurado.');
+        return;
+      }
+    }
+
+    item.status = status;
+    if (status === 'pendente') {
+      delete item.concluidoComo;
+      delete item.puladoEm;
+    }
+    if (status === 'concluido') item.concluidoComo = item.categoria;
+    if (status === 'pulado') item.puladoEm = new Date().toISOString();
+    salvarPlano(plano);
+    renderizarTudo();
+  };
+
+  var oldComecarItemPlano = window.comecarItemPlano;
+  window.comecarItemPlano = function(indice){
+    indice = Number(indice);
+    var plano = planoAtual();
+    if (plano && Array.isArray(plano.dias) && plano.dias[indice] && (plano.dias[indice].status === 'reagendado' || plano.dias[indice].reagendadoPara)) {
+      if (confirm('Essa sessao foi reagendada. Deseja restaurar o treino original neste dia e comecar agora?')) {
+        restaurarReagendamento(plano, indice, true);
+      } else {
+        return;
+      }
+    }
+    if (typeof oldComecarItemPlano === 'function') return oldComecarItemPlano(indice);
+  };
+
+  function lerContexto(){
+    if (window.__mtCheckinContextoV048 && window.__mtCheckinContextoV048.dataISO) return window.__mtCheckinContextoV048;
+    try {
+      var bruto = localStorage.getItem(CONTEXT_KEY);
+      if (bruto) {
+        var ctx = JSON.parse(bruto);
+        if (ctx && ctx.dataISO) return ctx;
+      }
+    } catch(e) {}
+    return { dataISO: hojeISO(), origem:'hoje' };
+  }
+  function salvarContexto(ctx){
+    window.__mtCheckinContextoV048 = ctx;
+    try { localStorage.setItem(CONTEXT_KEY, JSON.stringify(ctx)); } catch(e) {}
+  }
+  function itemDoContexto(){
+    var ctx = lerContexto();
+    var plano = planoAtual();
+    var dias = plano && Array.isArray(plano.dias) ? plano.dias : [];
+    return dias.find(function(d){ return d && d.dataISO === ctx.dataISO; }) || dias.find(function(d){ return d && d.dataISO === hojeISO(); }) || null;
+  }
+  function categoriaSelecionada(){
+    var sel = byId('divisaoTreino');
+    return sel ? cat(sel.value) : '';
+  }
+  function categoriaPlanejada(){
+    var item = itemDoContexto();
+    return item ? cat(item.categoria) : '';
+  }
+  function atualizarSessaoDoContexto(categoria){
+    var ctx = lerContexto();
+    var plano = planoAtual();
+    var item = null;
+    if (plano && Array.isArray(plano.dias)) {
+      item = plano.dias.find(function(d){ return d && d.dataISO === ctx.dataISO; }) || null;
+    }
+    if (item) {
+      item.categoria = categoria;
+      item.focoHibrido = 'forca';
+      item.status = item.status === 'concluido' ? item.status : 'pendente';
+      item.ajustadoManualCheckin = true;
+      item.ajustadoPeloCheckin = true;
+      delete item.tipoRecuperacao;
+      delete item.subtipoCorrida;
+      salvarPlano(plano);
+    }
+    ctx.categoria = categoria;
+    ctx.titulo = nomeCategoria(categoria);
+    ctx.descricao = 'Treino escolhido manualmente no check-in.';
+    salvarContexto(ctx);
+    return item;
+  }
+
+  window.usarPlanoSugeridoCheckinV061 = function(){
+    var planejada = categoriaPlanejada();
+    if (isForca(planejada) && byId('divisaoTreino')) byId('divisaoTreino').value = planejada;
+    if (typeof window.gerarRecomendacaoCheckin === 'function') window.gerarRecomendacaoCheckin();
+  };
+
+  window.comecarTreinoEscolhidoManualCheckinV061 = function(){
+    var escolhida = categoriaSelecionada();
+    if (!isForca(escolhida)) {
+      alert('Escolha uma sessao de forca no campo "Sessao de forca" para liberar outro treino manualmente.');
+      return;
+    }
+    var planejada = categoriaPlanejada();
+    if (planejada && planejada !== escolhida) {
+      var ok = confirm('O plano sugeria ' + nomeCategoria(planejada) + ', mas voce escolheu ' + nomeCategoria(escolhida) + '. Comecar mesmo assim? Ajuste cargas e volume se houver fadiga ou dor.');
+      if (!ok) return;
+    }
+    var item = atualizarSessaoDoContexto(escolhida);
+    if (byId('divisaoTreino')) byId('divisaoTreino').value = escolhida;
+    var fluxo = { tipo:'forca', categoria:escolhida, manual:true };
+    if (typeof window.abrirFluxoCheckinV041 === 'function') return window.abrirFluxoCheckinV041(fluxo);
+    if (typeof window.irParaTreino === 'function') return window.irParaTreino();
+  };
+
+  var oldGerarRecomendacao = window.gerarRecomendacaoCheckin;
+  window.gerarRecomendacaoCheckin = function(){
+    var selecionadaAntes = categoriaSelecionada();
+    if (typeof oldGerarRecomendacao === 'function') oldGerarRecomendacao.apply(this, arguments);
+
+    var planejada = categoriaPlanejada();
+    var manualForca = isForca(selecionadaAntes) && selecionadaAntes !== 'automatico' && selecionadaAntes !== planejada;
+    var rec = window.__mt03RecomendacaoCheckin || {};
+
+    if (manualForca) {
+      rec = {
+        tipo:'forca',
+        categoria:selecionadaAntes,
+        titulo:'Treino manual liberado: ' + nomeCategoria(selecionadaAntes),
+        texto:'O plano sugeria ' + nomeCategoria(planejada) + ', mas voce selecionou ' + nomeCategoria(selecionadaAntes) + '. O app vai permitir essa troca apenas para esta sessao. Use carga conservadora se estiver cansado ou com dor.',
+        dataISO:(lerContexto().dataISO || hojeISO()),
+        manual:true
+      };
+      window.__mt03RecomendacaoCheckin = rec;
+    }
+
+    var box = byId('recomendacaoCheckinBox');
+    if (!box || !rec || !rec.tipo) return;
+    box.classList.remove('hidden');
+    var textoBotao = manualForca ? 'Comecar treino escolhido' : 'Aplicar e comecar';
+    var avisoManual = manualForca
+      ? '<div class="mt-v061-aviso-manual"><strong>Troca manual ativada</strong><br>Voce nao fica preso ao treino sugerido. Esta troca altera somente a sessao selecionada; o restante da semana continua preservado.<span class="mt-v061-mini">Sugestao original: ' + esc(nomeCategoria(planejada)) + ' • Escolhido agora: ' + esc(nomeCategoria(selecionadaAntes)) + '</span></div>'
+      : '';
+    var botaoManualExtra = (!manualForca && isForca(selecionadaAntes) && selecionadaAntes !== 'automatico')
+      ? '<button type="button" class="botao-secundario" onclick="comecarTreinoEscolhidoManualCheckinV061()">Comecar treino escolhido mesmo assim</button>'
+      : '';
+    var botaoPlano = manualForca && isForca(planejada)
+      ? '<button type="button" class="botao-secundario" onclick="usarPlanoSugeridoCheckinV061()">Voltar para sugestao do plano</button>'
+      : '';
+
+    box.innerHTML =
+      '<h2>🧠 Recomendacao da sessao</h2>' +
+      '<strong>' + esc(rec.titulo || 'Ajuste sugerido') + '</strong>' +
+      '<p>' + esc(rec.texto || 'O app ajustou a sessao conforme seu check-in.') + '</p>' +
+      avisoManual +
+      '<div class="plano-acoes-principais">' +
+        '<button type="button" class="botao-principal" onclick="aplicarRecomendacaoCheckin()">' + textoBotao + '</button>' +
+        botaoManualExtra +
+        botaoPlano +
+        '<button type="button" class="botao-secundario" onclick="cancelarRecomendacaoCheckinV048 && cancelarRecomendacaoCheckinV048()">Cancelar e voltar</button>' +
+      '</div>' +
+      '<p class="fluxo-simples-nota">A recomendacao vale para a sessao selecionada. Para mudar a semana inteira, use Reorganizar pendentes na aba Plano.</p>';
+  };
+
+  var oldAplicar = window.aplicarRecomendacaoCheckin;
+  window.aplicarRecomendacaoCheckin = function(){
+    var rec = window.__mt03RecomendacaoCheckin;
+    if (rec && rec.manual && rec.tipo === 'forca' && isForca(rec.categoria)) {
+      atualizarSessaoDoContexto(rec.categoria);
+      if (byId('divisaoTreino')) byId('divisaoTreino').value = rec.categoria;
+      var fluxo = { tipo:'forca', categoria:rec.categoria, manual:true };
+      if (typeof window.abrirFluxoCheckinV041 === 'function') return window.abrirFluxoCheckinV041(fluxo);
+      if (typeof window.irParaTreino === 'function') return window.irParaTreino();
+      return;
+    }
+    if (typeof oldAplicar === 'function') return oldAplicar.apply(this, arguments);
+  };
+
+  var oldIrParaCheckin = window.irParaCheckin;
+  window.irParaCheckin = function(){
+    var retorno = typeof oldIrParaCheckin === 'function' ? oldIrParaCheckin.apply(this, arguments) : undefined;
+    var sel = byId('divisaoTreino');
+    if (sel && !sel.getAttribute('data-mt-v061-manual-listener')) {
+      sel.setAttribute('data-mt-v061-manual-listener', '1');
+      sel.addEventListener('change', function(){
+        var box = byId('recomendacaoCheckinBox');
+        if (box) { box.classList.add('hidden'); box.innerHTML = ''; }
+        window.__mt03RecomendacaoCheckin = null;
+      });
+    }
+    return retorno;
+  };
+
+  document.addEventListener('DOMContentLoaded', function(){
+    try { window.VERSION = VERSION_FIX; } catch(e) {}
+    var meta = document.querySelector('meta[name="app-version"]'); if (meta) meta.setAttribute('content', VERSION_FIX);
+    var badge = document.querySelector('.app-badge'); if (badge) badge.textContent = 'MetaTreino • Beta ' + VERSION_FIX;
+  });
+  window.addEventListener('load', function(){
+    var meta = document.querySelector('meta[name="app-version"]'); if (meta) meta.setAttribute('content', VERSION_FIX);
+    var badge = document.querySelector('.app-badge'); if (badge) badge.textContent = 'MetaTreino • Beta ' + VERSION_FIX;
+  });
 })();
 </script>
 
