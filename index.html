@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MetaTreino Hybrid</title>
-  <meta name="app-version" content="0.5.0">
+  <title>MetaTreino</title>
+  <meta name="app-version" content="0.6.0">
   <meta name="theme-color" content="#020617">
-  <link rel="manifest" href="manifest.json?v=0.5.0">
-<link rel="icon" type="image/png" href="icon-512.png.png?v=0.5.0">
-<link rel="apple-touch-icon" href="icon-512.png.png?v=0.5.0">
+  <link rel="manifest" href="manifest.json?v=0.6.0">
+<link rel="icon" type="image/png" href="icon-512.png.png?v=0.6.0">
+<link rel="apple-touch-icon" href="icon-512.png.png?v=0.6.0">
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -1506,9 +1506,9 @@
   <div class="container">
     <div class="app-hero">
       <div>
-        <span class="app-badge">MetaTreino Hybrid • Beta 0.5.0</span>
-        <h1><span class="hero-meta-word">Meta</span>Treino <span class="hero-hybrid-word">Hybrid</span></h1>
-        <p>Musculação e corrida no mesmo plano: força, shape, fôlego e recuperação sem bagunçar sua semana.</p>
+        <span class="app-badge">MetaTreino • Beta 0.6.0</span>
+        <h1><span class="hero-meta-word">Meta</span>Treino</h1>
+        <p>Treinos inteligentes para academia, corrida ou os dois. Você escolhe o foco e o app preserva seu histórico.</p>
       </div>
     </div>
 
@@ -1523,8 +1523,8 @@
       </div>
 
       <div id="cardDadosPessoa" class="card hidden">
-        <h2>⚙️ Perfil híbrido</h2>
-        <p class="small">Preencha em 3 passos rápidos para o app equilibrar musculação, corrida e recuperação.</p>
+        <h2>⚙️ Perfil de treino</h2>
+        <p class="small">Preencha em 3 passos rápidos para o app montar academia, corrida ou híbrido conforme seu foco.</p>
 
         <!-- Indicador de progresso -->
         <div class="wizard-progress">
@@ -1538,7 +1538,7 @@
           </div>
           <div class="wizard-step-dot">
             <div class="wizard-dot-circle" id="wdot3">3</div>
-            <span class="wizard-dot-label" id="wlbl3">Corrida</span>
+            <span class="wizard-dot-label" id="wlbl3">Preferências</span>
           </div>
         </div>
 
@@ -1579,16 +1579,24 @@
 
         <!-- Passo 2: Objetivos e rotina -->
         <div class="wizard-passo" id="wzPasso2">
+          <label for="focoPrincipal">Foco principal do app</label>
+          <select id="focoPrincipal" onchange="atualizarCamposPorFoco()">
+            <option value="academia" selected>Academia</option>
+            <option value="corrida">Corrida</option>
+            <option value="hibrido">Academia + corrida</option>
+          </select>
+          <p id="ajudaFocoPrincipal" class="small">Academia é o modo principal. Corrida fica separada e o híbrido só aparece quando você escolher os dois.</p>
+
           <label for="metaPrincipal">Principal meta</label>
           <select id="metaPrincipal">
-            <option value="hibrido_shape" selected>Shape + fôlego</option>
-            <option value="hibrido_performance">Performance híbrida geral</option>
-            <option value="massa">Ganhar massa sem abandonar corrida</option>
-            <option value="perder_peso">Emagrecimento híbrido</option>
+            <option value="massa" selected>Ganhar massa / hipertrofia</option>
+            <option value="perder_peso">Emagrecer com treino</option>
             <option value="definicao">Definição + condicionamento</option>
-            <option value="forca">Força com condicionamento</option>
-            <option value="corrida_5k">Correr 5 km mantendo força</option>
-            <option value="corrida_10k">Correr 10 km mantendo massa</option>
+            <option value="forca">Força</option>
+            <option value="hibrido_shape">Academia + corrida: shape e fôlego</option>
+            <option value="hibrido_performance">Academia + corrida: performance geral</option>
+            <option value="corrida_5k">Corrida: completar 5 km</option>
+            <option value="corrida_10k">Corrida: completar 10 km</option>
           </select>
 
           <label for="rotinaAtual">Sua rotina hoje</label>
@@ -1615,17 +1623,18 @@
             <option value="5">5 dias</option>
             <option value="6">6 dias</option>
           </select>
-          <p class="small">Conta musculação, corrida e recuperação planejada.</p>
+          <p class="small">Conta os dias ativos do modo escolhido. Em Academia, corrida não entra no plano principal.</p>
 
-          <label for="diasCorridaSemana">Dias de corrida/cardio por semana</label>
+          <label for="diasCorridaSemana">Dias de corrida por semana</label>
           <select id="diasCorridaSemana">
+            <option value="0">0 dias — não usar corrida no plano</option>
             <option value="1">1 dia</option>
             <option value="2" selected>2 dias</option>
             <option value="3">3 dias</option>
             <option value="4">4 dias</option>
           </select>
 
-          <label for="prioridadeHibrida">Prioridade do plano</label>
+          <label for="prioridadeHibrida">Prioridade quando usar corrida</label>
           <select id="prioridadeHibrida">
             <option value="equilibrado" selected>Equilibrado: força + corrida</option>
             <option value="forca_shape">Mais força/shape, corrida como complemento</option>
@@ -1750,15 +1759,16 @@
         <h2>✨ Versão atual</h2>
         <p class="small"><strong>Regra fixa de atualizações:</strong> dentro do app será mostrada somente a versão atual. O histórico completo fica no arquivo CHANGELOG que acompanha o pacote da versão.</p>
         <div class="plano-topo">
-          <strong>MetaTreino Hybrid 0.5.0 Beta</strong><br>
-          <span class="tag beta">Hybrid</span>
-          <p><strong>Atualizada em:</strong> 12/05/2026</p>
+          <strong>MetaTreino 0.6.0 Beta</strong><br>
+          <span class="tag beta">Modos</span>
+          <p><strong>Atualizada em:</strong> 13/05/2026</p>
           <ul class="versao-atual-lista">
-            <li>Corrida agora aparece como <strong>sessão guiada</strong>, com duração, esforço alvo, objetivo, execução, alternativa se cansar e aviso híbrido com a musculação.</li>
-            <li>No Plano, o botão de corrida mudou de <strong>Registrar corrida</strong> para <strong>Ver treino de corrida</strong>, deixando claro que o usuário primeiro vê/começa a sessão e só registra depois.</li>
-            <li>As sugestões de corrida ficam mais inteligentes: consideram nível, objetivo, condição atual, último registro, RPE, sensação das pernas, dor articular e proximidade de treino pesado de pernas.</li>
-            <li>O app agora reduz a agressividade da corrida quando detecta pernas pesadas, dor articular, treino de pernas próximo ou cardio forte recente.</li>
-            <li>O registro de corrida continua salvando distância, tempo, zona, esforço, sensação das pernas e dor, para adaptar melhor as próximas sessões.</li>
+            <li>O app agora trabalha com <strong>Foco principal</strong>: Academia, Corrida ou Academia + Corrida.</li>
+            <li>Salvar alterações no perfil preserva treinos concluídos, pulados e dias anteriores do plano semanal.</li>
+            <li>Atualizar ou reorganizar o plano adapta apenas sessões pendentes/futuras, sem zerar o progresso da semana.</li>
+            <li>A corrida foi simplificada para iniciantes: distância, tempo, esforço percebido, intensidade geral, pernas e dor articular.</li>
+            <li>Zonas de frequência cardíaca saíram do registro principal para não confundir quem está começando.</li>
+            <li>Hoje, Plano, Perfil e Progresso foram alinhados ao novo posicionamento: academia primeiro, corrida opcional e híbrido como modo avançado.</li>
           </ul>
         </div>
         <button type="button" class="botao-principal" onclick="verificarAtualizacaoManual()">Verificar se há nova atualização</button>
@@ -1769,7 +1779,7 @@
     <section id="paginaHoje" class="hidden">
       <div class="card">
         <h2>🔥 Hoje</h2>
-        <p class="small">Abra o app e veja o foco híbrido do dia: força, corrida ou recuperação.</p>
+        <p class="small">Abra o app e veja o foco do dia: academia, corrida, recuperação ou descanso.</p>
         <div id="resumoHojeApp" class="hoje-hero">Carregando recomendação de hoje...</div>
         <button type="button" class="botao-principal" onclick="comecarAgoraHoje()">Começar agora</button>
         <button type="button" class="botao-secundario" onclick="prepararCheckinHojeV048()">Adaptar check-in / recalcular</button>
@@ -1785,14 +1795,14 @@
 
       <div class="card">
         <h2>🏆 Próxima conquista</h2>
-        <div id="proximaConquistaHoje" class="proxima-conquista-box">Salve um treino ou cardio para começar sua jornada.</div>
+        <div id="proximaConquistaHoje" class="proxima-conquista-box">Salve seu primeiro treino para começar sua jornada.</div>
       </div>
     </section>
 
     <section id="paginaPlano" class="hidden">
       <div class="card">
-        <h2>🗓️ Plano híbrido da semana</h2>
-        <p class="small">Organize musculação, corrida e recuperação na mesma semana, evitando conflito entre perna pesada, tiros e longão.</p>
+        <h2>🗓️ Plano da semana</h2>
+        <p class="small">Organize academia, corrida ou híbrido em uma semana clara. O histórico concluído não é apagado ao atualizar o perfil.</p>
         <button type="button" class="botao-principal" onclick="gerarPlanoSemanalInteligente(true)">Montar / atualizar plano da semana</button>
         <button type="button" class="botao-secundario" onclick="reorganizarPlanoSemana()">Reorganizar plano</button>
         <div id="planoSemanalBox" class="plano-semanal-box hidden"></div>
@@ -1919,8 +1929,8 @@
 
       <div class="card app-section-hero corrida-hero">
         <span class="session-badge corrida">Corrida</span>
-        <h2>🏃 Central de corrida híbrida</h2>
-        <p class="small">Aqui a corrida é tratada como sessão própria: distância, tempo, zona, esforço, sensação das pernas e compatibilidade com treino de força.</p>
+        <h2>🏃 Central de corrida</h2>
+        <p class="small">Aqui a corrida é tratada como sessão própria: distância, tempo, esforço percebido, sensação das pernas e dor. Zonas ficam como dado avançado, fora do registro simples.</p>
         <div id="painelCorridaSemana" class="corrida-dashboard"></div>
         <div id="alertaCompatibilidadeCorrida" class="mensagem-inteligente">Carregando compatibilidade com a musculação...</div>
       </div>
@@ -2006,16 +2016,8 @@
 
         <label for="tempoCardio">Tempo total (minutos)</label>
         <input id="tempoCardio" type="number" min="0" step="1" placeholder="Ex: 35">
-
-        <label for="zonaCardio">Zona / intensidade percebida</label>
-        <select id="zonaCardio">
-          <option value="zona1">Zona 1 — muito leve</option>
-          <option value="zona2" selected>Zona 2 — leve/confortável</option>
-          <option value="zona3">Zona 3 — moderada</option>
-          <option value="zona4">Zona 4 — forte</option>
-          <option value="zona5">Zona 5 — máximo/tiros</option>
-        </select>
-
+        <input id="zonaCardio" type="hidden" value="nao_informada">
+        <p class="small">Registro simples: use esforço percebido e intensidade geral. Zonas de frequência cardíaca ficam para uma área avançada futura.</p>
         <label for="rpeCardio">Esforço percebido, de 1 a 10</label>
         <input id="rpeCardio" type="number" min="1" max="10" step="1" placeholder="Ex: 4">
 
@@ -2129,7 +2131,7 @@
     <section id="paginaProgresso" class="hidden">
       <div class="card">
         <h2>📊 Progresso</h2>
-        <p class="small">Histórico híbrido, conquistas, força, corrida e evolução em uma tela só.</p>
+        <p class="small">Histórico, conquistas, força, corrida e evolução em uma tela só.</p>
         <div id="resumoProgressoBox" class="resumo-grid"></div>
         <div id="nivelAlunoProgresso" class="proxima-conquista-box"></div>
       </div>
@@ -2167,7 +2169,7 @@
 
       <div class="card">
         <h2>🏆 Conquistas</h2>
-        <p class="small">Conquistas ampliadas para força, corrida, consistência híbrida, recuperação, desafios e evolução de carga.</p>
+        <p class="small">Conquistas organizadas por academia, corrida, consistência, recuperação e evolução de carga.</p>
         <div id="contadorConquistas" class="conquista-contador">Carregando conquistas...</div>
         <h3 class="conquistas-titulo-bloco">Conquistas desbloqueadas</h3>
         <div id="ultimasConquistas" class="conquistas-resumo"></div>
@@ -8423,7 +8425,7 @@
 </script>
 
 <script>
-  const METATREINO_APP_VERSION = "0.4.7";
+  const METATREINO_APP_VERSION = "0.6.0";
 
   function verificarAtualizacaoManual() {
     const status = document.getElementById("statusAtualizacaoManual");
@@ -10066,7 +10068,7 @@
 
 <script id="mt-v048-checkin-contexto-fix">
 (function(){
-  var VERSION = '0.5.0';
+  var VERSION = '0.6.0';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -10435,7 +10437,7 @@
 
 <script id="mt-v049-data-local-hoje-fix">
 (function(){
-  var VERSION = '0.5.0';
+  var VERSION = '0.6.0';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -10760,7 +10762,7 @@
 
 <script id="mt-v050-corrida-inteligente">
 (function(){
-  var VERSION_ATUAL = '0.5.0';
+  var VERSION_ATUAL = '0.6.0';
   try { window.VERSION = VERSION_ATUAL; } catch(e) {}
   try { if (typeof VERSION !== 'undefined') VERSION = VERSION_ATUAL; } catch(e) {}
 
@@ -11119,6 +11121,566 @@
     if (botaoCardioHoje) botaoCardioHoje.textContent = 'Ver treino de corrida/cardio';
     setTimeout(function(){ try { if (typeof window.renderizarPlanoSemanal === 'function') window.renderizarPlanoSemanal(); } catch(e) {} }, 300);
   });
+})();
+</script>
+
+
+<script id="mt-v060-modos-preservacao">
+(function(){
+  var VERSION_NOVA = '0.6.0';
+  function byId(id){ return document.getElementById(id); }
+  function esc(v){
+    try { return typeof limparTextoSeguro === 'function' ? limparTextoSeguro(v) : String(v == null ? '' : v).replace(/[&<>"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; }); }
+    catch(e){ return String(v == null ? '' : v); }
+  }
+  function cat(c){ try { return typeof normalizarCategoriaTreino === 'function' ? normalizarCategoriaTreino(c) : String(c || ''); } catch(e){ return String(c || ''); } }
+  function hoje(){ try { return typeof hojeISO === 'function' ? hojeISO() : new Date().toISOString().slice(0,10); } catch(e){ return new Date().toISOString().slice(0,10); } }
+  function addDias(iso, dias){ try { return typeof adicionarDiasISO === 'function' ? adicionarDiasISO(iso, dias) : iso; } catch(e){ return iso; } }
+  function dataBR(iso){ try { return typeof formatarDataPlano === 'function' ? formatarDataPlano(iso) : iso; } catch(e){ return iso; } }
+  function isForca(c){ c = cat(c); return ['superior','inferior','inferior_forca','inferior_moderado','core_abdomen','core_estabilidade','full_body','funcional'].indexOf(c) !== -1; }
+  function isCorrida(c){ c = cat(c); return c === 'cardio' || c === 'corrida'; }
+  function isRecuperacao(c){ c = cat(c); return c === 'recuperacao' || c === 'descanso'; }
+  function perfil(){ try { return typeof perfilUsuario !== 'undefined' ? perfilUsuario : null; } catch(e){ return null; } }
+  function traduzirFoco(foco){ return foco === 'corrida' ? 'Corrida' : foco === 'hibrido' ? 'Academia + corrida' : 'Academia'; }
+  function inferirFocoPrincipal(p){
+    p = p || perfil() || {};
+    if (p.focoPrincipal) return p.focoPrincipal;
+    if (p.modoTreino) return p.modoTreino;
+    if (p.metaPrincipal === 'corrida_5k' || p.metaPrincipal === 'corrida_10k') return 'corrida';
+    if (p.metaPrincipal === 'hibrido_shape' || p.metaPrincipal === 'hibrido_performance' || p.prioridadeHibrida === 'corrida_performance') return 'hibrido';
+    return 'academia';
+  }
+  window.obterFocoPrincipal = function(){ return inferirFocoPrincipal(perfil()); };
+
+  function arraysIguais(a,b){
+    a = Array.isArray(a) ? a.map(String).sort() : [];
+    b = Array.isArray(b) ? b.map(String).sort() : [];
+    if (a.length !== b.length) return false;
+    for (var i=0;i<a.length;i++) if (a[i] !== b[i]) return false;
+    return true;
+  }
+  function mudancaAfetaPlano(antigo, novo){
+    if (!antigo) return true;
+    var campos = ['focoPrincipal','metaPrincipal','rotinaAtual','tempoExperiencia','localTreino','diasTreinoSemana','diasCorridaSemana','prioridadeHibrida','nivelCorridaPerfil','objetivoCorridaPerfil','exerciciosBloqueados','limitacoesUsuario'];
+    for (var i=0;i<campos.length;i++) if (String(antigo[campos[i]] || '') !== String(novo[campos[i]] || '')) return true;
+    if (!arraysIguais(antigo.diasDisponiveis, novo.diasDisponiveis)) return true;
+    if (!arraysIguais(antigo.equipamentosDisponiveis, novo.equipamentosDisponiveis)) return true;
+    return false;
+  }
+  function devePreservarDia(diaAntigo){
+    if (!diaAntigo) return false;
+    var status = String(diaAntigo.status || 'pendente');
+    if (status !== 'pendente') return true;
+    if (diaAntigo.dataISO && diaAntigo.dataISO < hoje()) return true;
+    return false;
+  }
+  function copiarDiaPreservado(destino, origem){
+    if (!destino || !origem) return destino;
+    ['categoria','focoHibrido','subtipoCorrida','tipoRecuperacao','protegidoPorCorrida','status','concluidoComo','reagendadoDe','reagendadoPara','adaptadoDeDescanso','ajustadoPeloCheckin'].forEach(function(k){ if (origem[k] !== undefined) destino[k] = origem[k]; });
+    destino.preservadoHistorico = true;
+    return destino;
+  }
+  function recalcularPlanoPreservandoHistorico(){
+    if (typeof lerPlanoSemanalLocal !== 'function' || typeof criarPlanoSemanalInteligente !== 'function') return null;
+    var antigo = null;
+    try { antigo = lerPlanoSemanalLocal(); } catch(e) { antigo = null; }
+    var novo = null;
+    try { novo = criarPlanoSemanalInteligente(true); } catch(e) { console.log('Falha ao recalcular plano:', e); return antigo; }
+    if (antigo && novo && Array.isArray(antigo.dias) && Array.isArray(novo.dias)) {
+      var porData = {};
+      antigo.dias.forEach(function(d){ if (d && d.dataISO) porData[d.dataISO] = d; });
+      novo.dias.forEach(function(d){ var old = d && d.dataISO ? porData[d.dataISO] : null; if (devePreservarDia(old)) copiarDiaPreservado(d, old); });
+      try { if (typeof salvarPlanoSemanalLocal === 'function') salvarPlanoSemanalLocal(novo); } catch(e) {}
+    }
+    return novo;
+  }
+  window.recalcularPlanoPreservandoHistorico = recalcularPlanoPreservandoHistorico;
+
+  window.atualizarCamposPorFoco = function(){
+    var foco = byId('focoPrincipal') ? byId('focoPrincipal').value : obterFocoPrincipal();
+    var ajuda = byId('ajudaFocoPrincipal');
+    var diasCorrida = byId('diasCorridaSemana');
+    var prioridade = byId('prioridadeHibrida');
+    var nivel = byId('nivelCorridaPerfil');
+    var objetivo = byId('objetivoCorridaPerfil');
+    if (diasCorrida) {
+      if (foco === 'academia') { diasCorrida.value = '0'; }
+      else if (Number(diasCorrida.value || 0) < 1) { diasCorrida.value = foco === 'corrida' ? '3' : '2'; }
+    }
+    if (prioridade) prioridade.disabled = foco !== 'hibrido';
+    if (nivel) nivel.disabled = foco === 'academia';
+    if (objetivo) objetivo.disabled = foco === 'academia';
+    if (ajuda) {
+      ajuda.innerHTML = foco === 'academia'
+        ? 'Modo principal: treino de academia. A corrida não entra no plano da semana, mas continua disponível na aba Corrida.'
+        : foco === 'corrida'
+          ? 'Modo corrida: o plano prioriza sessões de corrida/caminhada. Academia fica separada para quando você quiser registrar força.'
+          : 'Modo híbrido: o app distribui força, corrida e recuperação sem apagar o que já foi concluído.';
+    }
+  };
+
+  var oldCarregarPerfil = window.carregarPerfilAutomaticamente;
+  window.carregarPerfilAutomaticamente = function(){
+    if (typeof oldCarregarPerfil === 'function') oldCarregarPerfil.apply(this, arguments);
+    var p = perfil();
+    var foco = byId('focoPrincipal');
+    if (foco) foco.value = inferirFocoPrincipal(p || {});
+    atualizarCamposPorFoco();
+  };
+
+  window.mostrarResumoPerfilCarregado = function(){
+    var p = perfil();
+    var box = byId('resultadoPerfil');
+    if (!p || !box) return;
+    var foco = inferirFocoPrincipal(p);
+    var limitacoes = p.limitacoesUsuario ? '<br>Limitações informadas: ' + esc(p.limitacoesUsuario) + '.' : '';
+    box.classList.remove('hidden');
+    box.innerHTML = '<strong>Perfil de treino carregado</strong><br>' + esc(p.nome) + ', seu IMC salvo é ' + esc(p.imc) + '.<br>' +
+      'Classificação: ' + esc(p.classificacao) + '.<br>' +
+      'Foco principal: ' + esc(traduzirFoco(foco)) + '.<br>' +
+      'Meta: ' + esc(typeof traduzirMeta === 'function' ? traduzirMeta(p.metaPrincipal) : p.metaPrincipal) + '.<br>' +
+      (foco === 'academia' ? 'Corrida: opcional, fora do plano principal.<br>' : 'Corrida: ' + esc(typeof traduzirNivelCorrida === 'function' ? traduzirNivelCorrida(p.nivelCorridaPerfil || 'iniciante') : p.nivelCorridaPerfil) + ' • ' + esc(typeof traduzirObjetivoCorrida === 'function' ? traduzirObjetivoCorrida(p.objetivoCorridaPerfil || '5k') : p.objetivoCorridaPerfil) + '.<br>') +
+      'Semana: ' + esc(p.diasTreinoSemana || 4) + ' dia(s) ativo(s)' + (foco === 'academia' ? '' : ', com ' + esc(p.diasCorridaSemana || 0) + ' de corrida') + '.<br>' +
+      'Local de treino: ' + esc(typeof traduzirLocal === 'function' ? traduzirLocal(p.localTreino) : p.localTreino) + '.' + limitacoes +
+      '<br><br><span class="small">Alterar peso, local, objetivo ou disponibilidade não apaga treinos concluídos. Quando necessário, o app adapta apenas o futuro do plano.</span>';
+  };
+
+  window.calcularPerfil = function(){
+    if (typeof acessoLiberado !== 'undefined' && !acessoLiberado) { if (typeof bloquearApp === 'function') bloquearApp('Faça login com um e-mail autorizado para usar o app.'); return; }
+    var nome = (byId('nome') ? byId('nome').value.trim() : '');
+    var sexo = byId('sexo') ? byId('sexo').value : '';
+    var dataNascimento = byId('dataNascimento') ? byId('dataNascimento').value : '';
+    var idade = typeof calcularIdadePorNascimento === 'function' ? calcularIdadePorNascimento(dataNascimento) : 0;
+    var peso = Number(byId('peso') ? byId('peso').value : 0);
+    var alturaCm = Number(byId('altura') ? byId('altura').value : 0);
+    var focoPrincipal = byId('focoPrincipal') ? byId('focoPrincipal').value : 'academia';
+    var metaPrincipal = byId('metaPrincipal') ? byId('metaPrincipal').value : 'massa';
+    var rotinaAtual = byId('rotinaAtual') ? byId('rotinaAtual').value : 'nunca';
+    var tempoExperiencia = byId('tempoExperiencia') ? byId('tempoExperiencia').value : 'menos_1';
+    var localTreino = byId('localTreino') ? byId('localTreino').value : 'academia_grande';
+    var diasTreinoSemana = Number(byId('diasTreinoSemana') ? byId('diasTreinoSemana').value : 4) || 4;
+    var diasCorridaSemanaBruto = Number(byId('diasCorridaSemana') ? byId('diasCorridaSemana').value : 0) || 0;
+    var diasCorridaSemana = focoPrincipal === 'academia' ? 0 : Math.max(1, Math.min(4, diasCorridaSemanaBruto));
+    if (focoPrincipal === 'corrida') diasCorridaSemana = Math.max(2, diasCorridaSemana);
+    var prioridadeHibrida = byId('prioridadeHibrida') ? byId('prioridadeHibrida').value : (focoPrincipal === 'academia' ? 'forca_shape' : 'equilibrado');
+    if (focoPrincipal === 'academia') prioridadeHibrida = 'forca_shape';
+    if (focoPrincipal === 'corrida') prioridadeHibrida = 'corrida_performance';
+    var nivelCorridaPerfil = byId('nivelCorridaPerfil') ? byId('nivelCorridaPerfil').value : 'iniciante';
+    var objetivoCorridaPerfil = byId('objetivoCorridaPerfil') ? byId('objetivoCorridaPerfil').value : '5k';
+    var distanciaCorridaConfortavel = Number(byId('distanciaCorridaConfortavel') ? byId('distanciaCorridaConfortavel').value || 0 : 0);
+    var paceCorridaMedio = (byId('paceCorridaMedio') ? byId('paceCorridaMedio').value.trim() : '').slice(0,20);
+    var diasDisponiveis = typeof obterValoresCheckbox === 'function' ? obterValoresCheckbox('diasDisponiveis') : [];
+    if (!diasDisponiveis.length && typeof valoresPadraoDiasDisponiveis === 'function') diasDisponiveis = valoresPadraoDiasDisponiveis();
+    var equipamentosDisponiveis = typeof obterValoresCheckbox === 'function' ? obterValoresCheckbox('equipamentosDisponiveis') : [];
+    if (!equipamentosDisponiveis.length && typeof valoresPadraoEquipamentos === 'function') equipamentosDisponiveis = valoresPadraoEquipamentos(localTreino);
+    var exerciciosPreferidos = (byId('exerciciosPreferidos') ? byId('exerciciosPreferidos').value.trim() : '').slice(0,500);
+    var exerciciosBloqueados = (byId('exerciciosBloqueados') ? byId('exerciciosBloqueados').value.trim() : '').slice(0,500);
+    var limitacoesUsuario = (byId('limitacoesUsuario') ? byId('limitacoesUsuario').value.trim() : '').slice(0,500);
+    var resultado = byId('resultadoPerfil');
+    var botao = byId('botaoIrTreino');
+    if (sexo === '') { if (resultado) { resultado.classList.remove('hidden'); resultado.innerHTML = 'Escolha uma opção no campo Sexo para continuar.'; } if (botao) botao.classList.add('hidden'); return; }
+    if (nome === '' || !dataNascimento || idade <= 0 || peso <= 0 || peso > 700 || alturaCm <= 0) { if (resultado) { resultado.classList.remove('hidden'); resultado.innerHTML = 'Preencha todos os campos corretamente. O peso deve estar entre 1 e 700 kg.'; } if (botao) botao.classList.add('hidden'); return; }
+    var perfilAntigo = null;
+    try { perfilAntigo = JSON.parse(localStorage.getItem('perfilUsuario') || 'null'); } catch(e) { perfilAntigo = null; }
+    var alturaM = alturaCm / 100;
+    var imc = peso / (alturaM * alturaM);
+    var classificacao = '';
+    var mensagem = '';
+    if (imc < 18.5) { classificacao = 'abaixo do peso'; mensagem = 'Seu foco pode ser ganhar massa muscular com alimentação adequada.'; }
+    else if (imc < 25) { classificacao = 'dentro da faixa considerada normal'; mensagem = 'Seu foco pode ser melhorar composição corporal, força e condicionamento.'; }
+    else if (imc < 30) { classificacao = 'acima do peso'; mensagem = 'Seu foco pode ser reduzir gordura corporal e manter ou ganhar massa magra.'; }
+    else { classificacao = 'em faixa de obesidade pelo IMC'; mensagem = 'O ideal é começar com treinos seguros, progressivos e, se possível, acompanhamento profissional.'; }
+    var novoPerfil = { nome:nome, sexo:sexo, dataNascimento:dataNascimento, idade:idade, peso:peso, alturaCm:alturaCm, imc:imc.toFixed(1), classificacao:classificacao, mensagem:mensagem, focoPrincipal:focoPrincipal, modoTreino:focoPrincipal, metaPrincipal:metaPrincipal, rotinaAtual:rotinaAtual, tempoExperiencia:tempoExperiencia, localTreino:localTreino, diasTreinoSemana:diasTreinoSemana, diasCorridaSemana:diasCorridaSemana, prioridadeHibrida:prioridadeHibrida, nivelCorridaPerfil:nivelCorridaPerfil, objetivoCorridaPerfil:objetivoCorridaPerfil, distanciaCorridaConfortavel:distanciaCorridaConfortavel, paceCorridaMedio:paceCorridaMedio, diasDisponiveis:diasDisponiveis, equipamentosDisponiveis:equipamentosDisponiveis, exerciciosPreferidos:exerciciosPreferidos, exerciciosBloqueados:exerciciosBloqueados, limitacoesUsuario:limitacoesUsuario };
+    try { perfilUsuario = novoPerfil; } catch(e) { window.perfilUsuario = novoPerfil; }
+    try { localStorage.setItem('perfilUsuario', JSON.stringify(novoPerfil)); } catch(e) {}
+    try { if (typeof registrarPeso === 'function') registrarPeso(peso); } catch(e) {}
+    try { if (typeof mostrarMensagemMudancaPeso === 'function') mostrarMensagemMudancaPeso(perfilAntigo, peso); } catch(e) {}
+    var mudouPlano = mudancaAfetaPlano(perfilAntigo, novoPerfil);
+    try {
+      if (mudouPlano) recalcularPlanoPreservandoHistorico();
+      else if (typeof renderizarPlanoSemanal === 'function' && typeof lerPlanoSemanalLocal === 'function' && lerPlanoSemanalLocal()) renderizarPlanoSemanal();
+    } catch(e) { console.log('Plano preservado após perfil:', e); }
+    if (resultado) {
+      resultado.classList.remove('hidden');
+      var resumoLimitacoes = limitacoesUsuario ? '<br>Limitações/observações: ' + esc(limitacoesUsuario) + '.' : '';
+      var resumoBloqueados = exerciciosBloqueados ? '<br>Exercícios bloqueados: ' + esc(exerciciosBloqueados) + '.' : '';
+      resultado.innerHTML = '<strong>' + esc(nome) + ', seu perfil de treino está pronto</strong><br>' +
+        'Foco principal: ' + esc(traduzirFoco(focoPrincipal)) + '.<br>' +
+        'IMC: ' + imc.toFixed(1) + ' • Idade: ' + idade + ' anos.<br>' +
+        'Classificação: ' + esc(classificacao) + '.<br>' + esc(mensagem) + '<br>' +
+        'Meta: ' + esc(typeof traduzirMeta === 'function' ? traduzirMeta(metaPrincipal) : metaPrincipal) + '.<br>' +
+        (focoPrincipal === 'academia' ? 'Corrida: opcional e separada do plano principal.<br>' : 'Corrida: ' + esc(typeof traduzirNivelCorrida === 'function' ? traduzirNivelCorrida(nivelCorridaPerfil) : nivelCorridaPerfil) + ' • ' + esc(typeof traduzirObjetivoCorrida === 'function' ? traduzirObjetivoCorrida(objetivoCorridaPerfil) : objetivoCorridaPerfil) + '.<br>') +
+        'Semana: ' + diasTreinoSemana + ' dia(s) ativo(s)' + (focoPrincipal === 'academia' ? '' : ', com ' + diasCorridaSemana + ' de corrida') + '.<br>' +
+        'Experiência de força: ' + esc(typeof traduzirExperiencia === 'function' ? traduzirExperiencia(tempoExperiencia) : tempoExperiencia) + '.<br>' +
+        'Local: ' + esc(typeof traduzirLocal === 'function' ? traduzirLocal(localTreino) : localTreino) + '.' + resumoLimitacoes + resumoBloqueados +
+        '<br><br><span class="small">Histórico preservado: treinos concluídos, pulados e dias anteriores continuam no plano. Mudanças de perfil adaptam somente o que ainda vem pela frente.</span>';
+    }
+    if (botao) { botao.classList.remove('hidden'); botao.textContent = '➡️ Ver plano'; botao.onclick = irParaPlano; }
+    try { if (typeof renderizarHoje === 'function') renderizarHoje(); } catch(e) {}
+    atualizarCamposPorFoco();
+  };
+
+  window.calcularDistribuicaoHibrida = function(){
+    var p = perfil() || {};
+    var foco = inferirFocoPrincipal(p);
+    var total = Math.max(2, Math.min(6, Number(p.diasTreinoSemana || 4)));
+    var meta = p.metaPrincipal || 'massa';
+    var prioridade = p.prioridadeHibrida || 'equilibrado';
+    if (foco === 'academia') return { total: total, corrida: 0, forca: total, recuperacao: Math.max(1, 7-total), prioridade: 'forca_shape', meta: meta, focoPrincipal: foco };
+    if (foco === 'corrida') return { total: total, corrida: total, forca: 0, recuperacao: Math.max(1, 7-total), prioridade: 'corrida_performance', meta: meta, focoPrincipal: foco };
+    var corrida = Math.max(1, Math.min(4, Number(p.diasCorridaSemana || 2)));
+    if (prioridade === 'forca_shape') corrida = Math.min(corrida, total <= 3 ? 1 : 2);
+    if (prioridade === 'corrida_performance' || ['corrida_5k','corrida_10k','hibrido_performance'].indexOf(meta) !== -1) corrida = Math.max(corrida, total >= 5 ? 3 : 2);
+    if (meta === 'massa' || meta === 'forca') corrida = Math.min(corrida, total >= 5 ? 2 : 1);
+    corrida = Math.max(1, Math.min(corrida, Math.max(1, total - 1)));
+    return { total: total, corrida: corrida, forca: Math.max(1, total-corrida), recuperacao: Math.max(1, 7-total), prioridade: prioridade, meta: meta, focoPrincipal: foco };
+  };
+
+  window.gerarPlanoSemanalInteligente = function(forcarNovo){
+    if (typeof acessoLiberado !== 'undefined' && !acessoLiberado) { if (typeof bloquearApp === 'function') bloquearApp('Faça login com um e-mail autorizado para montar o plano semanal.'); return; }
+    if (!perfil()) calcularPerfil();
+    if (!perfil()) return;
+    var executar = function(){
+      if (forcarNovo === true) recalcularPlanoPreservandoHistorico();
+      else if (typeof obterOuCriarPlanoSemanal === 'function') obterOuCriarPlanoSemanal(false);
+      if (typeof renderizarPlanoSemanal === 'function') renderizarPlanoSemanal();
+      if (typeof renderizarHoje === 'function') renderizarHoje();
+      var box = byId('planoSemanalBox'); if (box) box.scrollIntoView({behavior:'smooth', block:'center'});
+    };
+    if (typeof carregarMemoriaInteligenteTreino === 'function') carregarMemoriaInteligenteTreino(executar); else executar();
+  };
+
+  window.reorganizarPlanoSemana = function(){
+    if (typeof garantirPerfilParaNavegar === 'function' && !garantirPerfilParaNavegar('Faça login para reorganizar o plano.')) return;
+    if (!confirm('Reorganizar a semana vai adaptar apenas sessões pendentes. Treinos concluídos, pulados e dias anteriores serão preservados. Continuar?')) return;
+    var executar = function(){ recalcularPlanoPreservandoHistorico(); if (typeof renderizarPlanoSemanal === 'function') renderizarPlanoSemanal(); if (typeof renderizarHoje === 'function') renderizarHoje(); };
+    if (typeof carregarMemoriaInteligenteTreino === 'function') carregarMemoriaInteligenteTreino(executar); else executar();
+  };
+
+  window.montarHTMLPlanoSemanal = function(){
+    var p = perfil();
+    if (!p) return '<p class="small">Preencha e salve o perfil para montar o plano da semana.</p>';
+    var plano = typeof obterOuCriarPlanoSemanal === 'function' ? obterOuCriarPlanoSemanal(false) : null;
+    var dias = plano && Array.isArray(plano.dias) ? plano.dias : [];
+    var foco = inferirFocoPrincipal(p);
+    var h = hoje();
+    var atividades = dias.filter(function(d){ return cat(d.categoria) !== 'descanso'; }).length;
+    var concluidos = dias.filter(function(d){ return d.status === 'concluido' && cat(d.categoria) !== 'descanso'; }).length;
+    var pulados = dias.filter(function(d){ return d.status === 'pulado' && cat(d.categoria) !== 'descanso'; }).length;
+    var forca = dias.filter(function(d){ return isForca(d.categoria); }).length;
+    var corrida = dias.filter(function(d){ return isCorrida(d.categoria); }).length;
+    var recuperacao = dias.filter(function(d){ return cat(d.categoria) === 'recuperacao'; }).length;
+    var pct = atividades ? Math.min(100, Math.round((concluidos / atividades) * 100)) : 0;
+    var fim = plano && plano.inicioSemana ? addDias(plano.inicioSemana, 6) : '';
+    var frase = foco === 'academia' ? 'Modo Academia: a semana prioriza musculação. Corrida fica separada na aba Corrida.' : foco === 'corrida' ? 'Modo Corrida: a semana prioriza corrida/caminhada. Academia fica separada na aba Força.' : 'Modo Híbrido: força, corrida e recuperação são distribuídas sem apagar histórico.';
+    var html = '<div class="plano-topo"><strong>Semana de ' + esc(dataBR(plano.inicioSemana)) + ' a ' + esc(dataBR(fim)) + '</strong><br>' +
+      'Foco: ' + esc(traduzirFoco(foco)) + ' | Sessões: ' + atividades + ' | Academia: ' + forca + ' | Corrida: ' + corrida + ' | Recuperação: ' + recuperacao + ' | Concluídas: ' + concluidos +
+      '<div class="barra-progresso-fina"><div style="width:' + pct + '%"></div></div>' +
+      '<span class="small">' + esc(frase) + ' Ao atualizar o perfil, dias concluídos e anteriores permanecem intactos.</span>' +
+      '<div class="plano-acoes-principais"><button type="button" class="botao-principal" onclick="gerarPlanoSemanalInteligente(true)">Atualizar plano preservando histórico</button><button type="button" class="botao-secundario" onclick="reorganizarPlanoSemana()">Reorganizar pendentes</button><button type="button" class="botao-secundario" onclick="irParaCheckin()">Ajustar treino de hoje</button></div></div>';
+    dias.forEach(function(dia, i){
+      var c = cat(dia.categoria);
+      var badge = c === 'cardio' ? 'corrida' : c === 'recuperacao' ? 'recuperacao' : c === 'descanso' ? 'descanso' : 'forca';
+      var rotulo = badge === 'forca' ? 'Academia' : badge === 'corrida' ? 'Corrida' : badge === 'recuperacao' ? 'Recuperação' : 'Descanso';
+      var nome = typeof nomeItemPlanoHibrido === 'function' ? nomeItemPlanoHibrido(dia) : c;
+      var desc = typeof descricaoPlanoItemHibrido === 'function' ? descricaoPlanoItemHibrido(dia) : '';
+      var impacto = isForca(c) && typeof impactoCorridaCategoria === 'function' ? impactoCorridaCategoria(c) : null;
+      var botao = c === 'cardio' ? 'Ver treino de corrida' : c === 'recuperacao' ? 'Abrir recuperação' : c === 'descanso' ? 'Check-in opcional' : 'Começar academia';
+      html += '<div class="plano-semanal-dia"><strong>' + esc(dia.nomeDia || 'Dia') + (dia.dataISO === h ? ' Hoje' : '') + '</strong><span class="data-plano-dia">' + esc(dataBR(dia.dataISO)) + '</span>' +
+        '<span class="session-badge ' + badge + '">' + esc(rotulo) + '</span><br>' +
+        '<span><strong>' + esc(nome) + '</strong></span><br>' +
+        '<span class="small">' + esc(desc) + '</span><br>' +
+        (impacto ? '<span class="impacto-pill ' + esc(impacto.nivel) + '">' + esc(impacto.texto) + '</span>' : '') +
+        '<span class="' + (typeof classeStatusPlano === 'function' ? classeStatusPlano(dia.status, dia.dataISO === h) : '') + '">' + esc(typeof textoStatusPlano === 'function' ? textoStatusPlano(dia.status) : (dia.status || 'pendente')) + '</span>' +
+        '<div class="plano-acoes-dia"><button type="button" class="botao-secundario" onclick="comecarItemPlano(' + i + ')">' + esc(botao) + '</button>' +
+        (c !== 'descanso' ? '<button type="button" class="botao-secundario" onclick="marcarStatusPlanoDia(' + i + ', ' + JSON.stringify('concluido') + ')">Marcar feito</button><button type="button" class="botao-pular" onclick="marcarStatusPlanoDia(' + i + ', ' + JSON.stringify('pulado') + ')">Pular</button><button type="button" class="botao-secundario" onclick="reagendarItemPlano(' + i + ')">Reagendar</button>' : '') +
+        '<button type="button" class="botao-secundario" onclick="marcarStatusPlanoDia(' + i + ', ' + JSON.stringify('pendente') + ')">Reabrir</button></div></div>';
+    });
+    if (pulados > 0) html += '<div class="mensagem-inteligente">Você pulou ' + pulados + ' sessão(ões). Use Reorganizar pendentes se quiser redistribuir sem compensar tudo de uma vez.</div>';
+    return html;
+  };
+
+  window.montarResumoHojeBase = function(){
+    var item = typeof obterItemPlanoHoje === 'function' ? obterItemPlanoHoje() : null;
+    var treinoLocal = typeof lerResumoTreinoAtualLocal === 'function' ? lerResumoTreinoAtualLocal() : null;
+    if (treinoLocal) {
+      var categoria = cat(treinoLocal.categoria || treinoLocal.letra || '');
+      var concluidos = (treinoLocal.concluidos || []).filter(Boolean).length;
+      var total = treinoLocal.treino ? treinoLocal.treino.length : 0;
+      return '<span class="session-badge forca">Academia</span><br><strong>Treino em andamento</strong><br>' + esc(typeof nomeAmigavelTreino === 'function' ? nomeAmigavelTreino(categoria) : categoria) + '<br>Progresso: ' + concluidos + ' de ' + total + ' exercício(s).';
+    }
+    if (!item) return '<strong>Comece pelo plano</strong><br>Salve o perfil e veja o plano sugerido antes de iniciar o Hoje.';
+    var c = cat(item.categoria);
+    var badge = c === 'cardio' ? 'corrida' : c === 'recuperacao' ? 'recuperacao' : c === 'descanso' ? 'descanso' : 'forca';
+    var rotulo = badge === 'forca' ? 'Academia' : badge === 'corrida' ? 'Corrida' : badge === 'recuperacao' ? 'Recuperação' : 'Descanso';
+    var motivo = 'Escolhido pelo plano semanal conforme seu foco principal.';
+    if (c === 'recuperacao') motivo = 'Hoje o melhor é recuperar sem transformar caminhada ou mobilidade em treino pesado.';
+    if (c === 'descanso') motivo = 'Hoje está como descanso total. Check-in é opcional.';
+    if (item.status === 'concluido') motivo = 'Sessão de hoje já foi marcada como concluída. Excelente consistência.';
+    return '<span class="session-badge ' + badge + '">' + esc(rotulo) + '</span><br><strong>Hoje o foco é:</strong><br>' + esc(typeof nomeItemPlanoHibrido === 'function' ? nomeItemPlanoHibrido(item) : c) + '<br><span class="small">' + esc(typeof descricaoPlanoItemHibrido === 'function' ? descricaoPlanoItemHibrido(item) : '') + '</span><br><br><strong>Por que esse foco?</strong><br>' + esc(motivo);
+  };
+
+  window.gerarTextoSugestaoCardio = function(){
+    var tipoAtividade = byId('tipoAtividadeCardio') ? byId('tipoAtividadeCardio').value : 'corrida';
+    var nivel = byId('nivelCardio') ? byId('nivelCardio').value : 'iniciante';
+    var objetivo = byId('objetivoCardio') ? byId('objetivoCardio').value : '5k';
+    var tipoSessao = byId('tipoSessaoCardio') ? byId('tipoSessaoCardio').value : 'automatico';
+    if (tipoSessao === 'automatico') {
+      if (tipoAtividade === 'caminhada' || nivel === 'iniciante' || objetivo === 'comecar') tipoSessao = 'caminhada_leve';
+      else if (objetivo === 'pace') tipoSessao = 'intervalado';
+      else if (objetivo === '10k' || objetivo === 'meia') tipoSessao = 'longo';
+      else tipoSessao = 'corrida_leve';
+    }
+    var nome = typeof textoSubtipoCorrida === 'function' ? textoSubtipoCorrida(tipoSessao) : tipoSessao;
+    var desc = typeof descricaoCorridaSubtipo === 'function' ? descricaoCorridaSubtipo(tipoSessao) : '';
+    var tempoBase = tipoSessao === 'intervalado' ? '20–30 min' : tipoSessao === 'longo' ? '35–70 min' : tipoSessao === 'teste' ? '10–25 min' : '20–40 min';
+    var formato = tipoSessao === 'intervalado' ? 'Aquecimento + tiros curtos controlados + desaquecimento.' : tipoSessao === 'progressiva' ? 'Comece fácil e aumente aos poucos, sem sprint final.' : tipoSessao === 'longo' ? 'Ritmo confortável. Termine com sensação de que ainda conseguiria continuar.' : tipoSessao === 'caminhada_leve' ? 'Caminhe leve, mantendo respiração confortável.' : 'Mantenha conversa possível e esforço controlado.';
+    return '<strong>' + esc(nome) + '</strong><br>' + esc(desc) + '<br><br><strong>Duração sugerida:</strong> ' + tempoBase + '<br><strong>Como executar:</strong> ' + esc(formato) + '<br><br><span class="small">Depois registre distância, tempo, esforço percebido, intensidade geral, sensação das pernas e dor articular. Zonas não são necessárias neste modo simples.</span>';
+  };
+
+  window.salvarCardio = function(){
+    if (typeof acessoLiberado !== 'undefined' && (!acessoLiberado || !usuarioAtual || !db)) { alert('Faça login com um e-mail autorizado para salvar corrida/cardio.'); return; }
+    var tipoAtividadeCardio = byId('tipoAtividadeCardio') ? byId('tipoAtividadeCardio').value : 'corrida';
+    var distancia = Number(byId('distanciaCardio') ? byId('distanciaCardio').value : 0);
+    var tempo = Number(byId('tempoCardio') ? byId('tempoCardio').value : 0);
+    var intensidade = byId('intensidadeCardio') ? byId('intensidadeCardio').value : 'leve';
+    var sensacao = byId('sensacaoCardio') ? byId('sensacaoCardio').value : 'bem';
+    var observacao = byId('observacaoCardio') ? byId('observacaoCardio').value.trim() : '';
+    var rpeCardio = Number(byId('rpeCardio') ? byId('rpeCardio').value || 0 : 0);
+    var sensacaoPernas = byId('sensacaoPernasCardio') ? byId('sensacaoPernasCardio').value : 'normais';
+    var dorArticular = byId('dorArticularCardio') ? byId('dorArticularCardio').value : 'nao';
+    var nivelCardio = byId('nivelCardio') ? byId('nivelCardio').value : 'iniciante';
+    var objetivoCardio = byId('objetivoCardio') ? byId('objetivoCardio').value : 'comecar';
+    var condicaoCardio = byId('condicaoCardio') ? byId('condicaoCardio').value : 'caminho';
+    var tipoSessaoCardio = byId('tipoSessaoCardio') ? byId('tipoSessaoCardio').value : 'automatico';
+    var temDesafioCardio = byId('temDesafioCardio') ? byId('temDesafioCardio').checked : false;
+    var distanciaDesafioCardio = byId('distanciaDesafioCardio') ? byId('distanciaDesafioCardio').value : '';
+    var dataDesafioCardio = byId('dataDesafioCardio') ? byId('dataDesafioCardio').value : '';
+    var sugestaoCardioHTML = byId('sugestaoCardio') && !byId('sugestaoCardio').classList.contains('hidden') ? byId('sugestaoCardio').innerText : '';
+    var caixa = byId('mensagemCardio');
+    if (distancia < 0 || tempo <= 0) { if (caixa) { caixa.className = 'alerta alerta-aviso'; caixa.innerHTML = 'Informe distância com 0 km ou mais e tempo maior que zero.'; } return; }
+    var zonaInferida = intensidade === 'forte' ? 'zona4' : intensidade === 'moderada' ? 'zona3' : 'zona2';
+    var agora = new Date();
+    var corrida = { data: agora.toLocaleString('pt-BR'), criadoEm: agora.getTime(), diaSemana: typeof nomeDoDiaDaSemana === 'function' ? nomeDoDiaDaSemana() : '', tipoAtividade: tipoAtividadeCardio, distancia: distancia, tempo: tempo, intensidade: intensidade, sensacao: sensacao, observacao: observacao, zonaCardio: zonaInferida, zonaCardioOrigem: 'inferida_pela_intensidade_simples', rpeCardio: rpeCardio, sensacaoPernas: sensacaoPernas, dorArticular: dorArticular, nivelCardio: nivelCardio, objetivoCardio: objetivoCardio, condicaoCardio: condicaoCardio, tipoSessaoCardio: tipoSessaoCardio, temDesafio: temDesafioCardio, distanciaDesafio: temDesafioCardio ? distanciaDesafioCardio : '', dataDesafio: temDesafioCardio ? dataDesafioCardio : '', treinoSugerido: sugestaoCardioHTML, nomeUsuario: perfil() ? perfil().nome : 'Usuário' };
+    db.collection('usuarios').doc(usuarioAtual.uid).collection('corridas').add(corrida).then(function(){
+      try { ultimaCardioCache = corrida; ultimoCardioSalvoCompartilhavel = corrida; } catch(e) {}
+      if (typeof marcarPlanoHojeConcluido === 'function') marcarPlanoHojeConcluido('cardio');
+      if (caixa) { caixa.className = 'alerta alerta-sucesso'; caixa.innerHTML = '✅ Corrida/cardio salvo. Use esforço percebido e sensação das pernas para guiar os próximos treinos.'; }
+      var boxCompartilhar = byId('compartilharUltimoCardioBox'); if (boxCompartilhar) boxCompartilhar.classList.remove('hidden');
+      ['distanciaCardio','tempoCardio','rpeCardio','observacaoCardio'].forEach(function(id){ var el = byId(id); if (el) el.value = ''; });
+      if (typeof carregarCardios === 'function') carregarCardios(); if (typeof atualizarPainelCorrida === 'function') atualizarPainelCorrida(); if (typeof renderizarHoje === 'function') renderizarHoje();
+    }).catch(function(erro){ console.log('Erro ao salvar cardio:', erro); if (caixa) { caixa.className = 'alerta alerta-aviso'; caixa.innerHTML = 'Não foi possível salvar agora. Confira sua conexão.'; } });
+  };
+
+  window.atualizarPainelCorrida = function(){
+    if (typeof obterCardiosDaNuvem !== 'function') return;
+    obterCardiosDaNuvem(function(lista){
+      var inicio = new Date((typeof inicioSemanaAtualISO === 'function' ? inicioSemanaAtualISO() : hoje()) + 'T00:00:00').getTime();
+      var semana = (lista || []).filter(function(i){ return Number(i.criadoEm || 0) >= inicio && i.tipo !== 'sem_cardio'; });
+      var corridas = semana.filter(function(i){ return i.tipoAtividade !== 'recuperacao'; });
+      var distancia = corridas.reduce(function(s,i){ return s + Number(i.distancia || 0); }, 0);
+      var minutosLeves = corridas.filter(function(i){ return i.intensidade === 'leve' || i.zonaCardio === 'zona1' || i.zonaCardio === 'zona2'; }).reduce(function(s,i){ return s + Number(i.tempo || 0); }, 0);
+      var painel = byId('painelCorridaSemana');
+      if (painel) painel.innerHTML = '<div class="metric-card"><strong>' + distancia.toFixed(1) + ' km</strong><span>Volume da semana</span></div><div class="metric-card"><strong>' + corridas.length + '</strong><span>Sessões de corrida/cardio</span></div><div class="metric-card"><strong>' + minutosLeves + ' min</strong><span>Intensidade leve</span></div><div class="metric-card"><strong>' + (perfil() ? esc(typeof traduzirObjetivoCorrida === 'function' ? traduzirObjetivoCorrida(perfil().objetivoCorridaPerfil || '5k') : perfil().objetivoCorridaPerfil) : '5 km') + '</strong><span>Objetivo atual</span></div>';
+      var alerta = byId('alertaCompatibilidadeCorrida');
+      var item = typeof obterItemPlanoHoje === 'function' ? obterItemPlanoHoje() : null;
+      if (alerta && item) {
+        var c = cat(item.categoria);
+        if (c === 'inferior_forca') alerta.innerHTML = '⚠️ Hoje tem Pernas — Força. Evite transformar a corrida em tiro ou ritmo forte.';
+        else if (c === 'cardio') alerta.innerHTML = '🏃 Corrida planejada: ' + esc(typeof textoSubtipoCorrida === 'function' ? textoSubtipoCorrida(item.subtipoCorrida || 'corrida_leve') : 'Corrida') + '. Registre esforço e sensação das pernas ao terminar.';
+        else alerta.innerHTML = '✅ Compatível com a semana: mantenha a corrida leve se houver treino de pernas perto.';
+      }
+    });
+  };
+
+  window.carregarCardios = function(){
+    if (typeof obterCardiosDaNuvem !== 'function') return;
+    obterCardiosDaNuvem(function(lista){
+      var caixa = byId('listaCardios'); if (!caixa) return;
+      caixa.innerHTML = '';
+      if (!lista || !lista.length) { caixa.innerHTML = '<p class="small">Nenhum registro de corrida/cardio/recuperação salvo ainda.</p>'; try { ultimaCardioCache = null; } catch(e) {} return; }
+      try { ultimaCardioCache = lista[0]; } catch(e) {}
+      lista.slice(0,5).forEach(function(item){
+        var div = document.createElement('div'); div.className = 'historico-item';
+        if (item.tipoAtividade === 'recuperacao') {
+          div.innerHTML = '<span class="session-badge recuperacao">Recuperação</span><br><strong>' + esc(item.data || 'Sem data') + '</strong><br>Tipo: ' + esc(typeof nomeRecuperacao === 'function' ? nomeRecuperacao(item.tipoRecuperacao || item.tipoSessaoCardio || 'caminhada_leve') : 'Recuperação') + '<br>Duração: ' + esc(item.tempo || 0) + ' min<br>Distância: ' + esc(item.distancia || 0) + ' km<br>Sensação das pernas: ' + esc(item.sensacaoPernas || item.sensacao || '-') + '<br>Observação: ' + esc(item.observacao || 'Nenhuma');
+        } else if (item.tipo === 'sem_cardio' || item.tipo === 'sem_corrida') {
+          div.innerHTML = '<strong>' + esc(item.data || 'Sem data') + '</strong><br>Status: não fez cardio recentemente<br>Observação: ' + esc(item.observacao || 'Nenhuma');
+        } else {
+          div.innerHTML = '<span class="session-badge corrida">Corrida</span><br><strong>' + esc(item.data || 'Sem data') + '</strong><br>Atividade: ' + esc(typeof traduzirTipoAtividadeCardio === 'function' ? traduzirTipoAtividadeCardio(item.tipoAtividade) : item.tipoAtividade) + '<br>Sessão: ' + esc(typeof traduzirTipoSessaoCardio === 'function' ? traduzirTipoSessaoCardio(item.tipoSessaoCardio || 'corrida_leve') : item.tipoSessaoCardio) + '<br>Distância: ' + esc(item.distancia || 0) + ' km<br>Tempo: ' + esc(item.tempo || 0) + ' min<br>Pace médio: ' + esc(typeof calcularPaceMedio === 'function' ? (calcularPaceMedio(item) || 'Não calculado') : 'Não calculado') + '<br>Intensidade: ' + esc(item.intensidade || '-') + ' | RPE: ' + esc(item.rpeCardio || '-') + '<br>Pernas: ' + esc(item.sensacaoPernas || '-') + ' | Dor articular: ' + esc(item.dorArticular || '-') + '<br>Observação: ' + esc(item.observacao || 'Nenhuma');
+        }
+        caixa.appendChild(div);
+      });
+    });
+  };
+
+  var analisarAnterior = window.analisarConquistas;
+  window.analisarConquistas = function(treinos, cardios){
+    var lista = typeof analisarAnterior === 'function' ? analisarAnterior(treinos, cardios) : [];
+    var foco = inferirFocoPrincipal(perfil());
+    var totalForca = (treinos || []).length;
+    var totalCorrida = (cardios || []).filter(function(c){ return c && c.tipoAtividade !== 'recuperacao' && c.tipo !== 'sem_cardio' && c.tipo !== 'sem_corrida'; }).length;
+    lista = lista.filter(function(c){
+      var categoria = String(c.categoria || '').toLowerCase();
+      if (foco === 'academia') {
+        if (categoria.indexOf('híbr') !== -1 || categoria.indexOf('hibr') !== -1) return false;
+        if (categoria.indexOf('corrida') !== -1 && totalCorrida === 0) return false;
+      }
+      if (foco === 'corrida') {
+        if (categoria.indexOf('híbr') !== -1 || categoria.indexOf('hibr') !== -1) return false;
+        if (categoria.indexOf('força') !== -1 || categoria.indexOf('forca') !== -1) return totalForca > 0;
+      }
+      return true;
+    });
+    return lista;
+  };
+
+  function ajustarTextosVisuais(){
+    document.title = 'MetaTreino';
+    var meta = document.querySelector('meta[name="app-version"]'); if (meta) meta.setAttribute('content', VERSION_NOVA);
+    var badge = document.querySelector('.app-badge'); if (badge) badge.textContent = 'MetaTreino • Beta ' + VERSION_NOVA;
+    var hero = document.querySelector('.app-hero h1'); if (hero) hero.innerHTML = '<span class="hero-meta-word">Meta</span>Treino';
+    var btnCardioHoje = Array.prototype.slice.call(document.querySelectorAll('button')).find(function(b){ return /Fazer corrida\/cardio hoje|Ver treino de corrida\/cardio/i.test(b.textContent || ''); });
+    if (btnCardioHoje) btnCardioHoje.textContent = 'Abrir Corrida';
+    var zona = byId('zonaCardio');
+    if (zona && zona.tagName !== 'INPUT') { zona.style.display = 'none'; var lbl = document.querySelector('label[for="zonaCardio"]'); if (lbl) lbl.style.display = 'none'; }
+    atualizarCamposPorFoco();
+  }
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(ajustarTextosVisuais, 80); setTimeout(function(){ try { if (typeof renderizarHoje === 'function') renderizarHoje(); if (typeof renderizarPlanoSemanal === 'function' && byId('planoSemanalBox') && !byId('planoSemanalBox').classList.contains('hidden')) renderizarPlanoSemanal(); } catch(e) {} }, 500); });
+  window.addEventListener('load', function(){ setTimeout(ajustarTextosVisuais, 250); });
+})();
+</script>
+
+
+<script id="mt-v060-plan-generator-fix">
+(function(){
+  function byId(id){ return document.getElementById(id); }
+  function cat(c){ try { return typeof normalizarCategoriaTreino === 'function' ? normalizarCategoriaTreino(c) : String(c || ''); } catch(e){ return String(c || ''); } }
+  function perfil(){ try { return typeof perfilUsuario !== 'undefined' ? perfilUsuario : null; } catch(e){ return null; } }
+  function foco(){ var p = perfil() || {}; if (typeof obterFocoPrincipal === 'function') return obterFocoPrincipal(); return p.focoPrincipal || p.modoTreino || 'academia'; }
+  function hoje(){ try { return typeof hojeISO === 'function' ? hojeISO() : new Date().toISOString().slice(0,10); } catch(e){ return new Date().toISOString().slice(0,10); } }
+  function isForca(c){ c = cat(c); return ['superior','inferior','inferior_forca','inferior_moderado','core_abdomen','core_estabilidade','full_body','funcional'].indexOf(c) !== -1; }
+  function forcaPorOrdem(ordem, anterior, corridaProximaForte, corridaAnteriorForte){
+    var p = perfil() || {};
+    var modo = foco();
+    var prioridade = p.prioridadeHibrida || 'equilibrado';
+    var seq = ['superior','inferior_forca','superior','inferior_moderado','core_estabilidade','full_body','funcional'];
+    if (modo === 'academia') seq = ['superior','inferior_forca','superior','inferior_moderado','core_estabilidade','full_body'];
+    if (prioridade === 'corrida_performance') seq = ['superior','core_estabilidade','inferior_moderado','funcional','full_body'];
+    var c = seq[ordem % seq.length];
+    if ((corridaProximaForte || corridaAnteriorForte) && c === 'inferior_forca') c = ordem % 2 === 0 ? 'superior' : 'core_estabilidade';
+    if (c === anterior) {
+      for (var i=0;i<seq.length;i++) {
+        if (seq[i] !== anterior && !(seq[i] === 'inferior_forca' && (corridaProximaForte || corridaAnteriorForte))) { c = seq[i]; break; }
+      }
+    }
+    return c;
+  }
+  function slotsDistribuidos(indices, qtd){
+    indices = indices || [];
+    qtd = Math.max(0, Math.min(qtd, indices.length));
+    if (!qtd) return [];
+    if (qtd === indices.length) return indices.slice();
+    var escolhidos = [];
+    for (var i=0;i<qtd;i++) {
+      var pos = qtd === 1 ? indices.length - 1 : Math.round(i * (indices.length - 1) / (qtd - 1));
+      var val = indices[pos];
+      if (escolhidos.indexOf(val) === -1) escolhidos.push(val);
+    }
+    for (var j=0; escolhidos.length < qtd && j<indices.length; j++) if (escolhidos.indexOf(indices[j]) === -1) escolhidos.push(indices[j]);
+    return escolhidos.sort(function(a,b){ return a-b; });
+  }
+  function tipoRecuperacao(dia, anterior, proximo){
+    var a = anterior ? cat(anterior.categoria) : '';
+    var p = proximo ? cat(proximo.categoria) : '';
+    var runAnterior = a === 'cardio' ? (anterior.subtipoCorrida || '') : '';
+    if (a === 'inferior_forca' || runAnterior === 'longo' || runAnterior === 'corrida_longo') return 'recuperacao_pernas';
+    if (p === 'inferior_forca' || p === 'cardio') return 'mobilidade';
+    return dia.indiceSemana === 0 ? 'descanso_total' : 'caminhada_leve';
+  }
+  function preservarMapa(antigo){
+    var mapa = {};
+    if (antigo && Array.isArray(antigo.dias)) antigo.dias.forEach(function(d){ if (d && d.dataISO) mapa[d.dataISO] = d; });
+    return mapa;
+  }
+  function devePreservar(d){
+    if (!d) return false;
+    if (String(d.status || 'pendente') !== 'pendente') return true;
+    if (d.dataISO && d.dataISO < hoje()) return true;
+    return false;
+  }
+  function copiarPreservado(dest, src){
+    ['categoria','focoHibrido','subtipoCorrida','tipoRecuperacao','protegidoPorCorrida','status','concluidoComo','reagendadoDe','reagendadoPara','adaptadoDeDescanso','ajustadoPeloCheckin'].forEach(function(k){ if (src[k] !== undefined) dest[k] = src[k]; });
+    dest.preservadoHistorico = true;
+  }
+  window.criarPlanoSemanalInteligente = function(preservarStatus){
+    var p = perfil();
+    var antigo = null;
+    try { antigo = preservarStatus && typeof lerPlanoSemanalLocal === 'function' ? lerPlanoSemanalLocal() : null; } catch(e){ antigo = null; }
+    var antigos = preservarMapa(antigo);
+    var dias = typeof gerarDiasPlanoSemanalBase === 'function' ? gerarDiasPlanoSemanalBase() : [];
+    var dist = typeof calcularDistribuicaoHibrida === 'function' ? calcularDistribuicaoHibrida() : {total:4, forca:4, corrida:0, recuperacao:3, prioridade:'forca_shape'};
+    var modo = foco();
+    var disponiveis = p && p.diasDisponiveis ? p.diasDisponiveis.map(String) : (typeof valoresPadraoDiasDisponiveis === 'function' ? valoresPadraoDiasDisponiveis().map(String) : ['1','2','3','4','5']);
+    var indicesAtivos = [];
+    dias.forEach(function(dia, idx){ if (disponiveis.indexOf(String(dia.indiceSemana)) !== -1 && indicesAtivos.length < dist.total) indicesAtivos.push(idx); });
+    var corridaSlots = modo === 'academia' ? [] : (modo === 'corrida' ? indicesAtivos.slice() : slotsDistribuidos(indicesAtivos, dist.corrida));
+    var ordemForca = 0;
+    var ordemCorrida = 0;
+    var anteriorCat = '';
+    dias.forEach(function(dia, idx){
+      dia.status = 'pendente';
+      dia.focoPrincipal = modo;
+      if (indicesAtivos.indexOf(idx) === -1) {
+        dia.categoria = 'descanso';
+        dia.focoHibrido = 'descanso';
+        dia.tipoRecuperacao = 'descanso_total';
+      } else if (corridaSlots.indexOf(idx) !== -1) {
+        dia.categoria = 'cardio';
+        dia.focoHibrido = 'corrida';
+        dia.subtipoCorrida = typeof escolherSubtipoCorrida === 'function' ? escolherSubtipoCorrida(ordemCorrida, corridaSlots.length) : 'corrida_leve';
+        ordemCorrida += 1;
+        anteriorCat = 'cardio';
+      } else {
+        var proxSlot = corridaSlots.indexOf(idx + 1) !== -1;
+        var antSlot = corridaSlots.indexOf(idx - 1) !== -1;
+        var subtipoProx = proxSlot && typeof escolherSubtipoCorrida === 'function' ? escolherSubtipoCorrida(corridaSlots.indexOf(idx + 1), corridaSlots.length) : '';
+        var subtipoAnt = antSlot && typeof escolherSubtipoCorrida === 'function' ? escolherSubtipoCorrida(corridaSlots.indexOf(idx - 1), corridaSlots.length) : '';
+        var corridaProximaForte = ['intervalado','longo','corrida_intervalado','corrida_longo'].indexOf(subtipoProx) !== -1;
+        var corridaAnteriorForte = ['intervalado','longo','corrida_intervalado','corrida_longo'].indexOf(subtipoAnt) !== -1;
+        var c = forcaPorOrdem(ordemForca, anteriorCat, corridaProximaForte, corridaAnteriorForte);
+        dia.categoria = c;
+        dia.focoHibrido = 'forca';
+        dia.protegidoPorCorrida = corridaProximaForte || corridaAnteriorForte;
+        ordemForca += 1;
+        anteriorCat = c;
+      }
+    });
+    dias.forEach(function(dia, idx){
+      if (cat(dia.categoria) === 'descanso') {
+        var tipo = tipoRecuperacao(dia, dias[idx-1], dias[idx+1]);
+        if (tipo !== 'descanso_total') { dia.categoria = 'recuperacao'; dia.focoHibrido = 'recuperacao'; }
+        dia.tipoRecuperacao = tipo;
+      }
+      var old = antigos[dia.dataISO];
+      if (preservarStatus && devePreservar(old)) copiarPreservado(dia, old);
+    });
+    var plano = {
+      versao: '0.6.0-modos-preservacao',
+      inicioSemana: typeof inicioSemanaAtualISO === 'function' ? inicioSemanaAtualISO() : hoje(),
+      criadoEm: Date.now(),
+      focoPrincipal: modo,
+      metaSemanal: dist.total,
+      metaForca: dias.filter(function(d){ return isForca(d.categoria); }).length,
+      metaCardio: dias.filter(function(d){ return cat(d.categoria) === 'cardio'; }).length,
+      metaRecuperacao: dias.filter(function(d){ return cat(d.categoria) === 'recuperacao'; }).length,
+      prioridadeHibrida: dist.prioridade,
+      objetivoCorrida: p ? (p.objetivoCorridaPerfil || '5k') : '5k',
+      dias: dias
+    };
+    try { if (typeof salvarPlanoSemanalLocal === 'function') salvarPlanoSemanalLocal(plano); } catch(e) {}
+    return plano;
+  };
 })();
 </script>
 

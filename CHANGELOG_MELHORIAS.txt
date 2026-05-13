@@ -1,3 +1,13 @@
+MetaTreino — v0.6.0 Beta
+
+- Reposicionamento do app: MetaTreino agora trabalha com foco principal Academia, Corrida ou Academia + Corrida, sem obrigar todo usuário a usar híbrido.
+- Perfil recebeu seleção de foco principal e textos mais claros para academia, corrida separada e modo híbrido avançado.
+- Correção crítica: alterar peso, local de treino, objetivo, dias disponíveis ou preferências não apaga mais treinos concluídos, pulados ou dias anteriores do plano semanal.
+- Atualização do plano agora preserva histórico e adapta apenas sessões pendentes/futuras.
+- Corrida foi simplificada para iniciantes: registro principal usa distância, tempo, esforço percebido, intensidade geral, sensação das pernas e dor articular. Zonas ficaram fora da interface principal.
+- Plano, Hoje e Progresso receberam textos alinhados ao novo posicionamento: academia primeiro, corrida opcional, híbrido como modo escolhido pelo usuário.
+- Conquistas passam a reduzir ruído: conquistas híbridas não aparecem para quem escolhe apenas Academia ou apenas Corrida.
+
 MetaTreino Hybrid — v0.5.0 Beta
 Data: 12/05/2026
 
