@@ -142,3 +142,13 @@ Atualizada em: 11/05/2026
 6. TRANSPARÊNCIA DE VERSÃO
    - A aba Versão atual foi atualizada para v0.4.6 Beta com a lista real das mudanças desta entrega.
    - Manifest e service worker também foram atualizados para forçar cache novo no PWA.
+
+
+==============================
+VERSAO 0.7.0 BETA
+==============================
+- Removidos atalhos externos de execução que levavam o usuário para buscas de vídeo.
+- Adicionadas ilustrações locais animadas dentro do próprio index.html para exercícios de força.
+- Cada card de exercício agora mostra uma referência visual simples do movimento sem abrir links externos.
+- Complemento opcional de cardio em casa foi convertido para orientações locais sem botões para conteúdo externo.
+- Atualizada a identidade da versão para 0.7.0.
