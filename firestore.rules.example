@@ -15,15 +15,21 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == userId;
     }
 
-    // Regra fixa do app:
-    // - documentos de /admins usam o e-mail do treinador como ID, em minúsculas.
-    // - o código do app consulta /admins/{emailDoTreinador}.
-    // - crie esse documento manualmente pelo console do Firebase com ativo: true.
+    // Preferência v0.6.4: crie documentos de admin por UID do Firebase Auth.
+    // Compatibilidade: documentos por e-mail continuam funcionando quando o e-mail do token bate exatamente com o ID.
     function isAdmin() {
       return signedIn()
-        && request.auth.token.email != null
-        && exists(/databases/$(database)/documents/admins/$(userEmail()))
-        && get(/databases/$(database)/documents/admins/$(userEmail())).data.ativo == true;
+        && (
+          (
+            exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+            && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.ativo == true
+          )
+          || (
+            request.auth.token.email != null
+            && exists(/databases/$(database)/documents/admins/$(userEmail()))
+            && get(/databases/$(database)/documents/admins/$(userEmail())).data.ativo == true
+          )
+        );
     }
 
     match /usuarios/{userId} {
@@ -46,22 +52,26 @@ service cloud.firestore {
       }
     }
 
-    // O app consulta usuariosAutorizados pelo e-mail em minúsculas.
-    // Use o e-mail do aluno como ID do documento.
-    match /usuariosAutorizados/{emailDoc} {
+    // O app agora consulta /usuariosAutorizados/{uid} primeiro e /usuariosAutorizados/{email} como fallback.
+    // UID evita falha de caixa alta/baixa no e-mail, porque Firestore Rules não tem lowercase().
+    match /usuariosAutorizados/{docId} {
       allow read: if signedIn()
-        && request.auth.token.email != null
         && request.auth.token.email_verified == true
-        && userEmail() == emailDoc;
+        && (
+          docId == request.auth.uid
+          || (request.auth.token.email != null && docId == userEmail())
+        );
       allow create, update, delete: if isAdmin();
     }
 
     // Documento administrativo criado fora do app, pelo console do Firebase.
-    // ID recomendado: e-mail do treinador em minúsculas.
-    match /admins/{emailDoc} {
+    // Recomendado: /admins/{uidDoTreinador}. Compatível: /admins/{emailExatoDoToken}.
+    match /admins/{docId} {
       allow read: if signedIn()
-        && request.auth.token.email != null
-        && userEmail() == emailDoc;
+        && (
+          docId == request.auth.uid
+          || (request.auth.token.email != null && docId == userEmail())
+        );
       allow create, update, delete: if false;
     }
 
