@@ -6735,63 +6735,16 @@
     }
 
     function obterHtmlBotaoDemoExercicio(exercicio, index) {
-      const tipo = obterTipoIlustracaoExercicio(exercicio.nome, exercicio.grupo);
-      const demo = obterMidiaDemoExercicio(tipo, exercicio);
-      const legenda = demo ? "Demonstração local disponível em loop." : "Demonstração visual genérica disponível como apoio.";
+      const query = encodeURIComponent("como fazer " + (exercicio.nome || "exercício") + " academia");
+      const url = "https://www.youtube.com/results?search_query=" + query;
       return "<div class='demo-trigger-wrap'>" +
-        "<button type='button' class='botao-demo-exercicio' onclick='abrirModalDemoExercicio(" + index + ")'>Ver modo de fazer</button>" +
-        "<p>" + legenda + " Use junto com as instruções escritas abaixo.</p>" +
+        "<a href='" + url + "' target='_blank' rel='noopener noreferrer' class='botao-demo-exercicio' style='display:inline-block;text-decoration:none;'>▶ Ver no YouTube como executar</a>" +
+        "<p class='small' style='margin-top:4px;opacity:0.65;'>Abre o YouTube com a busca do exercício. Use junto com as instruções abaixo.</p>" +
         "</div>";
-    }
-
-    function obterHtmlDemoVideoLocal(demo, descricao) {
-      return `<div class="exercise-demo-media"><video id="videoModalDemoExercicio" class="exercise-demo-video" autoplay muted loop playsinline preload="metadata" poster="${demo.poster}" aria-label="${demo.titulo}" onerror="mostrarFallbackDemoExercicio()"><source src="${demo.webm}" type="video/webm"><source src="${demo.mp4}" type="video/mp4"></video></div><div class="exercise-illustration-hint">Vídeo curto em loop, local no app, sem YouTube e sem anúncios.</div><div class="exercise-illustration-note">${descricao}</div>`;
-    }
-
-    function abrirModalDemoExercicio(index) {
-      if (!treinoAtual || !treinoAtual[index]) {
-        mostrarMensagem("Não encontrei este exercício para abrir a demonstração.");
-        return;
-      }
-
-      const exercicio = treinoAtual[index];
-      const tipo = obterTipoIlustracaoExercicio(exercicio.nome, exercicio.grupo);
-      const descricao = obterDescricaoIlustracaoExercicio(tipo, exercicio);
-      const demo = obterMidiaDemoExercicio(tipo, exercicio);
-      const modal = document.getElementById("modalDemoExercicio");
-      const titulo = document.getElementById("tituloModalDemoExercicio");
-      const musculos = document.getElementById("textoModalDemoMusculos");
-      const conteudo = document.getElementById("conteudoModalDemoExercicio");
-      const fallback = document.getElementById("fallbackModalDemoExercicio");
-      if (!modal || !titulo || !musculos || !conteudo || !fallback) return;
-
-      fallback.classList.add("hidden");
-      titulo.textContent = exercicio.nome || "Demonstração do exercício";
-
-      if (demo) {
-        musculos.textContent = "Músculos principais: " + demo.musculos + ".";
-        conteudo.innerHTML = obterHtmlDemoVideoLocal(demo, descricao);
-      } else {
-        musculos.textContent = "Demonstração visual genérica. Siga as instruções escritas para executar com segurança.";
-        conteudo.innerHTML = `<div class="exercise-illustration"><div class="exercise-illustration-top"><span class="exercise-illustration-title">Ilustração local do movimento</span><span class="tag tag-ilustracao">Ilustração local</span></div>${obterSvgIlustracaoExercicio(tipo)}<div class="exercise-illustration-note">${descricao}</div></div>`;
-      }
-
-      modal.classList.remove("hidden");
-    }
-
-    function mostrarFallbackDemoExercicio() {
-      const fallback = document.getElementById("fallbackModalDemoExercicio");
-      const conteudo = document.getElementById("conteudoModalDemoExercicio");
-      if (fallback) fallback.classList.remove("hidden");
-      if (conteudo) conteudo.innerHTML = "";
     }
 
     function fecharModalDemoExercicio() {
       const modal = document.getElementById("modalDemoExercicio");
-      const conteudo = document.getElementById("conteudoModalDemoExercicio");
-      const fallback = document.getElementById("fallbackModalDemoExercicio");
-      if (conteudo) conteudo.innerHTML = "";
-      if (fallback) fallback.classList.add("hidden");
       if (modal) modal.classList.add("hidden");
     }
 
@@ -6910,53 +6863,24 @@
     }
 
     function obterHtmlBotaoDemoExercicio(exercicio, index) {
-      const tipo = obterTipoIlustracaoExercicio(exercicio.nome, exercicio.grupo);
-      const demo = obterMidiaDemoExercicio(tipo, exercicio);
-      const legenda = demo
-        ? (demo.cobertura === "especifico" ? "Demonstração específica disponível." : "Demonstração por família de movimento disponível.")
-        : "Demonstração visual genérica disponível como apoio.";
+      const query = encodeURIComponent("como fazer " + (exercicio.nome || "exercício") + " academia");
+      const url = "https://www.youtube.com/results?search_query=" + query;
       return "<div class='demo-trigger-wrap'>" +
-        "<button type='button' class='botao-demo-exercicio' onclick='abrirModalDemoExercicio(" + index + ")'>Ver modo de fazer</button>" +
-        "<p>" + legenda + " Use junto com as instruções escritas abaixo.</p>" +
+        "<a href='" + url + "' target='_blank' rel='noopener noreferrer' class='botao-demo-exercicio' style='display:inline-block;text-decoration:none;'>▶ Ver no YouTube como executar</a>" +
+        "<p class='small' style='margin-top:4px;opacity:0.65;'>Abre o YouTube com a busca do exercício. Use junto com as instruções abaixo.</p>" +
         "</div>";
     }
 
-    function obterHtmlDemoVideoLocal(demo, descricao) {
-      const badge = demo.cobertura === "especifico"
-        ? "Vídeo específico do exercício"
-        : "Vídeo por família: " + demo.familiaUsada;
-      return `<div class="exercise-demo-media"><video id="videoModalDemoExercicio" class="exercise-demo-video" autoplay muted loop playsinline preload="metadata" poster="${demo.poster}" aria-label="${demo.titulo}" onloadeddata="ocultarFallbackDemoExercicio()" onerror="mostrarFallbackDemoExercicio()"><source src="${demo.webm}" type="video/webm"><source src="${demo.mp4}" type="video/mp4"></video></div><div class="demo-cobertura-badge">${badge}</div><div class="exercise-illustration-hint">Vídeo curto em loop, local no app, sem YouTube e sem anúncios.</div><div class="exercise-illustration-note">${descricao}</div>`;
-    }
+    function obterHtmlDemoVideoLocal(demo, descricao) { return ""; }
 
-    function abrirModalDemoExercicio(index) {
-      if (!treinoAtual || !treinoAtual[index]) {
-        mostrarMensagem("Não encontrei este exercício para abrir a demonstração.");
-        return;
-      }
+    function abrirModalDemoExercicio(index) { }
 
-      const exercicio = treinoAtual[index];
-      const tipo = obterTipoIlustracaoExercicio(exercicio.nome, exercicio.grupo);
-      const descricao = obterDescricaoIlustracaoExercicio(tipo, exercicio);
-      const demo = obterMidiaDemoExercicio(tipo, exercicio);
+    function mostrarFallbackDemoExercicio() { }
+    function ocultarFallbackDemoExercicio() { }
+
+    function fecharModalDemoExercicio() {
       const modal = document.getElementById("modalDemoExercicio");
-      const titulo = document.getElementById("tituloModalDemoExercicio");
-      const musculos = document.getElementById("textoModalDemoMusculos");
-      const conteudo = document.getElementById("conteudoModalDemoExercicio");
-      const fallback = document.getElementById("fallbackModalDemoExercicio");
-      if (!modal || !titulo || !musculos || !conteudo || !fallback) return;
-
-      fallback.classList.add("hidden");
-      titulo.textContent = exercicio.nome || "Demonstração do exercício";
-
-      if (demo) {
-        musculos.innerHTML = "<strong>Músculos principais:</strong> " + demo.musculos + ".";
-        conteudo.innerHTML = obterHtmlDemoVideoLocal(demo, descricao);
-      } else {
-        musculos.textContent = "Demonstração visual genérica. Siga as instruções escritas para executar com segurança.";
-        conteudo.innerHTML = `<div class="exercise-illustration"><div class="exercise-illustration-top"><span class="exercise-illustration-title">Ilustração local do movimento</span><span class="tag tag-ilustracao">Ilustração local</span></div>${obterSvgIlustracaoExercicio(tipo)}<div class="exercise-illustration-note">${descricao}</div></div>`;
-      }
-
-      modal.classList.remove("hidden");
+      if (modal) modal.classList.add("hidden");
     }
 
     function ocultarFallbackDemoExercicio() {
@@ -7714,7 +7638,8 @@
     }
 
     function abrirVideoExercicio(nomeExercicio) {
-      mostrarMensagem("Os vídeos externos foram removidos desta versão. Use a ilustração local do movimento e os passos do exercício como orientação.");
+      const query = encodeURIComponent("como fazer " + (nomeExercicio || "exercício") + " academia");
+      window.open("https://www.youtube.com/results?search_query=" + query, "_blank", "noopener,noreferrer");
     }
 
     function mostrarTreinoNaTela() {
