@@ -2237,17 +2237,24 @@
           <option value="longo">Longo — acima de 1 hora</option>
         </select>
 
-        <label for="divisaoTreino">Sessão de força, se for treinar musculação</label>
+        <label for="divisaoTreino">Sessão de hoje</label>
         <select id="divisaoTreino">
-          <option value="automatico" selected>Automático pelo plano</option>
-          <option value="superior">Superiores — preserva as pernas para correr</option>
-          <option value="inferior_forca">Pernas — Força: pesado, longe de tiros/longão</option>
-          <option value="inferior_moderado">Pernas — Moderado: menos impacto na corrida</option>
-          <option value="full_body">Corpo Todo — equilíbrio geral</option>
-          <option value="core_estabilidade">Core e Estabilidade — postura, quadril e controle</option>
-          <option value="funcional">Força Funcional — atlético e dinâmico</option>
-          <option value="recuperacao">Recuperação ativa — sem peso/repetições</option>
+          <option value="automatico" selected>🤖 Automático pelo plano</option>
+          <option value="full_body">🏋️ Corpo todo</option>
+          <option value="superior_forca">💪 Superiores (peito, costas, ombros, braços)</option>
+          <option value="inferior_forca">🦵 Inferiores (pernas, glúteos)</option>
+          <option value="peito">🫁 Peito e tríceps</option>
+          <option value="costas">🔙 Costas e bíceps</option>
+          <option value="ombros">🔼 Ombros e trapézio</option>
+          <option value="core_estabilidade">⚡ Core e funcional</option>
+          <option value="recuperacao">🌿 Recuperação / mobilidade</option>
+          <option value="cardio" class="opcao-corrida">🏃 Corrida / cardio</option>
+          <option value="corrida_leve" class="opcao-corrida">🟢 Corrida leve / regenerativa</option>
+          <option value="corrida_longo" class="opcao-corrida">🔵 Corrida longa</option>
+          <option value="corrida_intervalado" class="opcao-corrida">🔴 Tiros / intervalado</option>
+          <option value="corrida_progressiva" class="opcao-corrida">🟡 Corrida progressiva</option>
         </select>
+        <p id="mt068-checkin-dica" class="small" style="margin-top:4px;color:#94a3b8;font-size:0.78em;display:none;">💡 Opções de corrida disponíveis pois seu perfil é híbrido ou foco corrida.</p>
 
         <div class="tipo-registro-info">
           <strong>Importante:</strong> recuperação, caminhada e mobilidade não entram como treino de força. Se a recomendação for recuperação, o app abre registro de duração, distância opcional, esforço e sensação das pernas.
@@ -9446,7 +9453,7 @@
 </script>
 
 <script>
-  const METATREINO_APP_VERSION = "0.6.7";
+  const METATREINO_APP_VERSION = "0.6.8";
 
   function verificarAtualizacaoManual() {
     const status = document.getElementById("statusAtualizacaoManual");
@@ -11089,7 +11096,7 @@
 
 <script id="mt-v048-checkin-contexto-fix">
 (function(){
-  var VERSION = '0.6.7';
+  var VERSION = '0.6.8';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -11458,7 +11465,7 @@
 
 <script id="mt-v049-data-local-hoje-fix">
 (function(){
-  var VERSION = '0.6.7';
+  var VERSION = '0.6.8';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -11783,7 +11790,7 @@
 
 <script id="mt-v050-corrida-inteligente">
 (function(){
-  var VERSION_ATUAL = '0.6.7';
+  var VERSION_ATUAL = '0.6.8';
   try { window.VERSION = VERSION_ATUAL; } catch(e) {}
   try { if (typeof VERSION !== 'undefined') VERSION = VERSION_ATUAL; } catch(e) {}
 
@@ -12148,7 +12155,7 @@
 
 <script id="mt-v060-modos-preservacao">
 (function(){
-  var VERSION_NOVA = '0.6.7';
+  var VERSION_NOVA = '0.6.8';
   function byId(id){ return document.getElementById(id); }
   function esc(v){
     try { return typeof limparTextoSeguro === 'function' ? limparTextoSeguro(v) : String(v == null ? '' : v).replace(/[&<>"']/g, function(ch){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]; }); }
@@ -12687,7 +12694,7 @@
       if (preservarStatus && devePreservar(old)) copiarPreservado(dia, old);
     });
     var plano = {
-      versao: '0.6.7-demos-melhorados',
+      versao: '0.6.8',
       inicioSemana: typeof inicioSemanaAtualISO === 'function' ? inicioSemanaAtualISO() : hoje(),
       criadoEm: Date.now(),
       focoPrincipal: modo,
@@ -12726,7 +12733,7 @@
 </style>
 <script id="mt-v061-reagendamento-e-treino-manual-fix">
 (function(){
-  var VERSION_FIX = '0.6.7';
+  var VERSION_FIX = '0.6.8';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -13147,7 +13154,7 @@
 </style>
 <script id="mt-v062-restaurar-sugestao-original">
 (function(){
-  var VERSION_FIX = '0.6.7';
+  var VERSION_FIX = '0.6.8';
   var CONTEXT_KEY = 'metatreinoCheckinContextoV048';
 
   function byId(id){ return document.getElementById(id); }
@@ -13565,19 +13572,23 @@
      FIX 9 — Versão visual
   ════════════════════════════════════════════════════════════ */
   function aplicarVersao068(){
-    var VERSION_FIX = VERSION_068;
+    var V = VERSION_068;
     var meta = document.querySelector('meta[name="app-version"]');
-    if(meta) meta.setAttribute('content', VERSION_FIX);
+    if(meta) meta.setAttribute('content', V);
     var badge = document.querySelector('.app-badge');
-    if(badge) badge.textContent = 'MetaTreino • Beta ' + VERSION_FIX;
+    if(badge) badge.textContent = 'MetaTreino • Beta ' + V;
     var card = document.querySelector('#cardVersaoAtual .plano-topo strong');
-    if(card) card.textContent = 'MetaTreino ' + VERSION_FIX + ' Beta';
-    try{ if(window.VERSION !== undefined) window.VERSION = VERSION_FIX; }catch(e){}
-    try{ if(window.VERSION_ATUAL !== undefined) window.VERSION_ATUAL = VERSION_FIX; }catch(e){}
+    if(card) card.textContent = 'MetaTreino ' + V + ' Beta';
+    /* travar variáveis globais */
+    try{ window.VERSION = V; }catch(e){}
+    try{ window.VERSION_ATUAL = V; }catch(e){}
+    try{ window.VERSION_NOVA = V; }catch(e){}
+    try{ window.METATREINO_APP_VERSION = V; }catch(e){}
   }
   document.addEventListener('DOMContentLoaded', aplicarVersao068);
   window.addEventListener('load', aplicarVersao068);
-  setTimeout(aplicarVersao068, 800);
+  /* múltiplos timeouts para garantir após qualquer script tardio */
+  [200, 700, 1200, 2500].forEach(function(ms){ setTimeout(aplicarVersao068, ms); });
 
   /* ════════════════════════════════════════════════════════════
      FIX 6 — Botões de sensação com contraste forte
@@ -13910,60 +13921,67 @@
     var sel = byId('divisaoTreino');
     if(!sel) return;
     var p = perfil();
-    var foco = (p && p.focoPrincipal) ? p.focoPrincipal : 'hibrido';
-    /* inferir foco pelo diasCorridaSemana se não tiver campo */
-    if(!p || !p.focoPrincipal){
-      foco = (p && Number(p.diasCorridaSemana||0) === 0) ? 'academia' : 'hibrido';
+    /* inferir foco */
+    var foco = 'hibrido';
+    if(p){
+      if(p.focoPrincipal) foco = p.focoPrincipal;
+      else if(Number(p.diasCorridaSemana||0) === 0) foco = 'academia';
     }
 
-    /* salva as opções originais */
-    if(!sel._068OpcoesOriginais){
-      sel._068OpcoesOriginais = Array.from(sel.options).map(function(o){
-        return { value: o.value, text: o.text };
-      });
-    }
+    var ehAcademia = (foco === 'academia');
 
-    /* reconstrói opções conforme foco */
-    while(sel.options.length > 0) sel.remove(0);
-
-    var opcoesAcademia = [
-      { value:'automatico',       text:'🤖 Automático pelo plano' },
-      { value:'full_body',        text:'🏋️ Corpo todo' },
-      { value:'superior_forca',   text:'💪 Superiores (peito, costas, ombros, braços)' },
-      { value:'inferior_forca',   text:'🦵 Inferiores (pernas, glúteos)' },
-      { value:'peito',            text:'🫁 Peito e tríceps' },
-      { value:'costas',           text:'🔙 Costas e bíceps' },
-      { value:'ombros',           text:'🔼 Ombros e trapézio' },
-      { value:'core',             text:'⚡ Core e funcional' },
-      { value:'recuperacao',      text:'🌿 Recuperação / mobilidade' }
-    ];
-
-    var opcoesHibrido = opcoesAcademia.concat([
-      { value:'cardio',           text:'🏃 Corrida / cardio (ir para aba corrida)' },
-      { value:'corrida_leve',     text:'🟢 Corrida leve / regenerativa' },
-      { value:'corrida_longo',    text:'🔵 Corrida longa (longe de desafio)' },
-      { value:'corrida_intervalado', text:'🔴 Tiros / intervalado (semana sem prova)' },
-      { value:'corrida_progressiva', text:'🟡 Corrida progressiva' }
-    ]);
-
-    var opcoes = foco === 'academia' ? opcoesAcademia : opcoesHibrido;
-    opcoes.forEach(function(op){
-      var o = document.createElement('option');
-      o.value = op.value;
-      o.textContent = op.text;
-      sel.appendChild(o);
+    /* esconder/mostrar opções de corrida existentes no HTML */
+    Array.from(sel.options).forEach(function(opt){
+      var val = opt.value || '';
+      var ehCorrida = (val === 'cardio' || val.indexOf('corrida_') === 0);
+      if(ehCorrida){
+        opt.style.display = ehAcademia ? 'none' : '';
+        opt.disabled = ehAcademia;
+      }
     });
+
+    /* mostrar dica para hibrido */
+    var dica = byId('mt068-checkin-dica');
+    if(dica) dica.style.display = ehAcademia ? 'none' : 'block';
+
+    /* se valor atual é corrida e foco é academia, volta para automatico */
+    var valAtual = sel.value || '';
+    if(ehAcademia && (valAtual === 'cardio' || valAtual.indexOf('corrida_') === 0)){
+      sel.value = 'automatico';
+    }
   }
 
-  /* roda ao abrir o check-in */
+  /* roda ao abrir o check-in E no carregamento inicial */
+  function rodarAdaptacoesCheckin(){
+    adaptarOpcoesCheckin();
+    if(isFeminino()) injetarMenstruacaoCheckin();
+    mostrarAlertaDesafioProximo();
+  }
+
   var oldIrParaCheckin068 = window.irParaCheckin;
   window.irParaCheckin = function(){
     var ret = oldIrParaCheckin068 ? oldIrParaCheckin068.apply(this, arguments) : undefined;
-    setTimeout(adaptarOpcoesCheckin, 150);
-    setTimeout(injetarMenstruacaoCheckin, 200);
-    setTimeout(mostrarAlertaDesafioProximo, 250);
+    setTimeout(rodarAdaptacoesCheckin, 150);
     return ret;
   };
+
+  /* também observa quando a seção de checkin fica visível */
+  document.addEventListener('DOMContentLoaded', function(){
+    var secCheckin = document.getElementById('paginaCheckin');
+    if(secCheckin && window.MutationObserver){
+      var obs = new MutationObserver(function(muts){
+        muts.forEach(function(m){
+          if(m.attributeName === 'class'){
+            var vis = !secCheckin.classList.contains('hidden');
+            if(vis) setTimeout(rodarAdaptacoesCheckin, 100);
+          }
+        });
+      });
+      obs.observe(secCheckin, { attributes: true });
+    }
+    /* roda uma vez no load para já preparar o select */
+    setTimeout(adaptarOpcoesCheckin, 500);
+  });
 
   /* ════════════════════════════════════════════════════════════
      FIX 4 — Modo menstruação (perfil feminino)
@@ -14117,6 +14135,21 @@
     setTimeout(injetarCardPesoRapido, 500);
     return ret;
   };
+
+  /* observa visibilidade da página de perfil */
+  document.addEventListener('DOMContentLoaded', function(){
+    var secPerfil = document.getElementById('paginaPerfil');
+    if(secPerfil && window.MutationObserver){
+      var obsPerfil = new MutationObserver(function(muts){
+        muts.forEach(function(m){
+          if(m.attributeName === 'class' && !secPerfil.classList.contains('hidden')){
+            setTimeout(injetarCardPesoRapido, 200);
+          }
+        });
+      });
+      obsPerfil.observe(secPerfil, { attributes: true });
+    }
+  });
 
   /* ════════════════════════════════════════════════════════════
      FIX 8 — Feedback de corrida humanizado
