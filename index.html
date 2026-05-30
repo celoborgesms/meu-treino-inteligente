@@ -2043,15 +2043,15 @@
         <div id="resultadoPerfil" class="alerta hidden"></div>
         <div id="mensagemPeso" class="alerta hidden"></div>
 
-        <!-- v0.6.8: Card de peso rápido — só aparece se já tiver perfil salvo -->
-        <div id="mt068-card-peso" style="display:none;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:14px;padding:16px;margin-top:14px;">
-          <p style="margin:0 0 4px;font-size:0.9em;font-weight:600;color:#93c5fd;">⚖️ Atualizar peso</p>
-          <p style="margin:0 0 12px;font-size:0.78em;color:#94a3b8;">Atualize sem precisar refazer o perfil completo.</p>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <input id="mt068PesoInput" type="number" min="30" max="700" step="0.1" placeholder="Peso atual (kg)"
-              style="flex:1;padding:11px 12px;border-radius:10px;border:1.5px solid rgba(59,130,246,0.4);background:rgba(255,255,255,0.1);color:#fff;font-size:1em;font-weight:600;text-align:center;outline:none;-webkit-appearance:none;">
+        <!-- v0.6.8: Card de peso rápido -->
+        <div id="mt068-card-peso" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:16px;margin-top:14px;">
+          <p style="margin:0 0 10px;font-size:0.9em;font-weight:600;color:#e5e7eb;">⚖️ Atualizar peso rapidamente</p>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <input id="mt068PesoInput" type="number" min="30" max="700" step="0.1" placeholder="Peso (kg)"
+              style="flex:1;padding:10px 12px;border-radius:10px;border:1.5px solid rgba(59,130,246,0.5);background:rgba(255,255,255,0.12);color:#fff;font-size:1.1em;font-weight:700;text-align:center;outline:none;">
+            <span style="color:#94a3b8;font-size:0.9em;">kg</span>
             <button type="button" onclick="mt068SalvarPesoRapido()"
-              style="padding:11px 18px;border-radius:10px;border:none;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;font-size:0.88em;font-weight:600;cursor:pointer;white-space:nowrap;min-width:70px;">
+              style="padding:10px 16px;border-radius:10px;border:none;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;font-size:0.88em;font-weight:600;cursor:pointer;white-space:nowrap;">
               Salvar
             </button>
           </div>
@@ -4229,8 +4229,13 @@
       const resumoBloqueados = exerciciosBloqueados ? "<br>Exercícios bloqueados: " + limparTextoSeguro(exerciciosBloqueados) + "." : "";
       resultadoPerfil.innerHTML = "<strong>" + limparTextoSeguro(nome) + ", seu perfil híbrido está pronto</strong><br>IMC: " + imc.toFixed(1) + " • Idade: " + idade + " anos.<br>Classificação: " + limparTextoSeguro(classificacao) + ".<br>" + limparTextoSeguro(mensagem) + "<br>Meta: " + limparTextoSeguro(traduzirMeta(metaPrincipal)) + ".<br>Prioridade: " + limparTextoSeguro(traduzirPrioridadeHibrida(prioridadeHibrida)) + ".<br>Corrida: " + limparTextoSeguro(traduzirNivelCorrida(nivelCorridaPerfil)) + " • " + limparTextoSeguro(traduzirObjetivoCorrida(objetivoCorridaPerfil)) + ".<br>Semana: " + diasTreinoSemana + " dia(s) ativos, com " + Math.min(diasCorridaSemana, Math.max(1, diasTreinoSemana - 1)) + " de corrida/cardio planejado(s).<br>Experiência de força: " + limparTextoSeguro(traduzirExperiencia(tempoExperiencia)) + ".<br>Local: " + limparTextoSeguro(traduzirLocal(localTreino)) + "." + resumoLimitacoes + resumoBloqueados + "<br><br><span class='small'>Observação: IMC é uma estimativa simples. O plano híbrido usa também sua experiência, disponibilidade, corrida e recuperação.</span>";
       botaoIrTreino.classList.remove("hidden");
-      // v068: mostrar card de peso rápido após salvar perfil
-      setTimeout(function(){ if(typeof mt068InitUI==='function') mt068InitUI(); }, 200);
+      // v068: mostrar card de peso após salvar perfil
+      setTimeout(function(){
+        var cp = document.getElementById('mt068-card-peso');
+        if(cp) cp.style.display = 'block';
+        var ip = document.getElementById('mt068PesoInput');
+        try{ var pf = JSON.parse(localStorage.getItem('perfilUsuario')||'null'); if(ip && pf && pf.peso) ip.value = pf.peso; }catch(e){}
+      }, 300);
     }
 
     function registrarPeso(peso) {
@@ -7221,21 +7226,15 @@
         fullbody: "full_body",
         full_body: "full_body",
         superior_forca: "superior",
-        superiores: "superior",
         peito: "superior",
         costas: "superior",
         ombros: "superior",
         biceps: "superior",
         triceps: "superior",
-        inferior_forca: "inferior",
-        inferiores: "inferior",
-        pernas: "inferior",
-        gluteos: "inferior",
-        core: "core_abdomen",
-        core_estabilidade: "core_abdomen",
-        funcional: "core_abdomen",
-        recuperacao: "descanso",
-        recuperação: "descanso",
+        inferior_forca: "inferior_forca",
+        pernas: "inferior_forca",
+        gluteos: "inferior_forca",
+        core: "core_estabilidade",
         corrida_leve: "cardio",
         corrida_longo: "cardio",
         corrida_intervalado: "cardio",
@@ -7855,12 +7854,7 @@
       const exercicioAtual = treinoAtual[index];
       if (!exercicioAtual) return [];
       const deveManterRegistravel = exercicioEhRegistravel(exercicioAtual);
-      // FIX v068: treinoAtual é um array — .categoria e .letra são props no array, não confiáveis
-      // Usa o grupo do exercício para determinar a categoria correta
-      const grupoEx = exercicioAtual.grupo || "";
-      const catPeloGrupo = categoriaDoGrupoExercicio(grupoEx);
-      const catPeloTreino = treinoAtual.categoria || treinoAtual.letra || "";
-      const categoriaAtual = normalizarCategoriaTreino(catPeloGrupo || catPeloTreino);
+      const categoriaAtual = normalizarCategoriaTreino(treinoAtual.categoria || treinoAtual.letra || categoriaDoGrupoExercicio(exercicioAtual.grupo));
       const localOriginal = perfilUsuario ? perfilUsuario.localTreino : "academia_grande";
       const local = localOriginal === "academia_basica" ? "academia_pequena" : localOriginal;
       const dorAtual = document.getElementById("dor") ? document.getElementById("dor").value : "nenhuma";
@@ -13495,11 +13489,17 @@
       '<p style="color:#94a3b8;font-size:0.9em;">' + rec.texto + '</p>' +
       '<div class="plano-acoes-principais">' +
         botaoAcao +
-        '<button type="button" class="botao-secundario" onclick="' +
-          'byId('divisaoTreino') && (byId('divisaoTreino').value='automatico');' +
-          'box && box.classList.add('hidden');">Usar sugestão do plano</button>' +
+        '<button type="button" class="botao-secundario" onclick="mt068UsarSugestaoPlano()">Usar sugestão do plano</button>' +
       '</div>';
     box.scrollIntoView({ behavior:'smooth', block:'center' });
+  };
+
+  window.mt068UsarSugestaoPlano = function(){
+    var sel = byId('divisaoTreino');
+    if(sel) sel.value = 'automatico';
+    var box = byId('recomendacaoCheckinBox');
+    if(box) box.classList.add('hidden');
+    window.__mt03RecomendacaoCheckin = null;
   };
 
   window.mt068AplicarManual = function(){
@@ -13511,7 +13511,7 @@
     try{
       var plano = lerPlano();
       if(plano && Array.isArray(plano.dias)){
-        var dia = plano.dias.find(function(d){ return d.dataISO === hojeISO(); });
+        var dia = plano.dias.find(function(d){ return d.dataISO === hojeIso(); });
         if(dia){ dia.categoria = valBruto; dia.ajustado068 = true; salvarPlano(plano); }
       }
     }catch(e){}
@@ -14049,6 +14049,16 @@
     return ret;
   };
 
+  /* também intercepta irParaCheckin via navegação bottom-nav */
+  var oldNavCheckin = window.navegarPara;
+  window.navegarPara = function(pagina){
+    var ret = oldNavCheckin ? oldNavCheckin.apply(this, arguments) : undefined;
+    if(pagina === 'paginaCheckin' || pagina === 'checkin'){
+      setTimeout(rodarAdaptacoesCheckin, 200);
+    }
+    return ret;
+  };
+
   /* também observa quando a seção de checkin fica visível */
   document.addEventListener('DOMContentLoaded', function(){
     var secCheckin = document.getElementById('paginaCheckin');
@@ -14394,7 +14404,7 @@
      Init geral — roda ao carregar
   ════════════════════════════════════════════════════════════ */
   function mt068InitUI(){
-    /* card de peso: só mostra se já tiver perfil salvo */
+    /* card de peso: mostra só se tem perfil, esconde se não tem */
     var p = perfil();
     var cardPeso = byId('mt068-card-peso');
     if(cardPeso){
@@ -14444,6 +14454,8 @@
     observarVisibilidade(secPerfil, function(){
       setTimeout(function(){
         var p2 = perfil();
+        var cardP = byId('mt068-card-peso');
+        if(cardP) cardP.style.display = p2 ? 'block' : 'none';
         var inp = byId('mt068PesoInput');
         if(inp && p2 && p2.peso) inp.value = p2.peso;
       }, 150);
